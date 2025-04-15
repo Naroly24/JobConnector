@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - JobConnect RD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables globales */
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2ecc71;
+            --secondary-dark: #27ae60;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #1abc9c;
+            --gray: #95a5a6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 0.5rem;
+            --transition: all 0.3s ease;
+            --max-width: 1200px;
+            --header-height: 70px;
+            --footer-height: 60px;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: var(--header-height);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 0.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        /* Navegación */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a.active {
+            color: var(--primary);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main content */
+        main {
+            margin-top: var(--header-height);
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        /* Hero section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .card-body {
+            color: var(--dark);
+        }
+
+        .card-footer {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Grid System */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+        }
+
+        .col {
+            flex: 1;
+            padding: 0 1rem;
+            min-width: 0;
+        }
+
+        .col-1 { flex: 0 0 8.333%; max-width: 8.333%; }
+        .col-2 { flex: 0 0 16.666%; max-width: 16.666%; }
+        .col-3 { flex: 0 0 25%; max-width: 25%; }
+        .col-4 { flex: 0 0 33.333%; max-width: 33.333%; }
+        .col-5 { flex: 0 0 41.666%; max-width: 41.666%; }
+        .col-6 { flex: 0 0 50%; max-width: 50%; }
+        .col-7 { flex: 0 0 58.333%; max-width: 58.333%; }
+        .col-8 { flex: 0 0 66.666%; max-width: 66.666%; }
+        .col-9 { flex: 0 0 75%; max-width: 75%; }
+        .col-10 { flex: 0 0 83.333%; max-width: 83.333%; }
+        .col-11 { flex: 0 0 91.666%; max-width: 91.666%; }
+        .col-12 { flex: 0 0 100%; max-width: 100%; }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+            padding-right: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--light);
+            opacity: 0.8;
+        }
+
+        .footer-section ul li a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            opacity: 0.8;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: var(--header-height);
+                left: -100%;
+                width: 70%;
+                height: calc(100vh - var(--header-height));
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="../img/logo.png" alt="JobConnect RD Logo">                <h1>Job<span>Connect RD</span></h1>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="empresas.html">Empresas</a></li>
+                    <li><a href="sobre-nosotros.html" class="active">Sobre Nosotros</a></li>
+                    <li><a href="#" class="btn btn-primary btn-sm">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="container">
+            <div class="hero">
+                <h2>Sobre JobConnect RD</h2>
+                <p>Conoce nuestra misión, visión y el equipo detrás de la plataforma líder en conexión de talento dominicano con oportunidades profesionales.</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Nuestra Historia</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>JobConnect RD nació en 2023 con la misión de transformar el mercado laboral dominicano. Nos propusimos crear una plataforma que no solo conecte a profesionales con empresas, sino que también fomente el crecimiento profesional y económico en República Dominicana.</p>
+                            <p>Hoy, somos la plataforma líder en el país, ayudando a miles de dominicanos a encontrar empleos en Santo Domingo, Santiago, Punta Cana y más, mientras apoyamos a empresas a descubrir talento excepcional.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission and Vision -->
+        <section class="container" style="margin-top: 3rem;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Misión y Visión</h2>
+            <div class="row">
+                <!-- Mission -->
+                <div class="col-md-6 col-sm-12" style="margin-bottom: 1.5rem;">
+                    <div class="card">
+                        <h3 class="card-title">Misión</h3>
+                        <div class="card-body">
+                            <p>Conectar el talento dominicano con oportunidades laborales significativas, promoviendo el desarrollo profesional y el bienestar económico en el país.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Vision -->
+                <div class="col-md-6 col-sm-12" style="margin-bottom: 1.5rem;">
+                    <div class="card">
+                        <h3 class="card-title">Visión</h3>
+                        <div class="card-body">
+                            <p>Ser la plataforma de empleo número uno en República Dominicana, reconocida por su innovación, accesibilidad y compromiso con el éxito de profesionales y empresas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="container" style="margin-top: 3rem;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Nuestro Equipo</h2>
+            <div class="row">
+                <!-- Team Member 1 -->
+                <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
+                    <div class="card" style="text-align: center;">
+                        <h3 class="card-title">Ana Martínez</h3>
+                        <div class="card-body">
+                            <p><strong>Fundadora y CEO</strong></p>
+                            <p>Líder apasionada por conectar talento con oportunidades en RD.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
+                    <div class="card" style="text-align: center;">
+                        <h3 class="card-title">Carlos Díaz</h3>
+                        <div class="card-body">
+                            <p><strong>Director de Tecnología</strong></p>
+                            <p>Experto en construir plataformas digitales innovadoras.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
+                    <div class="card" style="text-align: center;">
+                        <h3 class="card-title">Sofía López</h3>
+                        <div class="card-body">
+                            <p><strong>Gerente de Operaciones</strong></p>
+                            <p>Dedicada a garantizar una experiencia fluida para usuarios y empresas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="container" style="margin-top: 3rem; margin-bottom: 3rem;">
+            <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); text-align: center; padding: 3rem 1rem; border-radius: var(--radius);">
+                <h2 style="margin-bottom: 1rem; font-size: 2rem;">Únete a Nuestra Comunidad</h2>
+                <p style="margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Regístrate en JobConnect RD y forma parte de la plataforma que está transformando el mercado laboral dominicano.</p>
+                <a href="#" class="btn btn-secondary btn-lg">Crear Cuenta</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h3>Sobre JobConnect RD</h3>
+                    <p style="opacity: 0.8; margin-bottom: 1rem;">Plataforma líder en conectar talento dominicano con oportunidades profesionales en el país.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Links Section -->
