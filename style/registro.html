@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect RD - Registrarse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables globales */
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2ecc71;
+            --secondary-dark: #27ae60;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #1abc9c;
+            --gray: #95a5a6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 0.5rem;
+            --transition: all 0.3s ease;
+            --max-width: 1200px;
+            --header-height: 70px;
+            --footer-height: 60px;
+        }
+
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Contenedor principal */
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: var(--header-height);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 0.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        /* Navegación */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        nav ul li a.active {
+            color: var(--primary);
+        }
+
+        nav ul li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main content */
+        main {
+            margin-top: var(--header-height);
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        /* Botones */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-text {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1.5rem;
+            padding-right: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: var(--light);
+            opacity: 0.8;
+        }
+
+        .footer-section ul li a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            opacity: 0.8;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+        }
+
+        /* Registro Form Card */
+        .registro-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .registro-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .registro-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .registro-form {
+            padding: 2rem;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -0.5rem;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 200px;
+            padding: 0 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .tab-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .checkbox-group {
+            margin-top: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .checkbox-label input {
+            margin-right: 0.5rem;
+            margin-top: 0.3rem;
+        }
+
+        .form-divider {
+            margin: 1.5rem 0;
+            border-top: 1px solid #ddd;
+            position: relative;
+            text-align: center;
+        }
+
+        .form-divider span {
+            position: absolute;
+            top: -12px;
+            background: var(--white);
+            padding: 0 1rem;
+            color: var(--gray);
+        }
+
+        .social-signup {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            border: 1px solid #ddd;
+            background-color: var(--white);
+            color: var(--dark);
+            transition: var(--transition);
+            cursor: pointer;
+            width: 180px;
+        }
+
+        .social-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .social-btn.facebook {
+            background-color: #3b5998;
+            color: var(--white);
+            border-color: #3b5998;
+        }
+
+        .social-btn.google {
+            background-color: #ffffff;
+            color: #555;
+            border-color: #ddd;
+        }
+
+        .social-btn.linkedin {
+            background-color: #0077b5;
+            color: var(--white);
+            border-color: #0077b5;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: var(--header-height);
+                left: -100%;
+                width: 70%;
+                height: calc(100vh - var(--header-height));
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-bottom: 1rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .form-col {
+                margin-bottom: 1rem;
+            }
+
+            .social-signup {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-btn {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="../img/logo.png" alt="JobConnect RD Logo">             
+                <h1>Job<span>Connect RD</span></h1>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="empresas.html">Empresas</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="login.html" class="btn btn-primary btn-sm">Iniciar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="registro-container">
+                <div class="registro-header">
+                    <h2>Crear una cuenta</h2>
+                    <p>Únete a la mayor red de empleo profesional en República Dominicana</p>
+                </div>
+                
+                <div class="registro-form">
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <div class="tab-item active" data-tab="candidato">Candidato</div>
+                        <div class="tab-item" data-tab="empresa">Empresa</div>
+                    </div>
+                    
+                    <!-- Candidato Registration Form -->
+                    <div class="tab-content active" id="candidato-tab">
+                        <form id="candidato-form">
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="c-nombre" class="form-label">Nombre *</label>
+                                        <input type="text" id="c-nombre" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="c-apellido" class="form-label">Apellido *</label>
+                                        <input type="text" id="c-apellido" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="c-email" class="form-label">Correo Electrónico *</label>
+                                <input type="email" id="c-email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="c-password" class="form-label">Contraseña *</label>
+                                        <input type="password" id="c-password" class="form-control" required>
+                                        <small class="form-text">Mínimo 8 caracteres, con al menos una letra y un número</small>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="c-confirm-password" class="form-label">Confirmar Contraseña *</label>
+                                        <input type="password" id="c-confirm-password" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="c-telefono" class="form-label">Teléfono</label>
+                                        <input type="tel" id="c-telefono" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="c-ciudad" class="form-label">Ciudad *</label>
+                                        <select id="c-ciudad" class="form-control" required>
+                                            <option value="">Seleccionar ciudad</option>
+                                            <option value="santo-domingo">Santo Domingo</option>
+                                            <option value="santiago">Santiago</option>
+                                            <option value="punta-cana">Punta Cana</option>
+                                            <option value="puerto-plata">Puerto Plata</option>
+                                            <option value="la-romana">La Romana</option>
+                                            <option value="otra">Otra</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="c-profesion" class="form-label">Profesión o Título *</label>
+                                <input type="text" id="c-profesion" class="form-control" required>
+                                <small class="form-text">Ej: Desarrollador Web, Ingeniero Civil, Diseñador Gráfico</small>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span>Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a> *</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span>Deseo recibir correos con ofertas de trabajo relevantes y actualizaciones</span>
+                                </label>
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <button type="submit" class="btn btn-secondary btn-block">Crear Cuenta</button>
+                            </div>
+                            
+                            <div class="form-footer">
+                                ¿Ya tienes una cuenta? <a href="login.html">Iniciar Sesión</a>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Empresa Registration Form -->
+                    <div class="tab-content" id="empresa-tab">
+                        <form id="empresa-form">
+                            <div class="form-group">
+                                <label for="e-nombre" class="form-label">Nombre de la Empresa *</label>
+                                <input type="text" id="e-nombre" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="e-rnc" class="form-label">RNC (Registro Nacional del Contribuyente) *</label>
+                                        <input type="text" id="e-rnc" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="e-sector" class="form-label">Sector *</label>
+                                        <select id="e-sector" class="form-control" required>
+                                            <option value="">Seleccionar sector</option>
+                                            <option value="tecnologia">Tecnología e Informática</option>
+                                            <option value="turismo">Turismo y Hotelería</option>
+                                            <option value="finanzas">Finanzas y Banca</option>
+                                            <option value="salud">Salud</option>
+                                            <option value="educacion">Educación</option>
+                                            <option value="comercio">Comercio</option>
+                                            <option value="manufactura">Manufactura</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="e-direccion" class="form-label">Dirección *</label>
+                                <input type="text" id="e-direccion" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="e-ciudad" class="form-label">Ciudad *</label>
+                                        <select id="e-ciudad" class="form-control" required>
+                                            <option value="">Seleccionar ciudad</option>
+                                            <option value="santo-domingo">Santo Domingo</option>
+                                            <option value="santiago">Santiago</option>
+                                            <option value="punta-cana">Punta Cana</option>
+                                            <option value="puerto-plata">Puerto Plata</option>
+                                            <option value="la-romana">La Romana</option>
+                                            <option value="otra">Otra</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="e-telefono" class="form-label">Teléfono *</label>
+                                        <input type="tel" id="e-telefono" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="e-email" class="form-label">Correo Electrónico Corporativo *</label>
+                                <input type="email" id="e-email" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="e-password" class="form-label">Contraseña *</label>
+                                        <input type="password" id="e-password" class="form-control" required>
+                                        <small class="form-text">Mínimo 8 caracteres, con al menos una letra y un número</small>
+                                    </div>
+                                </div>
+                                <div class="form-col">
+                                    <div class="form-group">
+                                        <label for="e-confirm-password" class="form-label">Confirmar Contraseña *</label>
+                                        <input type="password" id="e-confirm-password" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="e-sitio-web" class="form-label">Sitio Web</label>
+                                <input type="url" id="e-sitio-web" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="e-descripcion" class="form-label">Descripción de la Empresa *</label>
+                                <textarea id="e-descripcion" class="form-control" rows="4" required></textarea>
+                                <small class="form-text">Breve descripción de su empresa, misión y cultura organizacional</small>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span>Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a> *</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span>Deseo recibir información sobre servicios premium y actualizaciones</span>
+                                </label>
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <button type="submit" class="btn btn-secondary btn-block">Registrar Empresa</button>
+                            </div>
+                            
+                            <div class="form-footer">
+                                ¿Ya tiene una cuenta? <a href="login.html">Iniciar Sesión</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h3>Sobre JobConnect RD</h3>
+                    <p style="opacity: 0.8; margin-bottom: 1rem;">Plataforma líder en conectar talento dominicano con oportunidades profesionales en el país.</p>
+                </div>
+                
+                <!-- Links Section -->
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="#">Buscar Empleos</a></li>
+                        <li><a href="empresas.html">Empresas</a></li>
+                        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> info@jobconnectrd.com</li>
+                        <li><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> +1 809-555-1234</li>
+                        <li><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i> Av. Winston Churchill, Santo Domingo</li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter Section -->
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p style="opacity: 0.8; margin-bottom: 1rem;">Recibe las últimas ofertas de empleo en República Dominicana.</p>
+                    <form>
+                        <div style="display: flex;">
+                            <input type="email" class="form-control" placeholder="Tu email" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                            <button type="submit" class="btn btn-primary" style="border-top-left-radius: 0; border-bottom-left-radius: 0; white-space: nowrap;">Suscribir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 JobConnect RD. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileToggle = document.getElementById('mobile-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Tab switching
+            const tabItems = document.querySelectorAll('.tab-item');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabItems.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabItems.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId + '-tab').classList.add('active');
+                });
+            });
+            
+            // Form validation
+            const candidatoForm = document.getElementById('candidato-form');
+            const empresaForm = document.getElementById('empresa-form');
+            
+            if (candidatoForm) {
+                candidatoForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Basic validation
+                    const password = document.getElementById('c-password').value;
+                    const confirmPassword = document.getElementById('c-confirm-password').value;
+                    if (password !== confirmPassword) {
+                        alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');
+                        return;
+                    }
+
+                    // If validation passes, you can proceed with form submission
+                    alert('Registro exitoso. Bienvenido!');
+                    // Here you can add code to handle form submission, e.g., sending data to a server
+                });
+            }
+
+            if (empresaForm) {
+                empresaForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Basic validation
+                    const password = document.getElementById('e-password').value;
+                    const confirmPassword = document.getElementById('e-confirm-password').value;
+
+                    if (password !== confirmPassword) {
+                        alert('Las contraseñas no coinciden. Por favor, inténtalo de nuevo.');
+                        return;
+                    }
+
+                    // If validation passes, you can proceed with form submission
+                    alert('Registro de empresa exitoso. Bienvenido!');
+                    // Here you can add code to handle form submission, e.g., sending data to a server
+                });
+            }
+        });
+    </script>
+</body>
+</html>
