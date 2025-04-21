@@ -69,21 +69,19 @@
                     <h2>Crear Nueva Oferta</h2>
                 </div>
                 <div class="section-body">
-                    <form id="formOferta" action="procesar_oferta.php" method="POST">
+                    <form action="procesar_oferta.php" method="POST">
                         <div class="form-group">
-                            <label for="titulo">Título de la Oferta</label>
-                            <input type="text" id="titulo" name="titulo" class="form-control"
-                                placeholder="Desarrollador Backend" required>
+                            <label for="titulo" class="form-label">Título de la oferta:</label>
+                            <input type="text" id="titulo" name="titulo" class="form-control" required>
                         </div>
+                            
                         <div class="form-group">
-                            <label for="descripcion">Descripción</label>
-                            <textarea id="descripcion" name="descripcion" class="form-control"
-                                placeholder="Responsabilidades y requisitos..." required></textarea>
+                                <label for="descripcion" class="form-label">Descripción:</label>
+                                <input type="text" id="descripcion" name="descripcion" class="form-control" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="ubicacion">Ubicación</label>
-                            <input type="text" id="ubicacion" name="ubicacion" class="form-control"
-                                placeholder="Santo Domingo">
+                            <input type="text" id="ubicacion" name="ubicacion" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="tipo">Tipo de Empleo</label>
@@ -104,14 +102,28 @@
                                 <option>Tecnología</option>
                                 <option>Marketing</option>
                                 <option>Finanzas</option>
+                                <option>Recursos Humanos</option>
+                                <option>Ventas</option>
+                                <option>Diseño</option>
+                                <option>Administración</option>
+                                <option>Atención al Cliente</option>
+                                <option>Producción</option>
+                                <option>Logística</option>
+                                <option>Construcción</option>
+                                <option>Salud</option>
                                 <option>Otros</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="requisitos">Requisitos</label>
-                            <textarea id="requisitos" name="requisitos" class="form-control"
+                            <input type="text" id="requisitos" name="requisitos" class="form-control"
                                 placeholder="3+ años de experiencia, conocimientos en..."></textarea>
                         </div>
+                        <div class="form-group">
+                            <input type="date" id="fecha_publicacion" name="fecha_publicacion" class="form-control"
+                            value="<?php echo date('Y-m-d'); ?>" style="display: none;">
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary btn-sm">Publicar Oferta</button>
                     </form>
                 </div>

@@ -35,7 +35,7 @@ try {
 <body>
      <main class="container my-4">
           <h1 class="text-primary text-center">Mis Ofertas de Empleo</h1>
-          <a href="crear_oferta.html" class="btn btn-success mb-3">➕ Crear nueva oferta</a>
+          <a href="ofertas_empleo.html" class="btn btn-success mb-3">Crear nueva oferta</a>
           <?php if (count($ofertas) > 0): ?>
                <table class="table table-bordered table-hover">
                     <thead class="table-primary">

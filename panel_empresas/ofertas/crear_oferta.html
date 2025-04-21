@@ -4,76 +4,66 @@
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Crear Oferta de Empleo</title>
-     <link rel="stylesheet" href="../../assets/style.css">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-     <style>
-          /* Variables globales */
-          :root {
-               --primary: #3498db;
-               --primary-dark: #2980b9;
-               --secondary: #2ecc71;
-               --secondary-dark: #27ae60;
-               --dark: #34495e;
-               --light: #ecf0f1;
-               --danger: #e74c3c;
-               --warning: #f39c12;
-               --info: #1abc9c;
-               --gray: #95a5a6;
-               --white: #ffffff;
-               --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-               --radius: 0.5rem;
-               --transition: all 0.3s ease;
-          }
-
-          body {
-               background-color: #f8f9fa;
-               color: var(--dark);
-               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-               line-height: 1.6;
-               min-height: 100vh;
-               display: flex;
-               flex-direction: column;
-          }
-
-          h1 {
-               margin-top: 2rem;
-               text-align: center;
-               color: var(--primary);
-          }
-
-          form {
-               max-width: 600px;
-               margin: 2rem auto;
-               background-color: var(--white);
-               padding: 2rem;
-               border-radius: var(--radius);
-               box-shadow: var(--shadow);
-          }
-
-          .form-group {
-               margin-bottom: 1.5rem;
-          }
-
-          .form-label {
-               font-weight: 500;
-          }
-
-          .btn-primary {
-               background-color: var(--primary);
-               border: none;
-          }
-
-          .btn-primary:hover {
-               background-color: var(--primary-dark);
-          }
-     </style>
+     <title>JobConnect RD - Crear Ofertas de Empleo</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="stylesheet" href="../../assets/style_empresas.css">
 </head>
 
 <body>
-     <main>
-          <h1>Crear Nueva Oferta de Empleo</h1>
-          <section>
+     <!-- Header -->
+     <header>
+          <div class="header-container">
+               <div class="logo">
+                    <img src="../../assets/logo.png" alt="JobConnect RD Logo">
+                    <h1>Job<span>Connect RD</span></h1>
+               </div>
+               <div class="mobile-menu-toggle" id="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+               </div>
+               <div class="user-menu">
+                    <div class="user-avatar">TS</div>
+                    <span class="user-name">Tech Solutions</span>
+                    <div class="dropdown-toggle">
+                         <i class="fas fa-chevron-down"></i>
+                    </div>
+               </div>
+          </div>
+     </header>
+     <!-- Dashboard Container -->
+     <div class="dashboard-container">
+          <!-- Sidebar -->
+          <div class="sidebar" id="sidebar">
+               <div class="sidebar-header">
+                    <h3>Panel de Empresa</h3>
+               </div>
+               <div class="sidebar-menu">
+                    <ul>
+                         <li class="menu-item active">
+                              <a href="empresa_panel.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                         </li>
+                         <li class="menu-item">
+                              <a href="ofertas_empleo.html"><i class="fas fa-search"></i> <span>Ofertas
+                                        empleo</span></a>
+                         </li>
+                         <li class="menu-item">
+                              <a href="candidatos.html"><i class="fas fa-users"></i> <span>Candidatos</span></a>
+                         </li>
+                         <li class="menu-item">
+                              <a href="perfil_empresa.html"><i class="fas fa-building"></i> <span>Perfil de la
+                                        empresa</span></a>
+                         </li>
+                         <li class="menu-item" style="color: var(--danger);">
+                              <a href="../../general/index_empresas.html" style="color: var(--danger);"><i
+                                        class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
+                                        Sesión</span></a>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+
+          <!-- Main Content -->
+          <section class="main-content">
+               <h1>Crear Nueva Oferta de Empleo</h1>
                <form action="procesar_oferta.php" method="POST">
                     <div class="form-group">
                          <label for="titulo" class="form-label">Título de la oferta:</label>
@@ -90,15 +80,12 @@
                          <textarea id="requisitos" name="requisitos" class="form-control" required></textarea>
                     </div>
 
-                    <div class="form-group">
-                         <label for="fecha_publicacion" class="form-label">Fecha de publicación:</label>
-                         <input type="date" id="fecha_publicacion" name="fecha_publicacion" class="form-control" required>
-                    </div>
+
 
                     <button type="submit" class="btn btn-primary w-100">Crear Oferta</button>
                </form>
           </section>
-     </main>
+     </div>
 </body>
 
 </html>
