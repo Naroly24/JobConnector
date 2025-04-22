@@ -707,8 +707,8 @@ class Plantilla
                 <header>
                     <div class="container header-container">
                         <div class="logo">
-                            <a href="index.php" class="logo-link">
-                                <img src="Img/logo.png" alt="JobConnect RD Logo">
+                            <a href="../index.php" class="logo-link">
+                                <img src="../../Libreria/logo.png" alt="JobConnect RD Logo">
                                 <h1>Job<span>Connect RD</span></h1>
                             </a>
                         </div>
@@ -719,8 +719,8 @@ class Plantilla
                             <ul>
                                 <li><a href="index.php" class="nav_link active-link">Inicio</a></li>
                                 <li><a href="registro.php" class="nav_link">Empresas</a></li>
-                                <li><a href="ofertas.php" class="nav_link">Ofertas de Empleos</a></li>
-                                <li><a href="reparto.php" class="nav_link">Sobre Nosotros</a></li>
+                                <li><a href="../genesral/ofertas.php" class="nav_link">Ofertas de Empleos</a></li>
+                                <li><a href="../sobre-nosotros.php" class="nav_link">Sobre Nosotros</a></li>
                                 <li><a href="Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
                             </ul>
                         </nav>
