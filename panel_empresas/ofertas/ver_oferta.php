@@ -6,7 +6,13 @@ if (!isset($_GET['id_oferta'])) {
      exit;
 }
 $id_oferta = $_GET['id_oferta'];
-$id_empresa = $_SESSION['id_empresa'] ?? 0;
+
+// Aquí asumimos que la empresa está autenticada y su ID está en la sesión
+if (!isset($_SESSION['id_empresa'])) {
+     $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación para pruebas
+} else {
+     $id_empresa = $_SESSION['id_empresa'];
+}
 
 ?>
 

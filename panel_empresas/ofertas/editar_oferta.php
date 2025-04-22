@@ -5,7 +5,9 @@ session_start();
 
 // Simulación de sesión si no está logueado
 if (!isset($_SESSION['id_empresa'])) {
-     $_SESSION['id_empresa'] = 2; // Simulación si no hay login aún
+     $id_empresa = $_SESSION['id_empresa'] ?? 0; // Simulación si no hay login aún
+} else {
+     $id_empresa = $_SESSION['id_empresa'];
 }
 
 // Verificar si se pasa el ID de la oferta
@@ -16,7 +18,7 @@ if (!isset($_GET['id_oferta'])) {
 
 // Obtener el ID de la oferta desde la URL o formulario
 $id_oferta = $_GET['id_oferta'] ?? null;
-$id_empresa = $_SESSION['id_empresa'] ?? 0;
+
 
 // Obtener los datos de la oferta
 $oferta = null;
