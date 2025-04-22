@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if (!file_exists('libreria/db_config.php')) {
     header("Location: instalador.php");
     exit;

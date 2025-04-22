@@ -691,6 +691,71 @@ class Plantilla
                         padding: 1rem;
                     }
                 }
+
+                .user-menu {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                }
+
+                .dropdown-toggle {
+                    margin-left: 0.5rem;
+                }
+
+                .dropdown-menu {
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    background: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                    display: none;
+                    flex-direction: column;
+                    min-width: 160px;
+                    z-index: 1000;
+                }
+
+                .user-menu:hover .dropdown-menu {
+                    display: flex;
+                }
+
+                .dropdown-menu a {
+                    padding: 0.75rem 1rem;
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    white-space: nowrap;
+                }
+
+                .dropdown-menu a:hover {
+                    background-color: #f0f0f0;
+                }
+
+                .user-avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 14px;
+                    margin-right: 0.5rem;
+                }
+
+                /* Colores dinámicos */
+                .avatar-candidato {
+                    background-color: #3498db;
+                    /* Azul */
+                }
+
+                .avatar-empresa {
+                    background-color: #e74c3c;
+                    /* Rojo */
+                }
             </style>
 
         </head>
@@ -703,6 +768,11 @@ class Plantilla
 
     public static function navbar()
     {
+        // Iniciar sesión si no se ha hecho aún
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         ?>
                 <header>
                     <div class="container header-container">
@@ -721,11 +791,48 @@ class Plantilla
                                 <li><a href="registro.php" class="nav_link">Empresas</a></li>
                                 <li><a href="ofertas.php" class="nav_link">Ofertas de Empleos</a></li>
                                 <li><a href="reparto.php" class="nav_link">Sobre Nosotros</a></li>
-                                <li><a href="Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
+
+                                <?php if (isset($_SESSION['nombre'])): ?>
+                                    <?php
+                                    $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+                                    // TEMPORAL PARA VERIFICAR EL VALOR
+                                    echo '<!-- Tipo de usuario: ' . $_SESSION['tipo_usuario'] . ' -->';
+
+                                    $claseColor = (strtolower($tipoUsuario) === 'empresa') ? 'avatar-empresa' : 'avatar-candidato';
+
+                                    $claseColor = ($tipoUsuario === 'empresa') ? 'avatar-empresa' : 'avatar-candidato';
+
+                                    $iniciales = strtoupper(substr($_SESSION['nombre'], 0, 1));
+                                    if (isset($_SESSION['apellido']) && $_SESSION['apellido'] !== '-' && $_SESSION['apellido'] !== '') {
+                                        $iniciales .= strtoupper(substr($_SESSION['apellido'], 0, 1));
+                                    }
+
+                                    $nombreCompleto = $_SESSION['nombre'];
+                                    if (isset($_SESSION['apellido']) && $_SESSION['apellido'] !== '-' && $_SESSION['apellido'] !== '') {
+                                        $nombreCompleto .= ' ' . $_SESSION['apellido'];
+                                    }
+                                    ?>
+                                    <li>
+                                        <div class="user-menu">
+                                            <div class="user-avatar <?= $claseColor ?>">
+                                                <?= $iniciales ?>
+                                            </div>
+                                            <span class="user-name"><?= htmlspecialchars($nombreCompleto) ?></span>
+                                            <div class="dropdown-toggle"><i class="fas fa-chevron-down"></i></div>
+                                            <div class="dropdown-menu">
+                                                <a href="perfil.php">Mi Perfil</a>
+                                                <a href="logout.php">Cerrar Sesión</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php else: ?>
+                                    <li><a href="Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
+                                <?php endif; ?>
                             </ul>
                         </nav>
                     </div>
                 </header>
+
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
@@ -753,6 +860,7 @@ class Plantilla
                 </script>
                 <?php
     }
+
 
 
     public function __destruct()

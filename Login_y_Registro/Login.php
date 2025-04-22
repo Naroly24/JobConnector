@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('libreria/motor.php');
 require('libreria/plantilla.php');
 plantilla::aplicar();

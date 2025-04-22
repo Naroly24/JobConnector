@@ -18,6 +18,7 @@ try {
         $_SESSION['nombre'] = $resultado['nombre'];
         $_SESSION['apellido'] = $resultado['apellido'];
         $_SESSION['correo'] = $resultado['correo'];
+        $_SESSION['tipo_usuario'] = $resultado['tipo_usuario']; // 'candidato' o 'empresa'
 
         // Redirigir al perfil
         header("Location: perfil.php");
