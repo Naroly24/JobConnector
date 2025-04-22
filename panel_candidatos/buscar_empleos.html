@@ -1,3 +1,10 @@
+<?php
+require_once 'conexion.php';
+
+// Consulta las ofertas para el select
+$ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobConnect RD - Buscar Empleos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Libreria/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 
     <style>
         /* Variables globales */
@@ -467,6 +474,8 @@
             .main-content {
                 padding: 1rem;
             }
+
+
         }
     </style>
 </head>
@@ -475,7 +484,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="../Libreria/logo.png" alt="JobConnect RD Logo">
+                <img src="../assets/logo.png" alt="JobConnect RD Logo">
                 <h1>Job<span>Connect RD</span></h1>
             </div>
             <div class="mobile-menu-toggle" id="mobile-toggle">
@@ -564,6 +573,8 @@
                 </div>
             </div>
 
+            <?php include 'conexion.php'; ?>
+
             <!-- Job Listings -->
             <div class="content-section">
                 <div class="section-header">
@@ -602,6 +613,7 @@
                             <button class="btn btn-primary btn-sm">Aplicar</button>
                             <button class="btn btn-outline btn-sm">Guardar</button>
                         </div>
+
                     </div>
                     <div class="job-application">
                         <div class="application-company">C</div>
@@ -624,28 +636,39 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-section">
-                    <h3>Sobre JobConnect RD</h3>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+    
+    <div class="main-content"> 
+        <div class="content-section">
+            <div class="section-header">
+                <h2>Aplicar a Oferta de Empleo</h2>
+            </div>
+            <div class="section-body">
+                <form action="formulario-aplicacion.php" method="POST">
+                    
+                    <div class="form-group">
+                        <label for="id_oferta" class="form-label">Selecciona una Oferta:</label>
+                        <select id="id_oferta" name="id_oferta" class="form-control" required>
+                            <option value="">-- Elige una oferta --</option>
+                            <?php while ($oferta = $ofertas->fetch_assoc()): ?>
+                                <option value="<?= $oferta['id_oferta'] ?>"><?= htmlspecialchars($oferta['titulo']) ?></option>
+                            <?php endwhile; ?>
+                        </select>
                     </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul>
-                        <li><a href="candidato_panel.html">Inicio</a></li>
-                        <li><a href="buscar_empleos.html">Buscar Empleos</a></li>
-                        <li><a href="empresas.html">Empresas</a></li>
-                        <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
-                    </ul>
-                </div>
+    
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="background-color: var(--primary); color: var(--white);">
+                            Enviar Aplicación
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+                
+
+
+                
                 <div class="footer-section">
                     <h3>Contacto</h3>
                     <ul>
