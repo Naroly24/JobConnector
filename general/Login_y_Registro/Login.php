@@ -1,6 +1,6 @@
 <?php
-require('libreria/motor.php');
-require('libreria/plantilla.php');
+require('../../libreria/motor.php');
+require('../../libreria/plantilla.php');
 plantilla::aplicar();
 plantilla::navbar();
 

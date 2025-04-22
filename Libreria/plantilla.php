@@ -13,7 +13,7 @@ class Plantilla
 
     public function __construct()
     {
-        ?>
+?>
 
         <!DOCTYPE html>
         <html lang="es">
@@ -548,16 +548,16 @@ class Plantilla
         <body>
             <div class="container">
 
-                <?php
-    }
+            <?php
+        }
 
-    public static function navbar()
-    {
-        ?>
+        public static function navbar()
+        {
+            ?>
                 <header>
                     <div class="container header-container">
                         <div class="logo">
-                            <img src="Img/logo.png" alt="JobConnect RD Logo">
+                            <img src="logo.png" alt="JobConnect RD Logo">
                             <h1>Job<span>Connect RD</span></h1>
                         </div>
                         <div class="mobile-menu-toggle" id="mobile-toggle">
@@ -565,22 +565,22 @@ class Plantilla
                         </div>
                         <nav id="nav-menu">
                             <ul>
-                                <li><a href="index.php" class="nav_link active-link">Candidatos</a></li>
-                                <li><a href="registro.php" class="nav_link">Empresas</a></li>
-                                <li><a href="reparto.php" class="nav_link">Sobre Nosotros</a></li>
-                                <li><a href="Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
+                                <li><a href="../general/index_candidatos.html" class="nav_link active-link">Candidatos</a></li>
+                                <li><a href="../general/index_empresas.html" class="nav_link">Empresas</a></li>
+                                <li><a href="../general/sobre-nosotros.html" class="nav_link">Sobre Nosotros</a></li>
+                                <li><a href="../general/Login_y_Registro/Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
                             </ul>
                         </nav>
                     </div>
                 </header>
 
                 <script>
-                    document.addEventListener('DOMContentLoaded', function () {
+                    document.addEventListener('DOMContentLoaded', function() {
                         const mobileToggle = document.getElementById('mobile-toggle');
                         const navMenu = document.getElementById('nav-menu');
 
                         if (mobileToggle) {
-                            mobileToggle.addEventListener('click', function () {
+                            mobileToggle.addEventListener('click', function() {
                                 navMenu.classList.toggle('active');
                             });
 
@@ -591,20 +591,20 @@ class Plantilla
                             });
                         }
 
-                        document.addEventListener('click', function (event) {
+                        document.addEventListener('click', function(event) {
                             if (!navMenu.contains(event.target) && !mobileToggle.contains(event.target)) {
                                 navMenu.classList.remove('active');
                             }
                         });
                     });
                 </script>
-                <?php
-    }
+            <?php
+        }
 
 
-    public function __destruct()
-    {
-        ?>
+        public function __destruct()
+        {
+            ?>
             </div>
 
             <footer>
@@ -665,7 +665,7 @@ class Plantilla
         </body>
 
         </html>
-        <?php
+<?php
+        }
     }
-}
 ?>

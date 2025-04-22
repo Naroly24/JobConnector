@@ -1,12 +1,12 @@
 <?php
 
-if (!file_exists('libreria/db_config.php')) {
+if (!file_exists('../libreria/bd/db_config.php')) {
     header("Location: instalador.php");
     exit;
 }
 
-require('libreria/motor.php');
-require('libreria/plantilla.php');
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
 
 plantilla::aplicar();
 Plantilla::navbar();

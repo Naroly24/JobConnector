@@ -1,13 +1,13 @@
 <?php
 
-if (!file_exists('libreria/db_config.php')) {
-    header("Location: instalador.php");
+if (!file_exists('../../libreria/db_config.php')) {
+    header("Location: ../../libreria/bd/instalador.php");
     exit;
 }
 
 ob_start();
 
-require('libreria/conexion.php');
+require('../../../../libreria/conexion.php');
 require('libreria/plantilla.php');
 
 plantilla::aplicar();

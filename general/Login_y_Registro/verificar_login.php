@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('libreria/conexion.php');
+require('../../libreria/conexion.php');
 
 // Obtener datos del formulario
 $usuario = $_POST['correo'] ?? '';
