@@ -3,8 +3,11 @@ require_once 'ofertas/crud_ofertas.php';
 require_once '../Libreria/bd/conexion.php';
 session_start();
 
+// Aquí asumimos que la empresa está autenticada y su ID está en la sesión
 if (!isset($_SESSION['id_empresa'])) {
-    $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación si no hay login aún
+    $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación para pruebas
+} else {
+    $id_empresa = $_SESSION['id_empresa'];
 }
 
 $ofertas = listarOfertas($id_empresa);
