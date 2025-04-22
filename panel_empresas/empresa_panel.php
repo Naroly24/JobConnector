@@ -1,5 +1,31 @@
+<?php
+require_once 'ofertas/crud_ofertas.php';
+require_once '../bd/config.php';
+session_start();
+
+$conn = conectarBD(); // Asegúrate de tener esta función en config.php
+
+$id_empresa = $_SESSION['id_empresa'];
+
+$ofertas = listarOfertas($_SESSION['id_empresa']);
+$totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
+
+
+try {
+    $stmt = $conn->prepare("SELECT * FROM Ofertas WHERE id_empresa = :id_empresa ORDER BY fecha_publicacion DESC");
+    $stmt->bindParam(':id_empresa', $_SESSION['id_empresa']);
+    $stmt->execute();
+    $ofertas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $totalOfertas = count($ofertas); // Aquí contamos las ofertas
+} catch (PDOException $e) {
+    echo "❌ Error al cargar ofertas: " . $e->getMessage();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/style_empresas.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -37,19 +64,21 @@
             <div class="sidebar-menu">
                 <ul>
                     <li class="menu-item active">
-                        <a href="empresa_panel.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                        <a href="empresa_panel.php"><i class="fas fa-home"></i> <span>Dashboard</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="ofertas/ofertas_empleo.html"><i class="fas fa-search"></i> <span>Ofertas empleo</span></a>
+                        <a href="ofertas/crear_oferta.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
                     </li>
                     <li class="menu-item">
                         <a href="candidatos.html"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="perfil_empresa.html"><i class="fas fa-building"></i> <span>Perfil de la empresa</span></a>
+                        <a href="perfil_empresa.html"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
                     </li>
                     <li class="menu-item" style="color: var(--danger);">
-                        <a href="../../general/index_empresas.html" style="color: var(--danger);"><i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar Sesión</span></a>
+                        <a href="../general/index_empresas.html" style="color: var(--danger);"><i
+                                class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
+                                Sesión</span></a>
                     </li>
                 </ul>
             </div>
@@ -74,7 +103,7 @@
                         <i class="fas fa-briefcase"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>5</h3>
+                        <h3><?php echo $totalOfertas; ?></h3>
                         <p>Ofertas Activas</p>
                     </div>
                 </div>
@@ -107,46 +136,37 @@
                 </div>
             </div>
 
-            <!-- Recent Job Offers -->
             <div class="content-section">
                 <div class="section-header">
                     <h2>Ofertas de Empleo Activas</h2>
-                    <a href="#" class="btn btn-primary btn-sm">Crear Nueva Oferta</a>
                 </div>
                 <div class="section-body">
-                    <div class="job-offer">
-                        <div class="offer-icon">D</div>
-                        <div class="offer-info">
-                            <div class="offer-title">Desarrollador Backend</div>
-                            <div class="offer-meta">
-                                <span><i class="fas fa-calendar-alt"></i> Publicado: 10 Abr 2025</span>
-                                <span><i class="fas fa-users"></i> 12 Candidatos</span>
+                    <?php if (count($ofertas) > 0): ?>
+                        <?php foreach ($ofertas as $oferta): ?>
+                            <div class="job-offer">
+                                <div class="offer-info">
+                                    <div class="offer-title"><?php echo htmlspecialchars($oferta['titulo']); ?></div>
+                                    <div class="offer-meta">
+                                        <span><i class="fas fa-calendar-alt"></i> <?php echo date('d M Y', strtotime($oferta['fecha_publicacion'])); ?></span>
+                                    </div>
+                                </div>
+                                <div class="offer-actions">
+                                    <a href="ofertas/ver_oferta.php?id_oferta=<?php echo $oferta['id_oferta']; ?>" class="btn btn-outline btn-sm">Ver Oferta</a>
+                                    <a href="ofertas/editar_oferta.php?id_oferta=<?php echo $oferta['id_oferta']; ?>" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="ofertas/eliminar_oferta.php?id_oferta=<?= $oferta['id_oferta'] ?>"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('¿Estás seguro de que deseas eliminar esta oferta?');">
+                                        Eliminar
+                                    </a>
+                                </div><br>
+                                <hr><br>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="alert alert-info">No hay ofertas registradas aún.</div>
+                        <?php endif; ?>
                             </div>
-                        </div>
-                        <div class="offer-actions">
-                            <a href="#" class="btn btn-outline btn-sm">Ver Candidatos</a>
-                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
-                        </div>
-                    </div>
-                    <div class="job-offer">
-                        <div class="offer-icon">F</div>
-                        <div class="offer-info">
-                            <div class="offer-title">Frontend Developer</div>
-                            <div class="offer-meta">
-                                <span><i class="fas fa-calendar-alt"></i> Publicado: 8 Abr 2025</span>
-                                <span><i class="fas fa-users"></i> 20 Candidatos</span>
-                            </div>
-                        </div>
-                        <div class="offer-actions">
-                            <a href="#" class="btn btn-outline btn-sm">Ver Candidatos</a>
-                            <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                            <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
-                        </div>
-                    </div>
                 </div>
             </div>
-
             <!-- Recent Applicants -->
             <div class="content-section">
                 <div class="section-header">
@@ -191,43 +211,18 @@
     <footer>
         <div class="container">
             <div class="footer-container">
-                </div>
                 <div class="footer-section">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul>
-                        <li><a href="empresa_panel.html">Inicio</a></li>
-                        <li><a href="ofertas_empleo.html">Buscar Empleos</a></li>
-                        <li><a href="candidatos.html">Empresas</a></li>
-                        <li><a href="perfil_empresa.html">Sobre Nosotros</a></li>
-                    </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> info@jobconnectrd.com</li>
-                        <li><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> +1 809-555-1234</li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Newsletter</h3>
-                    <form>
-                        <div style="display: flex;">
-                            <input type="email" class="form-control" placeholder="Tu email" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom">
             </div>
         </div>
     </footer>
-
+    </div>
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const mobileToggle = document.getElementById('mobile-toggle');
             const sidebar = document.getElementById('sidebar');
-            
+
             if (mobileToggle) {
                 mobileToggle.addEventListener('click', function() {
                     sidebar.classList.toggle('active');
@@ -236,4 +231,5 @@
         });
     </script>
 </body>
+
 </html>
