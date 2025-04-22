@@ -10,9 +10,27 @@ if (!isset($_SESSION['id_empresa'])) {
     $id_empresa = $_SESSION['id_empresa'];
 }
 
+$totalCandidatos = conexion::consulta("
+    SELECT a.id_candidato
+        FROM Aplicaciones a
+    INNER JOIN Ofertas o ON a.id_oferta = o.id_oferta
+    WHERE o.id_empresa = $id_empresa
+");
+$totalCandidatos = count($totalCandidatos); // 👈 Esto actualiza la tarjeta de candidatos
+
 $ofertas = listarOfertas($id_empresa);
 $totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
 
+$candidatos = conexion::consulta("
+    SELECT u.nombre, u.apellido, u.correo, c.profesion, c.cv_pdf, a.fecha_aplicacion
+    FROM Aplicaciones a
+    INNER JOIN Candidatos c ON a.id_candidato = c.id_candidato
+    INNER JOIN Usuarios u ON c.id_usuario = u.id_usuario
+    INNER JOIN Ofertas o ON a.id_oferta = o.id_oferta
+    WHERE o.id_empresa = $id_empresa
+    ORDER BY a.fecha_aplicacion DESC
+    LIMIT 5
+");
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +80,7 @@ $totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
                         <a href="ofertas/crear_oferta.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="candidatos.html"><i class="fas fa-users"></i> <span>Candidatos</span></a>
+                        <a href="candidatos.php"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                     </li>
                     <li class="menu-item">
                         <a href="perfil_empresa.html"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
@@ -104,7 +122,7 @@ $totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>32</h3>
+                        <h3><?php echo $totalCandidatos; ?></h3>
                         <p>Candidatos Totales</p>
                     </div>
                 </div>
@@ -162,37 +180,29 @@ $totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
                 <!-- Recent Applicants -->
                 <div class="section-header">
                     <h2>Candidatos Recientes</h2>
-                    <a href="#" class="btn-link">Ver todos</a>
+                    <a href="candidatos.php" class="btn-link">Ver todos</a>
                 </div>
                 <div class="section-body">
-                    <div class="job-offer">
-                        <div class="offer-icon">MC</div>
-                        <div class="offer-info">
-                            <div class="offer-title">María Castillo</div>
-                            <div class="offer-meta">
-                                <span><i class="fas fa-briefcase"></i> Aplicó a: Desarrollador Frontend</span>
-                                <span><i class="fas fa-calendar-alt"></i> 12 Abr 2025</span>
+                    <?php foreach ($candidatos as $candidato): ?>
+                        <div class="job-offer">
+                            <div class="offer-icon">
+                                <?= strtoupper(substr($candidato['nombre'], 0, 1) . substr($candidato['apellido'], 0, 1)) ?>
+                            </div>
+                            <div class="offer-info">
+                                <div class="offer-title">
+                                    <?= htmlspecialchars($candidato['nombre'] . ' ' . $candidato['apellido']) ?>
+                                </div>
+                                <div class="offer-meta">
+                                    <span><i class="fas fa-briefcase"></i> Aplicó a: <?= htmlspecialchars($candidato['titulo']) ?></span>
+                                    <span><i class="fas fa-calendar-alt"></i> <?= date("d M Y", strtotime($candidato['fecha_aplicacion'])) ?></span>
+                                </div>
+                            </div>
+                            <div class="offer-actions">
+                                <a href="<?= htmlspecialchars($candidato['cv_pdf']) ?>" target="_blank" class="btn btn-outline btn-sm">Ver CV</a>
+                                <a href="mailto:<?= htmlspecialchars($candidato['correo']) ?>" class="btn btn-primary btn-sm">Contactar</a>
                             </div>
                         </div>
-                        <div class="offer-actions">
-                            <a href="#" class="btn btn-outline btn-sm">Ver CV</a>
-                            <a href="#" class="btn btn-primary btn-sm">Contactar</a>
-                        </div>
-                    </div>
-                    <div class="job-offer">
-                        <div class="offer-icon">JP</div>
-                        <div class="offer-info">
-                            <div class="offer-title">Juan Pérez</div>
-                            <div class="offer-meta">
-                                <span><i class="fas fa-briefcase"></i> Aplicó a: Desarrollador Backend</span>
-                                <span><i class="fas fa-calendar-alt"></i> 11 Abr 2025</span>
-                            </div>
-                        </div>
-                        <div class="offer-actions">
-                            <a href="#" class="btn btn-outline btn-sm">Ver CV</a>
-                            <a href="#" class="btn btn-primary btn-sm">Contactar</a>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

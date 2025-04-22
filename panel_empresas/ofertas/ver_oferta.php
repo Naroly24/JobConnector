@@ -62,7 +62,7 @@ if (!isset($_SESSION['id_empresa'])) {
                               <a href="crear_oferta.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
                          </li>
                          <li class="menu-item">
-                              <a href="../candidatos.html"><i class="fas fa-users"></i> <span>Candidatos</span></a>
+                              <a href="../candidatos.php"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                          </li>
                          <li class="menu-item">
                               <a href="../perfil_empresa.html"><i class="fas fa-building"></i> <span>Perfil de
