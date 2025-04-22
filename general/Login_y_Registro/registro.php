@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                   VALUES (?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, NULL)";
                 $params_candidato = [$id_usuario, $telefono, $ciudad, $profesion];
                 Conexion::insert($sql_candidato, $params_candidato);
-
             } elseif ($tipo_usuario === 'empresa') {
                 $rnc = $_POST['rnc'];
                 $sector = $_POST['sector'];
@@ -85,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
             <div class="registro-container">
                 <div class="registro-header">
-                    <h1 class="title">Registro de Usuario</h1>
+                    <h1 class="title" id="tituloRegistro">Registro de Usuario</h1>
                     <p>Complete sus datos para crear una cuenta.</p>
                 </div>
                 <div class="registro-form">
@@ -183,22 +182,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="form-col">
                                     <div class="form-group password-toggle">
                                         <label for="contrasena_empresa">Contraseña *</label>
-                                        <input type="password" name="contrasena" id="contrasena_empresa"
-                                            class="form-control" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
-                                            title="Debe tener al menos 8 caracteres, incluyendo una letra y un número"
-                                            required>
-                                        <button type="button" class="toggle-btn"
-                                            onclick="togglePassword('contrasena_empresa', this)">👁</button>
+                                        <div class="campo-password">
+                                            <input type="password" name="contrasena_empresa" id="contrasena_empresa"
+                                                class="form-control" pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
+                                                title="Debe tener al menos 8 caracteres, incluyendo una letra y un número"
+                                                required>
+                                            <button type="button" class="toggle-password"
+                                                onclick="togglePassword('contrasena_empresa')">👁</button>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="form-col">
                                     <div class="form-group password-toggle">
-                                        <label for="confirmar">Confirmar Contraseña *</label>
-                                        <input type="password" name="confirmar" id="confirmar" class="form-control"
-                                            required>
-                                        <button type="button" class="toggle-btn"
-                                            onclick="togglePassword('confirmar', this)">👁</button>
+                                        <label for="confirmar_empresa">Confirmar Contraseña *</label>
+                                        <div class="campo-password">
+                                            <input type="password" name="confirmar_empresa" id="confirmar_empresa"
+                                                class="form-control" required placeholder="Repite la contraseña">
+
+                                            <button type="button" class="toggle-password"
+                                                onclick="togglePassword('confirmar_empresa')">👁</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -255,6 +259,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <script>
+        const tituloRegistro = document.getElementById('tituloRegistro');
+
+        function actualizarTitulo(tabActivo) {
+            const tipo = tabActivo.dataset.tab;
+            tituloRegistro.textContent = tipo === 'empresa' ? 'Registro de Empresa' : 'Registro de Candidato';
+        }
+
+        // Establecer título inicial según el tab activo
+        const tabInicial = document.querySelector('.tab-item.active');
+        if (tabInicial) {
+            actualizarTitulo(tabInicial);
+        }
 
         // Mostrar/ocultar contraseña
         function togglePassword(inputId) {
@@ -291,8 +307,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     tab.classList.add('active');
                     const target = document.getElementById(tab.dataset.tab + '-tab');
                     target.classList.add('active');
+
+                    // Actualizar el título dinámicamente
+                    actualizarTitulo(tab);
                 });
             });
+
 
             // Validación de contraseñas coincidentes
             function aplicarValidacionContraseñas(form) {
@@ -347,15 +367,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             aplicarValidacionContraseñas(candidatoForm);
             aplicarValidacionContraseñas(empresaForm);
 
-            candidatoForm.addEventListener('submit', function (e) {
+            candidatoForm.addEventListener('submit', function(e) {
                 if (!validarFormulario(this)) e.preventDefault();
             });
 
-            empresaForm.addEventListener('submit', function (e) {
+            empresaForm.addEventListener('submit', function(e) {
                 if (!validarFormulario(this)) e.preventDefault();
             });
         });
     </script>
 
 </body>
+
 </html>
