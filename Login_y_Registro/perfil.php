@@ -113,7 +113,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'] ?? 'usuario'; // 'candidato' o 'empres
         <a href="editar_perfil.php">Editar Perfil</a>
     </div>
 
-    <a class="logout-btn" href="logout.php">Cerrar sesión</a>
+    <a class="logout-btn" href="index.php">Cerrar sesión</a>
 </div>
 
 </body>

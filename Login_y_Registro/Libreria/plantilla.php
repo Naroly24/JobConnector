@@ -717,8 +717,9 @@ class Plantilla
                         </div>
                         <nav id="nav-menu" class="side-menu">
                             <ul>
-                                <li><a href="index.php" class="nav_link active-link">Candidatos</a></li>
+                                <li><a href="index.php" class="nav_link active-link">Inicio</a></li>
                                 <li><a href="registro.php" class="nav_link">Empresas</a></li>
+                                <li><a href="ofertas.php" class="nav_link">Ofertas de Empleos</a></li>
                                 <li><a href="reparto.php" class="nav_link">Sobre Nosotros</a></li>
                                 <li><a href="Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
                             </ul>
