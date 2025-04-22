@@ -2,36 +2,28 @@
 require_once 'crud_ofertas.php';
 session_start();
 
+// Aquí asumimos que la empresa está autenticada y su ID está en la sesión
 if (!isset($_SESSION['id_empresa'])) {
-    $_SESSION['id_empresa'] = 2; // Simulación para pruebas
+    $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación para pruebas
 }
 
-$conn = conectarBD(); // Asegúrate de tener esta función en config.php
 
-$id_empresa = $_SESSION['id_empresa'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $datos = [
+        'id_empresa' => $_SESSION['id_empresa'],
+        'titulo' => $_POST['titulo'],
+        'descripcion' => $_POST['descripcion'],
+        'requisitos' => $_POST['requisitos'],
+        'fecha_publicacion' => date('Y-m-d')
+    ];
 
-// Procesar el formulario si se envió
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
-    $requisitos = $_POST['requisitos'];
-    $fecha_publicacion = $_POST['fecha_publicacion'];
-    $id_empresa = $_SESSION['id_empresa'];
+    $resultado = crearOferta($datos);
 
-    try {
-        $stmt = $conn->prepare("INSERT INTO Ofertas (id_empresa, titulo, descripcion, requisitos, fecha_publicacion) 
-                                VALUES (:id_empresa, :titulo, :descripcion, :requisitos, :fecha_publicacion)");
-        $stmt->bindParam(':id_empresa', $id_empresa);
-        $stmt->bindParam(':titulo', $titulo);
-        $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->bindParam(':requisitos', $requisitos);
-        $stmt->bindParam(':fecha_publicacion', $fecha_publicacion);
-        $stmt->execute();
-
-        header("Location: crear_oferta.php?success=1");
+    if ($resultado) {
+        header("Location: empresa_panel.php?msg=Oferta creada");
         exit;
-    } catch (PDOException $e) {
-        echo "❌ Error: " . $e->getMessage();
+    } else {
+        $error = "❌ No se pudo crear la oferta.";
     }
 }
 ?>
@@ -44,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobConnect RD - Ofertas de Empleo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/style_empresas.css">
+    <link rel="stylesheet" href="../../Libreria/style_empresas.css">
 </head>
 
 <body>
@@ -52,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="../../assets/logo.png" alt="JobConnect RD Logo">
+                <img src="../../Libreria/logo.png" alt="JobConnect RD Logo">
                 <h1>Job<span>Connect RD</span></h1>
             </div>
             <div class="mobile-menu-toggle" id="mobile-toggle">
@@ -107,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="section-header">
                     <h2>Crear Nueva Oferta</h2>
                 </div>
+                <?php if (isset($error)): ?>
+                    <p style="color:red"><?= $error ?></p>
+                <?php endif; ?>
                 <div class="section-body">
                     <form method="POST">
                         <div class="form-group">
@@ -115,22 +110,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label for="descripcion">Descripción:</label>
-                            <input type="text" name="descripcion" id="descripcion" class="form-control" required>
+                            <textarea id="descripcion" name="descripcion" class="form-control" required></textarea><br><br>
                         </div>
                         <div class="form-group">
                             <label for="requisitos">Requisitos:</label>
-                            <input type="text" name="requisitos" id="requisitos" class="form-control" required>
+                            <textarea id="requisitos" name="requisitos" class="form-control" required></textarea><br><br>
                         </div>
                         <input type="hidden" name="fecha_publicacion" value="<?= date('Y-m-d') ?>">
                         <button type="submit" class="btn btn-primary btn-sm">Publicar Oferta</button>
                     </form>
                 </div>
             </div>
-            
-            </div>
-        </div>
 
-        <script src="../../assets/script.js"></script>
+        </div>
+    </div>
+
+    <script src="../../Libreria/script.js"></script>
 </body>
 
 </html>

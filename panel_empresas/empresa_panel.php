@@ -1,25 +1,14 @@
 <?php
 require_once 'ofertas/crud_ofertas.php';
-require_once '../bd/config.php';
+require_once '../Libreria/bd/conexion.php';
 session_start();
 
-$conn = conectarBD(); // Asegúrate de tener esta función en config.php
-
-$id_empresa = $_SESSION['id_empresa'];
-
-$ofertas = listarOfertas($_SESSION['id_empresa']);
-$totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
-
-
-try {
-    $stmt = $conn->prepare("SELECT * FROM Ofertas WHERE id_empresa = :id_empresa ORDER BY fecha_publicacion DESC");
-    $stmt->bindParam(':id_empresa', $_SESSION['id_empresa']);
-    $stmt->execute();
-    $ofertas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $totalOfertas = count($ofertas); // Aquí contamos las ofertas
-} catch (PDOException $e) {
-    echo "❌ Error al cargar ofertas: " . $e->getMessage();
+if (!isset($_SESSION['id_empresa'])) {
+    $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación si no hay login aún
 }
+
+$ofertas = listarOfertas($id_empresa);
+$totalOfertas = count($ofertas); // 👈 Esto actualiza la tarjeta
 
 ?>
 
@@ -31,7 +20,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JobConnect RD - Panel de Empresa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/style_empresas.css">
+    <link rel="stylesheet" href="../Libreria/style_empresas.css">
 </head>
 
 <body>
@@ -39,7 +28,7 @@ try {
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="../assets/logo.png" alt="JobConnect RD Logo">
+                <img src="../Libreria/logo.png" alt="JobConnect RD Logo">
                 <h1>Job<span>Connect RD</span></h1>
             </div>
             <div class="mobile-menu-toggle" id="mobile-toggle">
@@ -166,9 +155,8 @@ try {
                         <?php endif; ?>
                             </div>
                 </div>
-            </div>
-            <!-- Recent Applicants -->
-            <div class="content-section">
+
+                <!-- Recent Applicants -->
                 <div class="section-header">
                     <h2>Candidatos Recientes</h2>
                     <a href="#" class="btn-link">Ver todos</a>

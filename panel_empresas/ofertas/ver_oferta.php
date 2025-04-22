@@ -1,29 +1,13 @@
 <?php
-require_once '../../bd/config.php';
+require_once '../../bd/conexion.php';
 
 if (!isset($_GET['id_oferta'])) {
      echo "ID de oferta no proporcionado.";
      exit;
 }
-
 $id_oferta = $_GET['id_oferta'];
+$id_empresa = $_SESSION['id_empresa'] ?? 0;
 
-try {
-     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-     $stmt = $conn->prepare("SELECT * FROM Ofertas WHERE id_oferta = :id_oferta");
-     $stmt->bindParam(':id_oferta', $id_oferta);
-     $stmt->execute();
-     $oferta = $stmt->fetch(PDO::FETCH_ASSOC);
-
-     if (!$oferta) {
-          echo "Oferta no encontrada.";
-          exit;
-     }
-} catch (PDOException $e) {
-     die("Error al obtener la oferta: " . $e->getMessage());
-}
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +18,7 @@ try {
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>JobConnect RD - Editar Oferta</title>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <link rel="stylesheet" href="../../assets/style_empresas.css">
+     <link rel="stylesheet" href="../../Libreria/style_empresas.css">
 </head>
 
 <body>
@@ -42,7 +26,7 @@ try {
      <header>
           <div class="header-container">
                <div class="logo">
-                    <img src="../../assets/logo.png" alt="JobConnect RD Logo">
+                    <img src="../../Libreria/logo.png" alt="JobConnect RD Logo">
                     <h1>Job<span>Connect RD</span></h1>
                </div>
                <div class="mobile-menu-toggle" id="mobile-toggle">
@@ -69,7 +53,7 @@ try {
                               <a href="../empresa_panel.php"><i class="fas fa-home"></i> <span>Dashboard</span></a>
                          </li>
                          <li class="menu-item">
-                              <a href="crear_oferta.html"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
+                              <a href="crear_oferta.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
                          </li>
                          <li class="menu-item">
                               <a href="../candidatos.html"><i class="fas fa-users"></i> <span>Candidatos</span></a>
