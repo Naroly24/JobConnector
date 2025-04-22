@@ -779,7 +779,7 @@ class Plantilla
                     <div class="container header-container">
                         <div class="logo">
                             <a href="<?php echo BASE_URL; ?>index.php" class="logo-link">
-                                <img src="Img/logo.png" alt="JobConnect RD Logo">
+                                <img src="<?php echo BASE_URL; ?>Libreria/logo.png" alt="JobConnect RD Logo">
                                 <h1>Job<span>Connect RD</span></h1>
                             </a>
                         </div>
