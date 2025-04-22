@@ -72,16 +72,17 @@ $success = isset($_GET['success']) ? $_GET['success'] : "";
                 </div>
 
                 <!-- Formulario Empresa -->
+                <!-- Formulario Empresa -->
                 <div class="tab-content" id="empresa-tab">
-                    <form id="empresa-form" action="procesar_login_empresa.php" method="POST">
+                    <form id="empresa-form" action="verificar_login.php" method="POST">
                         <div class="form-group">
                             <label for="e-email" class="form-label">Correo Electrónico Corporativo *</label>
-                            <input type="email" id="c-email" name="correo" class="form-control" required>
+                            <input type="email" id="e-email" name="correo" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="e-password" class="form-label">Contraseña *</label>
                             <div class="campo-password">
-                                <input type="password" id="c-password" name="contrasena" class="form-control" required>
+                                <input type="password" id="e-password" name="contrasena" class="form-control" required>
                                 <button type="button" class="toggle-password"
                                     onclick="togglePassword('e-password')">👁</button>
                             </div>

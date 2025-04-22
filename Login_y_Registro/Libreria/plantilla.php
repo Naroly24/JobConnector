@@ -25,6 +25,8 @@ class Plantilla
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
             <style>
                 /* Variables globales */
@@ -80,6 +82,7 @@ class Plantilla
                     justify-content: space-between;
                     align-items: center;
                     height: 100%;
+                    padding: 0 20px;
                 }
 
                 .logo {
@@ -101,6 +104,25 @@ class Plantilla
                 .logo span {
                     color: var(--secondary);
                 }
+
+                .logo-link {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    /* Quita el subrayado */
+                }
+
+                .logo-link img {
+                    height: 40px;
+                    /* ajusta según tu diseño */
+                    margin-right: 10px;
+                }
+
+                .logo-link h1 {
+                    font-size: 24px;
+                    margin: 0;
+                }
+
 
                 nav {
                     display: flex;
@@ -125,41 +147,6 @@ class Plantilla
                     color: var(--primary);
                 }
 
-                .mobile-menu-toggle {
-                    display: none;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                }
-
-                @media (max-width: 768px) {
-                    .mobile-menu-toggle {
-                        display: block;
-                    }
-
-                    nav {
-                        display: none;
-                        position: absolute;
-                        top: var(--header-height);
-                        left: 0;
-                        width: 100%;
-                        background-color: var(--white);
-                        box-shadow: var(--shadow);
-                    }
-
-                    nav.active {
-                        display: block;
-                    }
-
-                    nav ul {
-                        flex-direction: column;
-                        padding: 1rem;
-                    }
-
-                    nav ul li {
-                        margin: 0.5rem 0;
-                    }
-                }
-
                 a {
                     color: var(--primary);
                     text-decoration: none;
@@ -180,7 +167,7 @@ class Plantilla
                 main {
                     margin-top: var(--header-height);
                     flex: 1;
-                    padding: 2rem 0;
+                    padding: 1.5rem 1rem;
                 }
 
                 /* Botones */
@@ -273,26 +260,31 @@ class Plantilla
                 footer {
                     background-color: var(--dark);
                     color: var(--white);
-                    padding: 2rem 0;
-                    margin-top: auto;
+                    padding: 12px;
                 }
 
                 .footer-container {
                     display: flex;
                     flex-wrap: wrap;
                     justify-content: space-between;
+                    gap: 1.5rem;
+                    /* Añade separación controlada entre columnas */
+                    margin-bottom: 0.5rem;
+                    /* Baja un poco el bloque de columnas */
                 }
 
                 .footer-section {
                     flex: 1;
                     min-width: 200px;
-                    margin-bottom: 1.5rem;
                     padding-right: 1rem;
+                    padding-top: 0.5rem;
+                    /* Baja el contenido dentro de la sección */
                 }
 
                 .footer-section h3 {
                     margin-bottom: 1rem;
-                    font-size: 1.2rem;
+                    font-size: 1.1rem;
+                    /* Ligeramente más pequeño */
                     color: var(--light);
                 }
 
@@ -301,7 +293,7 @@ class Plantilla
                 }
 
                 .footer-section ul li {
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 0.3rem;
                 }
 
                 .footer-section ul li a {
@@ -315,9 +307,20 @@ class Plantilla
 
                 .footer-bottom {
                     text-align: center;
-                    padding-top: 1.5rem;
-                    margin-top: 1.5rem;
+                    padding-top: 0.8rem;
+                    /* Menos separación superior */
+                    margin-top: 1rem;
+                    /* Menos margen para subir el bloque */
+                    font-size: 0.9rem;
+                    /* Tamaño más pequeño */
                     border-top: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .form-footer {
+                    text-align: center;
+                    margin-top: 1.5rem;
+                    padding-top: 1.5rem;
+                    border-top: 1px solid #ddd;
                 }
 
                 .social-links {
@@ -348,13 +351,6 @@ class Plantilla
                 .checkbox-label input {
                     margin-right: 0.5rem;
                     margin-top: 0.3rem;
-                }
-
-                .form-footer {
-                    text-align: center;
-                    margin-top: 1.5rem;
-                    padding-top: 1.5rem;
-                    border-top: 1px solid #ddd;
                 }
 
                 /* General */
@@ -541,6 +537,160 @@ class Plantilla
                 .tab-content.active {
                     display: block;
                 }
+
+                /* Por defecto (pantallas grandes) */
+                .mobile-menu-toggle {
+                    display: none;
+                }
+
+                /* Menú lateral desde la derecha */
+                .side-menu {
+                    position: fixed;
+                    top: var(--header-height);
+                    right: -250px;
+                    /* ← inicia oculto fuera de la pantalla, hacia la derecha */
+                    width: 250px;
+                    height: 100vh;
+                    background-color: var(--white);
+                    box-shadow: var(--shadow);
+                    padding: 20px;
+                    transition: right 0.3s ease;
+                    z-index: 999;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .side-menu.active {
+                    right: 0;
+                    /* ← aparece al hacer clic */
+                }
+
+                .side-menu ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                }
+
+                .side-menu ul li a {
+                    color: var(--dark);
+                    font-weight: 500;
+                }
+
+                .side-menu ul li a:hover {
+                    color: var(--primary);
+                }
+
+                /* Pantallas grandes: volver al menú horizontal */
+                @media (min-width: 769px) {
+                    .mobile-menu-toggle {
+                        display: none;
+                    }
+
+                    .side-menu {
+                        position: static;
+                        height: auto;
+                        width: auto;
+                        background: none;
+                        box-shadow: none;
+                        padding: 0;
+                        display: flex !important;
+                        flex-direction: row;
+                    }
+
+                    .side-menu ul {
+                        flex-direction: row;
+                        gap: 1.5rem;
+                    }
+                }
+
+                /* Ajuste el tamaño de la pantalla */
+
+                @media (max-width: 768px) {
+                    .header-container {
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 10px;
+                    }
+
+                    .logo-link {
+                        justify-content: center;
+                        width: 100%;
+                    }
+
+                    nav {
+                        display: none;
+                        width: 100%;
+                        background-color: var(--white);
+                    }
+
+                    nav.active {
+                        display: block;
+                    }
+
+                    nav ul {
+                        flex-direction: column;
+                        padding: 10px;
+                    }
+
+                    nav ul li {
+                        margin: 10px 0;
+                    }
+
+                    .mobile-menu-toggle {
+                        display: block;
+                        cursor: pointer;
+                        font-size: 1.5rem;
+                    }
+
+                    body {
+                        overflow-x: hidden;
+                        /* 💡 evita scroll horizontal */
+                    }
+
+                    .login-container,
+                    .registro-container {
+                        padding: 1rem;
+                        margin: 1rem;
+                    }
+
+
+                    .form-row {
+                        flex-direction: column;
+                    }
+
+                    .form-col {
+                        padding: 0;
+                        margin-bottom: 1rem;
+                    }
+
+                    .footer-container {
+                        flex-direction: column;
+                        gap: 2rem;
+                    }
+
+                    .footer-section {
+                        padding-right: 0;
+                    }
+
+                    .social-signup {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .social-btn {
+                        width: 100%;
+                        max-width: 300px;
+                    }
+
+                    .registro-form,
+                    .login-form {
+                        padding: 1rem;
+                    }
+                }
             </style>
 
         </head>
@@ -557,13 +707,15 @@ class Plantilla
                 <header>
                     <div class="container header-container">
                         <div class="logo">
-                            <img src="Img/logo.png" alt="JobConnect RD Logo">
-                            <h1>Job<span>Connect RD</span></h1>
+                            <a href="index.php" class="logo-link">
+                                <img src="Img/logo.png" alt="JobConnect RD Logo">
+                                <h1>Job<span>Connect RD</span></h1>
+                            </a>
                         </div>
                         <div class="mobile-menu-toggle" id="mobile-toggle">
                             <i class="fas fa-bars"></i>
                         </div>
-                        <nav id="nav-menu">
+                        <nav id="nav-menu" class="side-menu">
                             <ul>
                                 <li><a href="index.php" class="nav_link active-link">Candidatos</a></li>
                                 <li><a href="registro.php" class="nav_link">Empresas</a></li>

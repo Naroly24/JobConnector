@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Crear las tablas
         $sql = <<<SQL
+
 -- Tabla Usuarios
 CREATE TABLE IF NOT EXISTS Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -170,6 +171,7 @@ define('DB_NAME', '$dbName');
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Instalador PlataformaEmpleos</title>
@@ -212,6 +214,7 @@ define('DB_NAME', '$dbName');
         }
     </style>
 </head>
+
 <body>
     <h2>🔧 Instalador PlataformaEmpleos</h2>
     <p>Complete los datos para crear la base de datos e iniciar la aplicación.</p>
@@ -225,7 +228,7 @@ define('DB_NAME', '$dbName');
         <input type="text" name="db_host" value="localhost" required>
 
         <label>Usuario de Base de Datos:</label>
-        <input type="text" name="db_user" value="root"required>
+        <input type="text" name="db_user" value="root" required>
 
         <label>Contraseña:</label>
         <input type="password" name="db_pass">
@@ -236,4 +239,5 @@ define('DB_NAME', '$dbName');
         <button type="submit">📥 Instalar</button>
     </form>
 </body>
+
 </html>
