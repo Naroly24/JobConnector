@@ -1,6 +1,15 @@
 <?php
-session_start();
-require_once 'conexion.php';
+$ocultar_footer = true; // o false si lo quieres mostrar
+
+require_once 'ofertas/crud_ofertas.php';
+
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
+plantilla::aplicar();
+if (isset($ocultar_footer) && $ocultar_footer) {
+     echo '<style>footer { display: none !important; }</style>';
+}
+plantilla::navbar();
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['id_candidato'])) {

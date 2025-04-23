@@ -1,5 +1,4 @@
 <?php
-//session_start();
 $ocultar_footer = true; // o false si lo quieres mostrar
 
 require_once 'ofertas/crud_ofertas.php';

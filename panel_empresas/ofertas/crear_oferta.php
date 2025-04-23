@@ -1,7 +1,15 @@
 <?php
-$ocultar_footer = true; // o false si lo quieres mostrar
+$ocultar_footer = true;
 require('../../libreria/motor.php');
 require('../../libreria/plantilla.php');
+
+// No generamos salida HTML todavía (plantilla::aplicar() y plantilla::navbar() se llaman después)
+
+// Check if empresa is logged in
+if (!isset($_SESSION['id_empresa'])) {
+    header("Location: ../../general/Login_y_Registro/login.php");
+    exit();
+}
 
 plantilla::aplicar();
 if (isset($ocultar_footer) && $ocultar_footer) {
@@ -10,14 +18,7 @@ if (isset($ocultar_footer) && $ocultar_footer) {
 plantilla::navbar();
 
 require_once 'crud_ofertas.php';
-
-// Aquí asumimos que la empresa está autenticada y su ID está en la sesión
-if (!isset($_SESSION['id_empresa'])) {
-    $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación para pruebas
-} else {
-    $id_empresa = $_SESSION['id_empresa'];
-}
-
+$id_empresa = $_SESSION['id_empresa'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $datos = [
@@ -31,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $resultado = crearOferta($datos);
 
     if ($resultado) {
-        header("Location: empresa_panel.php?msg=Oferta creada");
-        exit;
+        header("Location: ../empresa_panel.php?msg=Oferta creada");
+        exit();
     } else {
         $error = "❌ No se pudo crear la oferta.";
     }
@@ -61,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <a href="../perfil_empresa.php"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
                 </li>
                 <li class="menu-item" style="color: var(--danger);">
-                    <a href="../../general/index_empresas.php" style="color: var(--danger);"><i
+                    <a href="../../general/Login_y_Registro/logout.php" style="color: var(--danger);"><i
                             class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
                             Sesión</span></a>
                 </li>
@@ -81,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <h2>Crear Nueva Oferta</h2>
             </div>
             <?php if (isset($error)): ?>
-                <p style="color:red"><?= $error ?></p>
+                <p style="color:red"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
             <div class="section-body">
                 <form method="POST">
@@ -102,6 +103,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </form>
             </div>
         </div>
-
     </div>
 </div>

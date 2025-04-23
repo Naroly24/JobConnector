@@ -5,22 +5,21 @@ require('../../libreria/plantilla.php');
 
 plantilla::aplicar();
 if (isset($ocultar_footer) && $ocultar_footer) {
-     echo '<style>footer { display: none !important; }</style>';
+    echo '<style>footer { display: none !important; }</style>';
 }
 plantilla::navbar();
+
+// Check if empresa is logged in
+if (!isset($_SESSION['id_empresa'])) {
+    header("Location: ../../general/Login_y_Registro/login.php");
+    exit();
+}
 
 if (!isset($_GET['id_oferta'])) {
      echo "ID de oferta no proporcionado.";
      exit;
 }
 $id_oferta = $_GET['id_oferta'];
-
-// Aquí asumimos que la empresa está autenticada y su ID está en la sesión
-if (!isset($_SESSION['id_empresa'])) {
-     $id_empresa = $_SESSION['id_empresa'] ?? 2; // Simulación para pruebas
-} else {
-     $id_empresa = $_SESSION['id_empresa'];
-}
 
 ?>
      <!-- Dashboard Container -->

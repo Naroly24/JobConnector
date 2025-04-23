@@ -5,15 +5,14 @@ require('../../libreria/plantilla.php');
 
 plantilla::aplicar();
 if (isset($ocultar_footer) && $ocultar_footer) {
-     echo '<style>footer { display: none !important; }</style>';
+    echo '<style>footer { display: none !important; }</style>';
 }
 plantilla::navbar();
-require_once 'crud_ofertas.php';
-// Simulación de sesión si no está logueado
+
+// Check if empresa is logged in
 if (!isset($_SESSION['id_empresa'])) {
-     $id_empresa = $_SESSION['id_empresa'] ?? 0; // Simulación si no hay login aún
-} else {
-     $id_empresa = $_SESSION['id_empresa'];
+    header("Location: ../../general/Login_y_Registro/login.php");
+    exit();
 }
 
 // Verificar si se pasa el ID de la oferta

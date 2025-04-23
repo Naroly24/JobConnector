@@ -19,7 +19,6 @@ class Plantilla
             session_start();
         }
 ?>
-
         <!DOCTYPE html>
         <html lang="es">
 
@@ -1160,7 +1159,7 @@ class Plantilla
                 <header>
                     <div class="container header-container">
                         <div class="logo">
-                            <a href="<?php echo BASE_URL; ?>index.php" class="logo-link">
+                            <a href="<?php echo BASE_URL; ?>general/index.php" class="logo-link">
                                 <img src="<?php echo BASE_URL; ?>Libreria/logo.png" alt="JobConnect RD Logo">
                                 <h1>Job<span>Connect RD</span></h1>
                             </a>
@@ -1175,30 +1174,34 @@ class Plantilla
                                 <li><a href="<?php echo BASE_URL; ?>general/index_candidatos.php" class="nav_link">Candidatos</a></li>
                                 <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.php" class="nav_link">Sobre Nosotros</a></li>
 
-                                <?php if (isset($_SESSION['nombre'])): ?>
+                                <?php if (isset($_SESSION['id_usuario'])): ?>
                                     <?php
                                     $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
-                                    // TEMPORAL PARA VERIFICAR EL VALOR
-                                    echo '<!-- Tipo de usuario: ' . $_SESSION['tipo_usuario'] . ' -->';
-
+                                    // Definir la clase del avatar según el tipo de usuario
                                     $claseColor = (strtolower($tipoUsuario) === 'empresa') ? 'avatar-empresa' : 'avatar-candidato';
 
-                                    $claseColor = ($tipoUsuario === 'empresa') ? 'avatar-empresa' : 'avatar-candidato';
+                                    // Usar el correo para iniciales y nombre si nombre/apellido no están en la sesión
+                                    $correo = $_SESSION['correo'] ?? 'Usuario';
+                                    $iniciales = strtoupper(substr($correo, 0, 2)); // Primeras dos letras del correo
+                                    $nombreCompleto = $correo; // Mostrar correo como nombre por defecto
 
-                                    $iniciales = strtoupper(substr($_SESSION['nombre'], 0, 1));
-                                    if (isset($_SESSION['apellido']) && $_SESSION['apellido'] !== '-' && $_SESSION['apellido'] !== '') {
-                                        $iniciales .= strtoupper(substr($_SESSION['apellido'], 0, 1));
-                                    }
-
-                                    $nombreCompleto = $_SESSION['nombre'];
-                                    if (isset($_SESSION['apellido']) && $_SESSION['apellido'] !== '-' && $_SESSION['apellido'] !== '') {
-                                        $nombreCompleto .= ' ' . $_SESSION['apellido'];
+                                    $sql = "SELECT nombre, apellido FROM Usuarios WHERE id_usuario = ?";
+                                    $parametros = [$_SESSION['id_usuario']];
+                                    $resultado = Conexion::select($sql, $parametros);
+                                    if ($resultado) {
+                                        $iniciales = strtoupper(substr($resultado['nombre'], 0, 1));
+                                        $nombreCompleto = $resultado['nombre'];
+                                        if ($resultado['apellido'] && $resultado['apellido'] !== '-' && $resultado['apellido'] !== '') {
+                                            $iniciales .= strtoupper(substr($resultado['apellido'], 0, 1));
+                                            $nombreCompleto .= ' ' . $resultado['apellido'];
+                                        }
                                     }
                                     ?>
+
                                     <li>
                                         <div class="user-menu">
                                             <div class="user-avatar <?= $claseColor ?>">
-                                                <?= $iniciales ?>
+                                                <?= htmlspecialchars($iniciales) ?>
                                             </div>
                                             <span class="user-name"><?= htmlspecialchars($nombreCompleto) ?></span>
                                             <div class="dropdown-toggle"><i class="fas fa-chevron-down"></i></div>
