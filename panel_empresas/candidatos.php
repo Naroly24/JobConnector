@@ -37,13 +37,13 @@ $candidatos = conexion::consulta("
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="empresa_panel.php"><i class="fas fa-home"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="menu-item">
                     <a href="ofertas/crear_oferta.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="candidatos.php"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                 </li>
                 <li class="menu-item">

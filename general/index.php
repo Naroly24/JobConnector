@@ -15,101 +15,96 @@ plantilla::navbar();
     <section class="container">
         <div class="hero">
             <h2>Encuentra tu próxima oportunidad profesional en República Dominicana</h2>
-            <p>Conectamos talento dominicano con las mejores empresas del país. Crea tu perfil, sube tu CV y comienza a aplicar a ofertas de trabajo en Santo Domingo, Santiago y más.</p>
+            <p>Conectamos talento dominicano con las mejores empresas del país. Crea tu perfil, sube tu CV y comienza a
+                aplicar a ofertas de trabajo en Santo Domingo, Santiago y más.</p>
             <a href="Login_y_Registro/registro.php" class="btn btn-secondary btn-lg">Registrarse Ahora</a>
         </div>
     </section>
 
     <!-- AQUI PONDRE LAS FUNCIONES DE LISTAR OFERTAS -->
     <!-- Featured Jobs Section -->
-    <section class="container">
-        <h2 style="margin-bottom: 1.5rem;">Ofertas Destacadas</h2>
 
-        <!-- Job Listing Item -->
-        <div class="job-listing">
-            <div class="job-info">
-                <h3 class="job-title">Desarrollador Frontend</h3>
-                <div class="job-company">TechRD Solutions</div>
-                <div class="job-details">
-                    <div class="job-detail">
-                        <i class="fas fa-map-marker-alt"></i> Santo Domingo, RD
-                    </div>
-                    <div class="job-detail">
-                        <i class="fas fa-clock"></i> Tiempo Completo
-                    </div>
-                    <div class="job-detail">
-                        <i class="fas fa-dollar-sign"></i> RD$1,200,000 - RD$1,500,000
-                    </div>
-                </div>
-                <div>
-                    <span class="badge badge-primary">React</span>
-                    <span class="badge badge-primary">JavaScript</span>
-                    <span class="badge badge-primary">CSS</span>
-                </div>
-            </div>
-            <div class="job-actions">
-                <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
-            </div>
-        </div>
 
-        <!-- Job Listing Item -->
-        <div class="job-listing">
-            <div class="job-info">
-                <h3 class="job-title">Ingeniero de Software Backend</h3>
-                <div class="job-company">Innovatech RD</div>
-                <div class="job-details">
-                    <div class="job-detail">
-                        <i class="fas fa-map-marker-alt"></i> Santiago, RD
-                    </div>
-                    <div class="job-detail">
-                        <i class="fas fa-clock"></i> Tiempo Completo
-                    </div>
-                    <div class="job-detail">
-                        <i class="fas fa-dollar-sign"></i> RD$1,400,000 - RD$1,800,000
-                    </div>
-                </div>
-                <div>
-                    <span class="badge badge-primary">Python</span>
-                    <span class="badge badge-primary">Django</span>
-                    <span class="badge badge-primary">SQL</span>
-                </div>
-            </div>
-            <div class="job-actions">
-                <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
-            </div>
-        </div>
+    <!-- Ofertas Destacadas -->
+    <section class="container" style="margin-top: 3rem;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Ofertas Destacadas</h2>
+        <div class="row">
 
-        <!-- Job Listing Item -->
-        <div class="job-listing">
-            <div class="job-info">
-                <h3 class="job-title">Diseñador UX/UI</h3>
-                <div class="job-company">CreativeTech RD</div>
-                <div class="job-details">
-                    <div class="job-detail">
-                        <i class="fas fa-map-marker-alt"></i> Punta Cana, RD
+            <!-- Oferta 1 -->
+            <div class="col-md-6-col-lg-4-col-sm-12">
+                <div class="card h-100">
+                    <div style="font-size: 2rem; color: var(--primary); margin-top: 1rem; text-align: center;">
+                        <i class="fas fa-quote-left"></i>
                     </div>
-                    <div class="job-detail">
-                        <i class="fas fa-clock"></i> Tiempo Completo
-                    </div>
-                    <div class="job-detail">
-                        <i class="fas fa-dollar-sign"></i> RD$1,000,000 - RD$1,300,000
+                    <div class="card-body text-center">
+                        <h3 class="job-title">Desarrollador Frontend</h3>
+                        <div class="job-company">TechRD Solutions</div>
+                        <div class="job-details my-2">
+                            <div><i class="fas fa-map-marker-alt"></i> Santo Domingo, RD</div>
+                            <div><i class="fas fa-clock"></i> Tiempo Completo</div>
+                            <div><i class="fas fa-dollar-sign"></i> RD$1,200,000 - RD$1,500,000</div>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">React</span>
+                            <span class="badge bg-primary">JavaScript</span>
+                            <span class="badge bg-primary">CSS</span>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
                     </div>
                 </div>
-                <div>
-                    <span class="badge badge-primary">Figma</span>
-                    <span class="badge badge-primary">Adobe XD</span>
-                    <span class="badge badge-primary">Sketch</span>
-                </div>
             </div>
-            <div class="job-actions">
-                <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
-            </div>
-        </div>
 
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="#" class="btn btn-outline">Ver Todas las Ofertas</a>
+            <!-- Oferta 2 -->
+            <div class="col-md-6-col-lg-4-col-sm-12">
+                <div class="card h-100">
+                    <div style="font-size: 2rem; color: var(--primary); margin-top: 1rem; text-align: center;">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="job-title">Ingeniero de Software Backend</h3>
+                        <div class="job-company">Innovatech RD</div>
+                        <div class="job-details my-2">
+                            <div><i class="fas fa-map-marker-alt"></i> Santiago, RD</div>
+                            <div><i class="fas fa-clock"></i> Tiempo Completo</div>
+                            <div><i class="fas fa-dollar-sign"></i> RD$1,400,000 - RD$1,800,000</div>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">Python</span>
+                            <span class="badge bg-primary">Django</span>
+                            <span class="badge bg-primary">SQL</span>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Oferta 3 -->
+            <div class="col-md-6-col-lg-4-col-sm-12">
+                <div class="card h-100">
+                    <div style="font-size: 2rem; color: var(--primary); margin-top: 1rem; text-align: center;">
+                        <i class="fas fa-quote-left"></i>
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="job-title">Diseñador UX/UI</h3>
+                        <div class="job-company">CreativeTech RD</div>
+                        <div class="job-details my-2">
+                            <div><i class="fas fa-map-marker-alt"></i> Punta Cana, RD</div>
+                            <div><i class="fas fa-clock"></i> Tiempo Completo</div>
+                            <div><i class="fas fa-dollar-sign"></i> RD$1,000,000 - RD$1,300,000</div>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-primary">Figma</span>
+                            <span class="badge bg-primary">Adobe XD</span>
+                            <span class="badge bg-primary">Sketch</span>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-sm">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
+
 
     <!-- How It Works Section -->
     <section class="container" style="margin-top: 3rem;">
@@ -124,7 +119,8 @@ plantilla::navbar();
                     </div>
                     <h3 class="card-title">1. Crea tu Perfil</h3>
                     <div class="card-body">
-                        <p>Regístrate y completa tu perfil profesional con tus experiencias, habilidades y formación académica.</p>
+                        <p>Regístrate y completa tu perfil profesional con tus experiencias, habilidades y formación
+                            académica.</p>
                     </div>
                 </div>
             </div>
@@ -137,7 +133,8 @@ plantilla::navbar();
                     </div>
                     <h3 class="card-title">2. Sube tu CV</h3>
                     <div class="card-body">
-                        <p>Carga tu currículum actualizado para que las empresas puedan conocer mejor tu trayectoria profesional.</p>
+                        <p>Carga tu currículum actualizado para que las empresas puedan conocer mejor tu trayectoria
+                            profesional.</p>
                     </div>
                 </div>
             </div>
@@ -150,7 +147,8 @@ plantilla::navbar();
                     </div>
                     <h3 class="card-title">3. Aplica a Ofertas</Fh3>
                         <div class="card-body">
-                            <p>Explora las ofertas disponibles y postúlate fácilmente a aquellas que se alineen con tus intereses y habilidades profesionales.</p>
+                            <p>Explora las ofertas disponibles y postúlate fácilmente a aquellas que se alineen con tus
+                                intereses y habilidades profesionales.</p>
                         </div>
                 </div>
             </div>
@@ -222,13 +220,14 @@ plantilla::navbar();
 
         <div class="row">
             <!-- Testimonial 1 -->
-            <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
+            <div class="col-md-6-col-lg-4-col-sm-12">
                 <div class="card">
                     <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; text-align: center;">
                         <i class="fas fa-quote-left"></i>
                     </div>
                     <div class="card-body">
-                        <p style="font-style: italic;">JobConnect RD me ayudó a encontrar un trabajo en Santo Domingo en solo tres semanas. ¡La plataforma es súper fácil de usar!</p>
+                        <p style="font-style: italic;">JobConnect RD me ayudó a encontrar un trabajo en Santo Domingo en
+                            solo tres semanas. ¡La plataforma es súper fácil de usar!</p>
                         <div style="margin-top: 1.5rem;">
                             <strong>María Gómez</strong>
                             <div style="color: var(--gray);">Desarrolladora Frontend</div>
@@ -238,13 +237,14 @@ plantilla::navbar();
             </div>
 
             <!-- Testimonial 2 -->
-            <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
+            <div class="col-md-6-col-lg-4-col-sm-12">
                 <div class="card">
                     <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; text-align: center;">
                         <i class="fas fa-quote-left"></i>
                     </div>
                     <div class="card-body">
-                        <p style="font-style: italic;">Como empresa, encontramos en JobConnect RD candidatos talentosos que encajan perfectamente con nuestra visión.</p>
+                        <p style="font-style: italic;">Como empresa, encontramos en JobConnect RD candidatos talentosos
+                            que encajan perfectamente con nuestra visión.</p>
                         <div style="margin-top: 1.5rem;">
                             <strong>Juan Pérez</strong>
                             <div style="color: var(--gray);">Director de RRHH, Innovatech RD</div>
@@ -254,13 +254,14 @@ plantilla::navbar();
             </div>
 
             <!-- Testimonial 3 -->
-            <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
+            <div class="col-md-6-col-lg-4-col-sm-12">
                 <div class="card">
                     <div style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem; text-align: center;">
                         <i class="fas fa-quote-left"></i>
                     </div>
                     <div class="card-body">
-                        <p style="font-style: italic;">Gracias a JobConnect RD conseguí un empleo en Punta Cana que combina mi pasión por el diseño y el turismo.</p>
+                        <p style="font-style: italic;">Gracias a JobConnect RD conseguí un empleo en Punta Cana que
+                            combina mi pasión por el diseño y el turismo.</p>
                         <div style="margin-top: 1.5rem;">
                             <strong>Laura Sánchez</strong>
                             <div style="color: var(--gray);">Diseñadora UX/UI</div>
@@ -273,11 +274,14 @@ plantilla::navbar();
 
     <!-- Call to Action Section -->
     <section class="container" style="margin-top: 3rem; margin-bottom: 3rem;">
-        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); text-align: center; padding: 3rem 1rem; border-radius: var(--radius);">
+        <div
+            style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); text-align: center; padding: 3rem 1rem; border-radius: var(--radius);">
             <h2 style="margin-bottom: 1rem; font-size: 2rem;">¿Listo para impulsar tu carrera profesional?</h2>
-            <p style="margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Únete a JobConnect RD hoy mismo y conecta con las mejores oportunidades profesionales. Registro gratuito y fácil.</p>
+            <p style="margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Únete a JobConnect
+                RD hoy mismo y conecta con las mejores oportunidades profesionales. Registro gratuito y fácil.</p>
             <div>
-                <a href="registro.html" class="btn btn-secondary btn-lg" style="margin-right: 1rem;">Crear Cuenta Candidato o Registrar empresa</a>
+                <a href="registro.html" class="btn btn-secondary btn-lg" style="margin-right: 1rem;">Crear Cuenta
+                    Candidato o Registrar empresa</a>
             </div>
         </div>
     </section>

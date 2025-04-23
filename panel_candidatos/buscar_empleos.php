@@ -1,12 +1,21 @@
 <?php
-require_once 'conexion.php';
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
+require_once('../libreria/bd/conexion.php');
+session_start();
+plantilla::aplicar();
+plantilla::navbar();
+
+$nombreUsuario = $_SESSION['nombre'] ?? 'Usuario';
+$iniciales = strtoupper(substr($nombreUsuario, 0, 1));
 
 // Consulta las ofertas para el select
-$ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
+$ofertas = conexion::consulta("SELECT id_oferta, titulo FROM Ofertas");
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +45,7 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             --footer-height: 60px;
             --sidebar-width: 250px;
         }
-    
+
         /* Reset y estilos base */
         * {
             margin: 0;
@@ -44,7 +53,7 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-    
+
         body {
             color: var(--dark);
             line-height: 1.6;
@@ -53,103 +62,25 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             display: flex;
             flex-direction: column;
         }
-    
+
         a {
             color: var(--primary);
             text-decoration: none;
             transition: var(--transition);
         }
-    
+
         a:hover {
             color: var(--primary-dark);
         }
-    
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    
-        /* Header */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            height: var(--header-height);
-        }
-    
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-            padding: 0 1rem;
-            max-width: var(--max-width);
-            margin: 0 auto;
-        }
-    
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-    
-        .logo img {
-            height: 40px;
-            margin-right: 0.5rem;
-        }
-    
-        .logo h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-    
-        .logo span {
-            color: var(--secondary);
-        }
-    
-        .user-menu {
-            display: flex;
-            align-items: center;
-        }
-    
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 0.5rem;
-        }
-    
-        .user-name {
-            margin-right: 1rem;
-            font-weight: 500;
-        }
-    
-        .dropdown-toggle {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-    
-        .dropdown-toggle i {
-            margin-left: 0.5rem;
-        }
-    
+
+
         /* Layout principal */
         .dashboard-container {
             display: flex;
             margin-top: var(--header-height);
             flex: 1;
         }
-    
+
         /* Sidebar */
         .sidebar {
             width: var(--sidebar-width);
@@ -160,20 +91,20 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             overflow-y: auto;
             transition: var(--transition);
         }
-    
+
         .sidebar-header {
             padding: 1.5rem 1rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
-    
+
         .sidebar-menu {
             padding: 1rem 0;
         }
-    
+
         .sidebar-menu ul {
             list-style: none;
         }
-    
+
         .menu-item {
             padding: 0.75rem 1.5rem;
             display: flex;
@@ -181,37 +112,37 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             transition: var(--transition);
             cursor: pointer;
         }
-    
+
         .menu-item.active {
             background-color: rgba(52, 152, 219, 0.1);
             border-left: 4px solid var(--primary);
         }
-    
+
         .menu-item:hover {
             background-color: rgba(52, 152, 219, 0.05);
         }
-    
+
         .menu-item i {
             margin-right: 0.75rem;
             width: 20px;
             text-align: center;
             color: var(--primary);
         }
-    
+
         /* Contenido principal */
         .main-content {
             flex: 1;
             padding: 2rem;
             margin-left: var(--sidebar-width);
         }
-    
+
         .page-title {
             margin-bottom: 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-    
+
         /* Cards para Dashboard */
         .stats-container {
             display: grid;
@@ -219,7 +150,7 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
-    
+
         .stat-card {
             background-color: var(--white);
             border-radius: var(--radius);
@@ -228,7 +159,7 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             display: flex;
             align-items: center;
         }
-    
+
         .stat-icon {
             width: 60px;
             height: 60px;
@@ -241,17 +172,17 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             color: var(--primary);
             margin-right: 1rem;
         }
-    
+
         .stat-info h3 {
             font-size: 1.25rem;
             margin-bottom: 0.25rem;
         }
-    
+
         .stat-info p {
             color: var(--gray);
             font-size: 0.875rem;
         }
-    
+
         /* Secciones de contenido */
         .content-section {
             background-color: var(--white);
@@ -259,7 +190,7 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             box-shadow: var(--shadow);
             margin-bottom: 2rem;
         }
-    
+
         .section-header {
             padding: 1.25rem 1.5rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -267,11 +198,11 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             justify-content: space-between;
             align-items: center;
         }
-    
+
         .section-body {
             padding: 1.5rem;
         }
-    
+
         /* Aplicaciones a trabajos */
         .job-application {
             display: flex;
@@ -279,11 +210,11 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             padding: 1rem 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
-    
+
         .job-application:last-child {
             border-bottom: none;
         }
-    
+
         .application-company {
             width: 50px;
             height: 50px;
@@ -296,45 +227,45 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             font-weight: bold;
             margin-right: 1rem;
         }
-    
+
         .application-info {
             flex: 1;
         }
-    
+
         .application-title {
             font-weight: 500;
             font-size: 1.1rem;
             margin-bottom: 0.25rem;
         }
-    
+
         .application-company-name {
             font-size: 0.9rem;
             color: var(--primary);
             margin-bottom: 0.25rem;
         }
-    
+
         .application-meta {
             font-size: 0.875rem;
             color: var(--gray);
             display: flex;
             align-items: center;
         }
-    
+
         .application-meta span {
             margin-right: 1rem;
             display: flex;
             align-items: center;
         }
-    
+
         .application-meta i {
             margin-right: 0.25rem;
         }
-    
+
         .application-status {
             min-width: 120px;
             text-align: right;
         }
-    
+
         .status-badge {
             display: inline-block;
             padding: 0.25rem 0.75rem;
@@ -342,23 +273,23 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             font-size: 0.75rem;
             font-weight: 700;
         }
-    
+
         .status-applied {
             background-color: rgba(52, 152, 219, 0.1);
             color: var(--primary);
         }
-    
+
         /* Formularios */
         .form-group {
             margin-bottom: 1.5rem;
         }
-    
+
         .form-label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
-    
+
         .form-control {
             width: 100%;
             padding: 0.75rem;
@@ -367,18 +298,18 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             font-size: 1rem;
             transition: var(--transition);
         }
-    
+
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
-    
+
         textarea.form-control {
             min-height: 100px;
             resize: vertical;
         }
-    
+
         /* Botones */
         .btn {
             display: inline-block;
@@ -390,87 +321,87 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             transition: var(--transition);
             border: none;
         }
-    
+
         .btn-primary {
             background-color: var(--primary);
             color: var(--white);
         }
-    
+
         .btn-primary:hover {
             background-color: var(--primary-dark);
             color: var(--white);
         }
-    
+
         .btn-outline {
             background-color: transparent;
             color: var(--primary);
             border: 2px solid var(--primary);
         }
-    
+
         .btn-outline:hover {
             background-color: var(--primary);
             color: var(--white);
         }
-    
+
         .btn-sm {
             padding: 0.4rem 0.8rem;
             font-size: 0.875rem;
         }
-    
+
         /* Mobile menu toggle */
         .mobile-menu-toggle {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
         }
-    
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .stats-container {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
-    
+
         @media (max-width: 768px) {
             .mobile-menu-toggle {
                 display: block;
             }
-    
+
             .sidebar {
                 left: -300px;
                 z-index: 998;
             }
-    
+
             .sidebar.active {
                 left: 0;
             }
-    
+
             .main-content {
                 margin-left: 0;
             }
-    
+
             .user-name {
                 display: none;
             }
-    
+
             .stats-container {
                 grid-template-columns: 1fr 1fr;
             }
         }
-    
+
         @media (max-width: 576px) {
             .header-container {
                 padding: 0 0.5rem;
             }
-    
+
             .logo h1 {
                 font-size: 1.2rem;
             }
-    
+
             .stats-container {
                 grid-template-columns: 1fr;
             }
-    
+
             .main-content {
                 padding: 1rem;
             }
@@ -479,47 +410,29 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
         }
     </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="../assets/logo.png" alt="JobConnect RD Logo">
-                <h1>Job<span>Connect RD</span></h1>
-            </div>
-            <div class="mobile-menu-toggle" id="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="user-menu">
-                <div class="user-avatar">MC</div>
-                <span class="user-name">María Castillo</span>
-                <div class="dropdown-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <!-- Dashboard Container -->
     <div class="dashboard-container">
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h3>Panel de Usuario</h3>
+                <h3>Panel de Candidato</h3>
             </div>
             <div class="sidebar-menu">
                 <ul>
-                    <li class="menu-item">
-                        <a href="candidato_panel.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                    <li class="menu-item"><a href="candidato_panel.php"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
-                    <li class="menu-item active">
-                        <a href="buscar_empleos.html"><i class="fas fa-search"></i> <span>Buscar Empleos</span></a>
+                    <li class="menu-item active"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar Empleos</a>
                     </li>
-                    <li class="menu-item">
-                        <a href="postulaciones.html"><i class="fas fa-briefcase"></i> <span>Mis Postulaciones</span></a>
-                    </li>
+                    <li class="menu-item"><a href="mis_aplicaciones.php"><i class="fas fa-file-alt"></i> Mis
+                            Aplicaciones</a></li>
+                    <li class="menu-item"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                     <li class="menu-item" style="color: var(--danger);">
-                        <a href="../general/index_candidatos.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar Sesión</span></a>
+                        <a href="../general/index_candidatos.php" style="color: var(--danger);">
+                            <i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> Cerrar Sesión
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -540,7 +453,8 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
                     <form>
                         <div class="form-group">
                             <label class="form-label" for="keywords">Palabras Clave</label>
-                            <input type="text" id="keywords" class="form-control" placeholder="Desarrollador, Marketing...">
+                            <input type="text" id="keywords" class="form-control"
+                                placeholder="Desarrollador, Marketing...">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="ubicacion">Ubicación</label>
@@ -572,8 +486,6 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
                     </form>
                 </div>
             </div>
-
-            <?php include 'conexion.php'; ?>
 
             <!-- Job Listings -->
             <div class="content-section">
@@ -636,27 +548,31 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
         </div>
     </div>
 
-    
-    <div class="main-content"> 
+
+    <div class="main-content">
         <div class="content-section">
             <div class="section-header">
                 <h2>Aplicar a Oferta de Empleo</h2>
             </div>
             <div class="section-body">
                 <form action="formulario-aplicacion.php" method="POST">
-                    
+
                     <div class="form-group">
                         <label for="id_oferta" class="form-label">Selecciona una Oferta:</label>
                         <select id="id_oferta" name="id_oferta" class="form-control" required>
                             <option value="">-- Elige una oferta --</option>
-                            <?php while ($oferta = $ofertas->fetch_assoc()): ?>
-                                <option value="<?= $oferta['id_oferta'] ?>"><?= htmlspecialchars($oferta['titulo']) ?></option>
-                            <?php endwhile; ?>
+                            <?php foreach ($ofertas as $oferta): ?>
+
+                                <option value="<?= $oferta['id_oferta'] ?>"><?= htmlspecialchars($oferta['titulo']) ?>
+                                </option>
+                            <?php endforeach; ?>
+
                         </select>
                     </div>
-    
+
                     <div class="form-group">
-                        <button type="submit" class="btn" style="background-color: var(--primary); color: var(--white);">
+                        <button type="submit" class="btn"
+                            style="background-color: var(--primary); color: var(--white);">
                             Enviar Aplicación
                         </button>
                     </div>
@@ -664,32 +580,34 @@ $ofertas = $conn->query("SELECT id_oferta, titulo FROM Ofertas");
             </div>
         </div>
     </div>
-    
-                
 
 
-                
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> info@jobconnectrd.com</li>
-                        <li><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> +1 809-555-1234</li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Newsletter</h3>
-                    <form>
-                        <div style="display: flex;">
-                            <input type="email" class="form-control" placeholder="Tu email" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                        </div>
-                    </form>
-                </div>
+
+
+
+    <div class="footer-section">
+        <h3>Contacto</h3>
+        <ul>
+            <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> info@jobconnectrd.com</li>
+            <li><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> +1 809-555-1234</li>
+        </ul>
+    </div>
+    <div class="footer-section">
+        <h3>Newsletter</h3>
+        <form>
+            <div style="display: flex;">
+                <input type="email" class="form-control" placeholder="Tu email"
+                    style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
             </div>
-            <div class="footer-bottom">
-            </div>
-        </div>
+        </form>
+    </div>
+    </div>
+    <div class="footer-bottom">
+    </div>
+    </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

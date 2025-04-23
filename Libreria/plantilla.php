@@ -1193,7 +1193,6 @@ class Plantilla
                                     
                                 <?php elseif ($tipoUsuario === 'candidato'): ?>
                                     <li><a href="/panel_candidatos/buscar_empleos.php" class="nav_link">Buscar Empleos</a></li>
-                                    <li><a href="/panel_candidatos/mis_aplicaciones.php" class="nav_link">Mis Aplicaciones</a></li>
                                     <li><a href="/panel_candidatos/candidato_panel.php" class="nav_link">Panel</a></li>
                                 <?php endif; ?>
 

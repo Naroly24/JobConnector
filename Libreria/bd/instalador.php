@@ -45,13 +45,9 @@ CREATE TABLE IF NOT EXISTS Candidatos (
     id_candidato INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     telefono VARCHAR(20),
-    direccion VARCHAR(255),
     ciudad VARCHAR(100),
     profesion VARCHAR(100),
-    resumen_profesional TEXT,
     disponibilidad VARCHAR(50),
-    redes_profesionales VARCHAR(255),
-    cv_pdf VARCHAR(255),
     foto VARCHAR(255),
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );

@@ -58,7 +58,7 @@ if ($usuario) {
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="empresa_panel.php"><i class="fas fa-home"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="menu-item">
@@ -67,7 +67,7 @@ if ($usuario) {
                 <li class="menu-item">
                     <a href="candidatos.php"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                     <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
                 </li>
                 <li class="menu-item" style="color: var(--danger);">
