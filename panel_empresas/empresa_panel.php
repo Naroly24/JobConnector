@@ -1,9 +1,15 @@
 <?php
+session_start();
+$ocultar_footer = true; // o false si lo quieres mostrar
+
 require_once 'ofertas/crud_ofertas.php';
 
 require('../libreria/motor.php');
 require('../libreria/plantilla.php');
 plantilla::aplicar();
+if (isset($ocultar_footer) && $ocultar_footer) {
+    echo '<style>footer { display: none !important; }</style>';
+}
 plantilla::navbar();
 
 // Aquí asumimos que la empresa está autenticada y su ID está en la sesión
