@@ -1,7 +1,10 @@
 <?php
 require_once 'ofertas/crud_ofertas.php';
-require_once '../Libreria/bd/conexion.php';
-session_start();
+
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
+plantilla::aplicar();
+plantilla::navbar();
 
 // Aquí asumimos que la empresa está autenticada y su ID está en la sesión
 if (!isset($_SESSION['id_empresa'])) {
@@ -33,37 +36,6 @@ $candidatos = conexion::consulta("
 ");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobConnect RD - Panel de Empresa</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Libreria/style_empresas.css">
-</head>
-
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="../Libreria/logo.png" alt="JobConnect RD Logo">
-                <h1>Job<span>Connect RD</span></h1>
-            </div>
-            <div class="mobile-menu-toggle" id="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="user-menu">
-                <div class="user-avatar">TS</div>
-                <span class="user-name">Tech Solutions</span>
-                <div class="dropdown-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-    </header>
     <!-- Dashboard Container -->
     <div class="dashboard-container">
         <!-- Sidebar -->
@@ -207,30 +179,3 @@ $candidatos = conexion::consulta("
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-section">
-                </div>
-            </div>
-        </div>
-    </footer>
-    </div>
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileToggle = document.getElementById('mobile-toggle');
-            const sidebar = document.getElementById('sidebar');
-
-            if (mobileToggle) {
-                mobileToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('active');
-                });
-            }
-        });
-    </script>
-</body>
-
-</html>

@@ -28,7 +28,6 @@ class Plantilla
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-
             <style>
                 /* Variables globales */
                 :root {
@@ -49,6 +48,7 @@ class Plantilla
                     --max-width: 1200px;
                     --header-height: 70px;
                     --footer-height: 60px;
+                    --sidebar-width: 250px;
                 }
 
                 /* Reset y estilos base */
@@ -83,7 +83,9 @@ class Plantilla
                     justify-content: space-between;
                     align-items: center;
                     height: 100%;
-                    padding: 0 20px;
+                    padding: 0 1rem;
+                    max-width: var(--max-width);
+                    margin: 0 auto;
                 }
 
                 .logo {
@@ -756,6 +758,259 @@ class Plantilla
                 .avatar-empresa {
                     background-color: #e74c3c;
                     /* Rojo */
+                }
+
+                /* Seccion empresas */
+
+                /* Dashboard */
+                .dashboard-container {
+                    display: flex;
+                    margin-top: var(--header-height);
+                    flex: 1;
+                }
+
+                /* Sidebar */
+                .sidebar {
+                    width: var(--sidebar-width);
+                    background-color: var(--white);
+                    box-shadow: var(--shadow);
+                    height: calc(100vh - var(--header-height));
+                    position: fixed;
+                    overflow-y: auto;
+                    transition: var(--transition);
+                }
+
+                .sidebar-header {
+                    padding: 1.5rem 1rem;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                }
+
+                .sidebar-menu {
+                    padding: 1rem 0;
+                }
+
+                .sidebar-menu ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .menu-item {
+                    padding: 0.75rem 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    transition: var(--transition);
+                    cursor: pointer;
+                }
+
+                .menu-item.active {
+                    background-color: rgba(52, 152, 219, 0.1);
+                    border-left: 4px solid var(--primary);
+                }
+
+                .menu-item:hover {
+                    background-color: rgba(52, 152, 219, 0.05);
+                }
+
+                .menu-item i {
+                    margin-right: 0.75rem;
+                    width: 20px;
+                    text-align: center;
+                    color: var(--primary);
+                }
+
+                /* Contenido principal */
+                .main-content {
+                    flex: 1;
+                    padding: 2rem;
+                    margin-left: var(--sidebar-width);
+                }
+
+                .page-title {
+                    margin-bottom: 1.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                /* Cards para Dashboard */
+                .stats-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                    gap: 1.5rem;
+                    margin-bottom: 2rem;
+                }
+
+                .stat-card {
+                    background-color: var(--white);
+                    border-radius: var(--radius);
+                    box-shadow: var(--shadow);
+                    padding: 1.5rem;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .stat-icon {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    background-color: rgba(52, 152, 219, 0.1);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.5rem;
+                    color: var(--primary);
+                    margin-right: 1rem;
+                }
+
+                .stat-info h3 {
+                    font-size: 1.25rem;
+                    margin-bottom: 0.25rem;
+                }
+
+                .stat-info p {
+                    color: var(--gray);
+                    font-size: 0.875rem;
+                }
+
+                /* Secciones de contenido */
+                .content-section {
+                    background-color: var(--white);
+                    border-radius: var(--radius);
+                    box-shadow: var(--shadow);
+                    margin-bottom: 2rem;
+                }
+
+                .section-header {
+                    padding: 1.25rem 1.5rem;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .section-body {
+                    padding: 1.5rem;
+                }
+
+                /* Aplicaciones a trabajos */
+                .job-application {
+                    display: flex;
+                    align-items: center;
+                    padding: 1rem 0;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                }
+
+                .job-application:last-child {
+                    border-bottom: none;
+                }
+
+                .application-company {
+                    width: 50px;
+                    height: 50px;
+                    background-color: rgba(52, 152, 219, 0.1);
+                    border-radius: var(--radius);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--primary);
+                    font-weight: bold;
+                    margin-right: 1rem;
+                }
+
+                .application-info {
+                    flex: 1;
+                }
+
+                .application-title {
+                    font-weight: 500;
+                    font-size: 1.1rem;
+                    margin-bottom: 0.25rem;
+                }
+
+                .application-company-name {
+                    font-size: 0.9rem;
+                    color: var(--primary);
+                    margin-bottom: 0.25rem;
+                }
+
+                .application-meta {
+                    font-size: 0.875rem;
+                    color: var(--gray);
+                    display: flex;
+                    align-items: center;
+                }
+
+                .application-meta span {
+                    margin-right: 1rem;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .application-meta i {
+                    margin-right: 0.25rem;
+                }
+
+                .application-status {
+                    min-width: 120px;
+                    text-align: right;
+                }
+
+                .status-badge {
+                    display: inline-block;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 50px;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                }
+
+                .status-applied {
+                    background-color: rgba(52, 152, 219, 0.1);
+                    color: var(--primary);
+                }
+
+                /*Ofertas de empleo*/
+                .offer-card {
+                    background-color: #fff;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    padding: 20px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                }
+
+                .offer-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+                }
+
+                .offer-title {
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    margin: 0;
+                    color: #333;
+                }
+
+                .offer-date {
+                    font-size: 0.9rem;
+                    color: #666;
+                }
+
+                .offer-body {
+                    margin-bottom: 15px;
+                }
+
+                .offer-description {
+                    font-size: 1rem;
+                    line-height: 1.5;
+                    color: #444;
+                }
+
+                .offer-footer {
+                    display: flex;
+                    gap: 10px;
                 }
             </style>
 

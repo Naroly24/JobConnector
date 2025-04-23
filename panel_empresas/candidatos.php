@@ -1,4 +1,8 @@
 <?php
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
+//plantilla::aplicar();
+
 require_once('../Libreria/bd/conexion.php'); // Ajusta la ruta si es necesario
 session_start();
 
@@ -32,24 +36,8 @@ $candidatos = conexion::consulta("
 
 <body>
     <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="../Libreria/logo.png" alt="JobConnect RD Logo">
-                <h1>Job<span>Connect RD</span></h1>
-            </div>
-            <div class="mobile-menu-toggle" id="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="user-menu">
-                <div class="user-avatar">TS</div>
-                <span class="user-name">Tech Solutions</span>
-                <div class="dropdown-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-    </header>
+        <?php plantilla::navbar(); ?>
+        
     <!-- Dashboard Container -->
     <div class="dashboard-container">
         <!-- Sidebar -->
