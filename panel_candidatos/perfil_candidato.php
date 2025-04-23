@@ -45,21 +45,18 @@ $cv = $candidato['cv_pdf'] ?? '';
         </div>
         <div class="sidebar-menu">
             <ul>
-                <li class="menu-item">
-                    <a href="empresa_panel.php"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                <li class="menu-item"><a href="candidato_panel.php"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
-                <li class="menu-item">
-                    <a href="/panel_candidatos/buscar_empleos.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
-                </li>
-                <li class="menu-item active">
-                    <a href="perfil_candidato.php"><i class="fas fa-users"></i> <span>Perfil de la Empresa</span></a>
-                </li>
+                <li class="menu-item"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar Empleos</a></li>
+                <li class="menu-item"><a href="postulaciones.php"><i class="fas fa-file-alt"></i> Mis
+                        Aplicaciones</a></li>
                 <li class="menu-item">
                     <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
                 </li>
+                <li class="menu-item active" ><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                 <li class="menu-item" style="color: var(--danger);">
-                    <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt"
-                            style="color: var(--danger);"></i> <span>Cerrar
+                    <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
                             Sesión</span></a>
                 </li>
             </ul>
@@ -152,8 +149,8 @@ $cv = $candidato['cv_pdf'] ?? '';
 </div>
 
 <script>
-function togglePasswordFields() {
-    const section = document.getElementById('password-section');
-    section.style.display = (section.style.display === 'none') ? 'block' : 'none';
-}
+    function togglePasswordFields() {
+        const section = document.getElementById('password-section');
+        section.style.display = (section.style.display === 'none') ? 'block' : 'none';
+    }
 </script>

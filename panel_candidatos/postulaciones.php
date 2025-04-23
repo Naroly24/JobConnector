@@ -1,3 +1,26 @@
+<?php
+session_start();
+$ocultar_footer = true;
+
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
+require_once('../libreria/bd/conexion.php');
+
+plantilla::aplicar();
+if ($ocultar_footer) {
+    echo '<style>footer { display: none !important; }</style>';
+}
+plantilla::navbar();
+
+// Verificar sesión de candidato
+if (!isset($_SESSION['id_candidato'])) {
+    echo "<p style='color: red;'>❌ Debes iniciar sesión como candidato para ver el panel.</p>";
+    exit;
+}
+
+$id_candidato = $_SESSION['id_candidato'];
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -470,25 +493,6 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="../Libreria/logo.png" alt="JobConnect RD Logo">
-                <h1>Job<span>Connect RD</span></h1>
-            </div>
-            <div class="mobile-menu-toggle" id="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="user-menu">
-                <div class="user-avatar">MC</div>
-                <span class="user-name">María Castillo</span>
-                <div class="dropdown-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <!-- Dashboard Container -->
     <div class="dashboard-container">
@@ -498,18 +502,21 @@
                 <h3>Panel de Usuario</h3>
             </div>
             <div class="sidebar-menu">
-                <ul>
+            <ul>
+                    <li class="menu-item "><a href="candidato_panel.php"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="menu-item"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar
+                            Empleos</a></li>
+                    <li class="menu-item active"><a href="postulaciones.php"><i class="fas fa-file-alt"></i> Mis
+                            Aplicaciones</a></li>
                     <li class="menu-item">
-                        <a href="candidato_panel.html"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+                        <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
                     </li>
-                    <li class="menu-item">
-                        <a href="buscar_empleos.html"><i class="fas fa-search"></i> <span>Buscar Empleos</span></a>
-                    </li>
-                    <li class="menu-item active">
-                        <a href="postulaciones.html"><i class="fas fa-briefcase"></i> <span>Mis Postulaciones</span></a>
-                    </li>
+                    <li class="menu-item"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                     <li class="menu-item" style="color: var(--danger);">
-                        <a href="../general/index_candidatos.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar Sesión</span></a>
+                        <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i
+                                class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
+                                Sesión</span></a>
                     </li>
                 </ul>
             </div>

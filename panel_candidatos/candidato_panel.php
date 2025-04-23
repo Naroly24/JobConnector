@@ -53,8 +53,11 @@ $misAplicaciones = conexion::consulta("
                 <li class="menu-item active"><a href="candidato_panel.php"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li class="menu-item"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar Empleos</a></li>
-                <li class="menu-item"><a href="mis_aplicaciones.php"><i class="fas fa-file-alt"></i> Mis
+                <li class="menu-item"><a href="postulaciones.php"><i class="fas fa-file-alt"></i> Mis
                         Aplicaciones</a></li>
+                        <li class="menu-item">
+                    <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
+                </li>
                 <li class="menu-item"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                 <li class="menu-item" style="color: var(--danger);">
                     <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i
