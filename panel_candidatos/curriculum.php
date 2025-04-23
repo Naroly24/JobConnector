@@ -3,10 +3,10 @@
 session_start();
 
 // Incluir archivo de configuración de la base de datos
-include("C:/Pweb/JobConnector/JobConnector/bd/config.php");
+require_once 'conexion.php';
 
 // Definir rutas absolutas para las carpetas de carga
-$base_dir = __DIR__; // Directorio actual: C:\Pweb\JobConnector\JobConnector\panel_candidatos\Cv_digital
+$base_dir = __DIR__; 
 $cv_upload_dir = $base_dir . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cvs' . DIRECTORY_SEPARATOR;
 $photo_upload_dir = $base_dir . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR;
 
