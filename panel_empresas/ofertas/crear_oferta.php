@@ -1,9 +1,9 @@
 <?php
+session_start();
 $ocultar_footer = true;
 require('../../libreria/motor.php');
 require('../../libreria/plantilla.php');
-
-// No generamos salida HTML todavía (plantilla::aplicar() y plantilla::navbar() se llaman después)
+require_once 'crud_ofertas.php';
 
 // Check if empresa is logged in
 if (!isset($_SESSION['id_empresa'])) {
@@ -11,33 +11,41 @@ if (!isset($_SESSION['id_empresa'])) {
     exit();
 }
 
-plantilla::aplicar();
-if (isset($ocultar_footer) && $ocultar_footer) {
-    echo '<style>footer { display: none !important; }</style>';
-}
-plantilla::navbar();
-
-require_once 'crud_ofertas.php';
 $id_empresa = $_SESSION['id_empresa'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $datos = [
-        'id_empresa' => $_SESSION['id_empresa'],
-        'titulo' => $_POST['titulo'],
-        'descripcion' => $_POST['descripcion'],
-        'requisitos' => $_POST['requisitos'],
-        'fecha_publicacion' => date('Y-m-d')
-    ];
+    // Validate form inputs
+    $titulo = trim($_POST['titulo'] ?? '');
+    $descripcion = trim($_POST['descripcion'] ?? '');
+    $requisitos = trim($_POST['requisitos'] ?? '');
 
-    $resultado = crearOferta($datos);
-
-    if ($resultado) {
-        header("Location: ../empresa_panel.php?msg=Oferta creada");
-        exit();
+    if (empty($titulo) || empty($descripcion) || empty($requisitos)) {
+        $error = "Por favor, completa todos los campos requeridos.";
     } else {
-        $error = "❌ No se pudo crear la oferta.";
+        $datos = [
+            'id_empresa' => $id_empresa,
+            'titulo' => $titulo,
+            'descripcion' => $descripcion,
+            'requisitos' => $requisitos,
+            'fecha_publicacion' => date('Y-m-d')
+        ];
+
+        $resultado = crearOferta($datos);
+
+        if ($resultado) {
+            header("Location: ../empresa_panel.php?msg=Oferta creada exitosamente");
+            exit();
+        } else {
+            $error = "No se pudo crear la oferta. Inténtalo de nuevo.";
+        }
     }
 }
+
+plantilla::aplicar();
+if ($ocultar_footer) {
+    echo '<style>footer { display: none !important; }</style>';
+}
+plantilla::navbar();
 ?>
 
 <!-- Dashboard Container -->
@@ -63,8 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </li>
                 <li class="menu-item" style="color: var(--danger);">
                     <a href="../../general/Login_y_Registro/logout.php" style="color: var(--danger);"><i
-                            class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
-                            Sesión</span></a>
+                            class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar Sesión</span></a>
                 </li>
             </ul>
         </div>
@@ -73,33 +80,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Main Content -->
     <div class="main-content">
         <div class="page-title">
-            <h1>Ofertas de Empleo</h1>
+            <h1>Crear Oferta de Empleo</h1>
         </div>
 
         <!-- Formulario para crear nueva oferta -->
         <div class="content-section">
             <div class="section-header">
-                <h2>Crear Nueva Oferta</h2>
+                <h2>Nueva Oferta</h2>
             </div>
             <?php if (isset($error)): ?>
-                <p style="color:red"><?= htmlspecialchars($error) ?></p>
+                <p class="error-message"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
             <div class="section-body">
                 <form method="POST">
                     <div class="form-group">
-                        <label for="titulo">Título de la oferta:</label>
-                        <input type="text" name="titulo" id="titulo" class="form-control" required>
+                        <label for="titulo">Título de la oferta</label>
+                        <input type="text" name="titulo" id="titulo" class="form-control" value="<?= isset($_POST['titulo']) ? htmlspecialchars($_POST['titulo']) : '' ?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="descripcion">Descripción:</label>
-                        <textarea id="descripcion" name="descripcion" class="form-control" required></textarea><br><br>
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control" required><?= isset($_POST['descripcion']) ? htmlspecialchars($_POST['descripcion']) : '' ?></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="requisitos">Requisitos:</label>
-                        <textarea id="requisitos" name="requisitos" class="form-control" required></textarea><br><br>
+                        <label for="requisitos">Requisitos</label>
+                        <textarea id="requisitos" name="requisitos" class="form-control" required><?= isset($_POST['requisitos']) ? htmlspecialchars($_POST['requisitos']) : '' ?></textarea>
                     </div>
                     <input type="hidden" name="fecha_publicacion" value="<?= date('Y-m-d') ?>">
-                    <button type="submit" class="btn btn-primary btn-sm">Publicar Oferta</button>
+                    <button type="submit" class="btn btn-primary">Publicar Oferta</button>
                 </form>
             </div>
         </div>

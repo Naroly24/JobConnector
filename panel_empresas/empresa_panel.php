@@ -153,35 +153,7 @@ $candidatos = conexion::consulta("
                             <div class="alert alert-info">No hay ofertas registradas aún.</div>
                         <?php endif; ?>
                             </div>
-                </div>
-
-                <!-- Recent Applicants -->
-                <div class="section-header">
-                    <h2>Candidatos Recientes</h2>
-                    <a href="candidatos.php" class="btn-link">Ver todos</a>
-                </div>
-                <div class="section-body">
-                    <?php foreach ($candidatos as $candidato): ?>
-                        <div class="job-offer">
-                            <div class="offer-icon">
-                                <?= strtoupper(substr($candidato['nombre'], 0, 1) . substr($candidato['apellido'], 0, 1)) ?>
-                            </div>
-                            <div class="offer-info">
-                                <div class="offer-title">
-                                    <?= htmlspecialchars($candidato['nombre'] . ' ' . $candidato['apellido']) ?>
-                                </div>
-                                <div class="offer-meta">
-                                    <span><i class="fas fa-briefcase"></i> Aplicó a: <?= htmlspecialchars($candidato['titulo']) ?></span>
-                                    <span><i class="fas fa-calendar-alt"></i> <?= date("d M Y", strtotime($candidato['fecha_aplicacion'])) ?></span>
-                                </div>
-                            </div>
-                            <div class="offer-actions">
-                                <a href="<?= htmlspecialchars($candidato['cv_pdf']) ?>" target="_blank" class="btn btn-outline btn-sm">Ver CV</a>
-                                <a href="mailto:<?= htmlspecialchars($candidato['correo']) ?>" class="btn btn-primary btn-sm">Contactar</a>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+                </div>                
             </div>
         </div>
     </div>

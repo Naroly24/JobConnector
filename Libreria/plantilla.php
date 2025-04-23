@@ -18,7 +18,7 @@ class Plantilla
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        ?>
+?>
         <!DOCTYPE html>
         <html lang="es">
 
@@ -52,6 +52,7 @@ class Plantilla
                     --header-height: 70px;
                     --footer-height: 60px;
                     --sidebar-width: 250px;
+                   /* --main-content-width: calc(100% - var(--sidebar-width)); */
                 }
 
                 /* Reset y estilos base */
@@ -826,7 +827,7 @@ class Plantilla
                 .main-content {
                     flex: 1;
                     padding: 2rem;
-                    margin-left: var(--sidebar-width);
+                    
                 }
 
                 .page-title {
@@ -1163,14 +1164,14 @@ class Plantilla
         <body>
             <div class="container">
 
-                <?php
-    }
+            <?php
+        }
 
-    public static function navbar()
-    {
-        $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
+        public static function navbar()
+        {
+            $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
 
-        ?>
+            ?>
                 <header>
                     <div class="container header-container">
                         <div class="logo">
@@ -1190,7 +1191,7 @@ class Plantilla
                                 <?php if ($tipoUsuario === 'empresa'): ?>
                                     <li><a href="/panel_empresas/empresa_panel.php" class="nav_link">Panel</a></li>
                                     </li>
-                                    
+
                                 <?php elseif ($tipoUsuario === 'candidato'): ?>
                                     <li><a href="/panel_candidatos/buscar_empleos.php" class="nav_link">Buscar Empleos</a></li>
                                     <li><a href="/panel_candidatos/mis_aplicaciones.php" class="nav_link">Mis Aplicaciones</a></li>
@@ -1206,7 +1207,7 @@ class Plantilla
                                     $correo = $_SESSION['correo'] ?? 'Usuario';
                                     $iniciales = strtoupper(substr($correo, 0, 2)); // Primeras dos letras del correo
                                     $nombreCompleto = $correo; // Mostrar correo como nombre por defecto
-                        
+
                                     $sql = "SELECT nombre, apellido FROM Usuarios WHERE id_usuario = ?";
                                     $parametros = [$_SESSION['id_usuario']];
                                     $resultado = Conexion::select($sql, $parametros);
@@ -1244,12 +1245,12 @@ class Plantilla
 
 
                 <script>
-                    document.addEventListener('DOMContentLoaded', function () {
+                    document.addEventListener('DOMContentLoaded', function() {
                         const mobileToggle = document.getElementById('mobile-toggle');
                         const navMenu = document.getElementById('nav-menu');
 
                         if (mobileToggle) {
-                            mobileToggle.addEventListener('click', function () {
+                            mobileToggle.addEventListener('click', function() {
                                 navMenu.classList.toggle('active');
                             });
 
@@ -1260,21 +1261,21 @@ class Plantilla
                             });
                         }
 
-                        document.addEventListener('click', function (event) {
+                        document.addEventListener('click', function(event) {
                             if (!navMenu.contains(event.target) && !mobileToggle.contains(event.target)) {
                                 navMenu.classList.remove('active');
                             }
                         });
                     });
                 </script>
-                <?php
-    }
+            <?php
+        }
 
 
 
-    public function __destruct()
-    {
-        ?>
+        public function __destruct()
+        {
+            ?>
             </div>
 
             <footer>
@@ -1335,7 +1336,7 @@ class Plantilla
         </body>
 
         </html>
-        <?php
+<?php
+        }
     }
-}
 ?>
