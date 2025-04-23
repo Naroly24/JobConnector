@@ -5,10 +5,55 @@ session_start();
 // Incluir archivo de conexión a la base de datos
 require('../libreria/motor.php');
 
+// Variables para almacenar los datos prellenados
+$nombre = '';
+$apellido = '';
+$correo = '';
+$telefono = '';
+$ciudad = '';
+$profesion = '';
+$user_exists = false;
+$candidato_exists = false;
+
+// Verificar si el usuario está logueado
+if (isset($_SESSION['user_id'])) {
+    $id_usuario = $_SESSION['user_id'];
+
+    // Consultar datos del usuario en la tabla Usuarios
+    $query_usuario = "SELECT nombre, apellido, correo FROM usuarios WHERE id_usuario = :id_usuario";
+    $result_usuario = conexion::select($query_usuario, [':id_usuario' => $id_usuario]);
+
+    if ($result_usuario) {
+        $user_exists = true;
+        $nombre = htmlspecialchars($result_usuario[0]['nombre']);
+        $apellido = htmlspecialchars($result_usuario[0]['apellido']);
+        $correo = htmlspecialchars($result_usuario[0]['correo']);
+
+        // Consultar datos del candidato en la tabla Candidatos
+        $query_candidato = "SELECT telefono, ciudad, profesion FROM candidatos WHERE id_usuario = :id_usuario ORDER BY id_candidato DESC LIMIT 1";
+        $result_candidato = conexion::select($query_candidato, [':id_usuario' => $id_usuario]);
+
+        if ($result_candidato) {
+            $candidato_exists = true;
+            $telefono = htmlspecialchars($result_candidato[0]['telefono']);
+            $ciudad = htmlspecialchars($result_candidato[0]['ciudad']);
+            $profesion = htmlspecialchars($result_candidato[0]['profesion']);
+        } else {
+            echo "<div class='alert alert-danger'>Error: No se encontraron datos del candidato. Por favor, complete su perfil primero.</div>";
+            exit;
+        }
+    } else {
+        echo "<div class='alert alert-danger'>Error: El usuario no existe en la base de datos. Por favor, inicie sesión o regístrese.</div>";
+        exit;
+    }
+} else {
+    echo "<div class='alert alert-danger'>Por favor, inicie sesión para continuar.</div>";
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener id_usuario de la sesión o usar valor por defecto para pruebas
-    $id_usuario = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : $_POST['id_usuario'];
+    // Obtener id_usuario de la sesión
+    $id_usuario = $_SESSION['user_id'];
 
     // Verificar si id_usuario existe en la tabla Usuarios
     $check_user_query = "SELECT id_usuario FROM Usuarios WHERE id_usuario = :id_usuario";
@@ -277,7 +322,6 @@ if (isset($id_usuario)) {
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -342,7 +386,7 @@ if (isset($id_usuario)) {
         .container {
             width: 100%;
             max-width: var(--max-width);
-
+            margin: 0 auto;
             padding: 0 1rem;
         }
 
@@ -623,7 +667,6 @@ if (isset($id_usuario)) {
         }
     </style>
 </head>
-
 <body>
     <header>
         <div class="header-container container">
@@ -646,32 +689,32 @@ if (isset($id_usuario)) {
     <main class="main-content container">
         <h1>Formulario de Currículum Digital</h1>
         <form action="curriculum.php" method="post" enctype="multipart/form-data">
-            <!-- Campo oculto para id_usuario (solo para pruebas, usar sesión en producción) -->
-            <input type="hidden" name="id_usuario" value="1">
+            <!-- Campo oculto para id_usuario -->
+            <input type="hidden" name="id_usuario" value="<?php echo htmlspecialchars($id_usuario); ?>">
 
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
                         <label for="nombre" class="form-label">Nombre(s)</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" required>
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $nombre; ?>" readonly required>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label for="apellido" class="form-label">Apellido(s)</label>
-                        <input type="text" id="apellido" name="apellido" class="form-control" required>
+                        <input type="text" id="apellido" name="apellido" class="form-control" value="<?php echo $apellido; ?>" readonly required>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="correo" class="form-label">Correo Electrónico</label>
-                <input type="email" id="correo" name="correo" class="form-control" required>
+                <input type="email" id="correo" name="correo" class="form-control" value="<?php echo $correo; ?>" readonly required>
             </div>
 
             <div class="form-group">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" id="telefono" name="telefono" class="form-control" required>
+                <input type="tel" id="telefono" name="telefono" class="form-control" value="<?php echo $telefono; ?>" readonly required>
             </div>
 
             <div class="form-group">
@@ -681,12 +724,12 @@ if (isset($id_usuario)) {
 
             <div class="form-group">
                 <label for="ciudad" class="form-label">Ciudad / Provincia</label>
-                <input type="text" id="ciudad" name="ciudad" class="form-control" required>
+                <input type="text" id="ciudad" name="ciudad" class="form-control" value="<?php echo $ciudad; ?>" readonly required>
             </div>
 
             <div class="form-group">
                 <label for="profesion" class="form-label">Profesión</label>
-                <input type="text" id="profesion" name="profesion" class="form-control" placeholder="Ej: Ingeniero de Software" required>
+                <input type="text" id="profesion" name="profesion" class="form-control" value="<?php echo $profesion; ?>" readonly required>
             </div>
 
             <div class="form-group">
@@ -868,5 +911,4 @@ if (isset($id_usuario)) {
         </div>
     </footer>
 </body>
-
 </html>
