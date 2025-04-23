@@ -2,29 +2,9 @@
 // Iniciar sesión para obtener id_usuario del usuario autenticado
 session_start();
 
-// Incluir archivo de configuración de la base de datos
-require_once 'conexion.php';
+// Incluir archivo de conexión a la base de datos
+require('../libreria/motor.php');
 
-// Definir rutas absolutas para las carpetas de carga
-$base_dir = __DIR__; 
-$cv_upload_dir = $base_dir . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'cvs' . DIRECTORY_SEPARATOR;
-$photo_upload_dir = $base_dir . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'fotos' . DIRECTORY_SEPARATOR;
-
-// Verificar y crear carpetas de carga si no existen
-foreach ([$cv_upload_dir, $photo_upload_dir] as $dir) {
-     if (!is_dir($dir)) {
-          // Intentar crear la carpeta con permisos 0755
-          if (!mkdir($dir, 0755, true)) {
-               echo "<div class='alert alert-danger'>Error: No se pudo crear la carpeta $dir. Por favor, cree manualmente las carpetas 'uploads/cvs' y 'uploads/fotos' en $base_dir y otorgue permisos de escritura al servidor web (e.g., IUSR o IIS_IUSRS en Windows).</div>";
-               exit;
-          }
-     }
-     // Verificar que la carpeta sea escribible
-     if (!is_writable($dir)) {
-          echo "<div class='alert alert-danger'>Error: La carpeta $dir no tiene permisos de escritura. Otorgue permisos de escritura al servidor web (e.g., IUSR o IIS_IUSRS) en $dir.</div>";
-          exit;
-     }
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener id_usuario de la sesión o usar valor por defecto para pruebas
