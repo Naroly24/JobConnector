@@ -12,6 +12,7 @@ if (!$idUsuario) {
 $nombre = $_POST['nombre'] ?? '';
 $apellido = $_POST['apellido'] ?? '';
 $correo = $_POST['correo'] ?? '';
+$rnc = $_POST['rnc'] ?? ''; // ✅ Agregado
 
 $password_actual = $_POST['password_actual'] ?? '';
 $nueva_password = $_POST['nueva_password'] ?? '';
@@ -57,6 +58,7 @@ Conexion::ejecutar($sqlUsuario, $paramsUsuario);
 
 // --- ACTUALIZAR EMPRESA ---
 $sqlEmpresa = "UPDATE Empresas SET 
+    rnc = ?,
     descripcion = ?, 
     sector = ?, 
     direccion = ?, 
@@ -66,6 +68,7 @@ $sqlEmpresa = "UPDATE Empresas SET
     WHERE id_usuario = ?";
 
 $paramsEmpresa = [
+    $rnc,             // ✅ Asegúrate que este sea el primer parámetro
     $descripcion,
     $industria,
     $ubicacion,
@@ -80,3 +83,4 @@ Conexion::ejecutar($sqlEmpresa, $paramsEmpresa);
 // Redirigir o mostrar mensaje
 echo "<script>alert('✅ Perfil actualizado correctamente.'); window.location.href='perfil_empresa.php';</script>";
 exit;
+?>

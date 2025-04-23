@@ -1194,7 +1194,7 @@ class Plantilla
 
                                 <?php elseif ($tipoUsuario === 'candidato'): ?>
                                     <li><a href="/panel_candidatos/buscar_empleos.php" class="nav_link">Buscar Empleos</a></li>
-                                    <li><a href="/panel_candidatos/mis_aplicaciones.php" class="nav_link">Mis Aplicaciones</a></li>
+                                    <li><a href="/panel_candidatos/candidato_panel.php" class="nav_link">Panel</a></li>
                                 <?php endif; ?>
 
                                 <?php if (isset($_SESSION['id_usuario'])): ?>
@@ -1229,7 +1229,6 @@ class Plantilla
                                             <span class="user-name"><?= htmlspecialchars($nombreCompleto) ?></span>
                                             <div class="dropdown-toggle"><i class="fas fa-chevron-down"></i></div>
                                             <div class="dropdown-menu">
-                                                <a href="/general/Login_y_registro/perfil.php">Mi Perfil</a>
                                                 <a href="/general/Login_y_registro/logout.php">Cerrar Sesión</a>
                                             </div>
                                         </div>

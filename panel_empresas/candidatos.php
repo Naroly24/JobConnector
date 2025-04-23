@@ -56,11 +56,13 @@ plantilla::navbar();
         <div class="sidebar-menu">
             <ul>
                 <li class="menu-item">
+                <li class="menu-item">
                     <a href="empresa_panel.php"><i class="fas fa-home"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="menu-item">
                     <a href="ofertas/crear_oferta.php"><i class="fas fa-search"></i> <span>Ofertas de Empleo</span></a>
                 </li>
+                <li class="menu-item active">
                 <li class="menu-item active">
                     <a href="candidatos.php"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                 </li>
@@ -70,6 +72,9 @@ plantilla::navbar();
                 <li class="menu-item" style="color: var(--danger);">
                     <a href="../../general/Login_y_Registro/logout.php" style="color: var(--danger);"><i
                             class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar Sesión</span></a>
+                    <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt"
+                            style="color: var(--danger);"></i> <span>Cerrar
+                            Sesión</span></a>
                 </li>
             </ul>
         </div>
