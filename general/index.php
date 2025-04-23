@@ -18,8 +18,8 @@ Plantilla::navbar();
         <div class="bienvenida">
             <h1>Registro de Visitas</h1>
             <p>Bienvenido al sistema de registro de visitas. Por favor, regístrese para acceder a nuestras instalaciones.</p>
-            <a href="registro.php" class="boton-secundario">Registrar Visita</a>
-            <a href="reparto.php" class="boton-secundario">Ver Registros</a>
+            <a href="Login_y_Registro/registro.php" class="btn btn-secondary">Registrarse</a>
+            <a href="Login_y_Registro/Login.php" class="btn btn-secondary">Ingresar</a>
         </div>
 
     </section>

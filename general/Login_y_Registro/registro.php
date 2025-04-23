@@ -19,8 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $apellido = ($tipo_usuario === 'candidato') ? $_POST['apellido'] : '-';
     $correo = $_POST['correo'];
     $fecha = $_POST['fecha'];
-    $contrasena = $_POST['contrasena'];
-    $confirmar = $_POST['confirmar'];
+    if ($tipo_usuario === 'candidato') {
+        $contrasena = $_POST['contrasena'] ?? '';
+        $confirmar = $_POST['confirmar'] ?? '';
+    } else {
+        $contrasena = $_POST['contrasena_empresa'] ?? '';
+        $confirmar = $_POST['confirmar_empresa'] ?? '';
+    }
 
     if (!str_contains($correo, '@')) {
         echo "<script>alert('⚠️ El correo debe contener @');</script>";
@@ -367,11 +372,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             aplicarValidacionContraseñas(candidatoForm);
             aplicarValidacionContraseñas(empresaForm);
 
-            candidatoForm.addEventListener('submit', function(e) {
+            candidatoForm.addEventListener('submit', function (e) {
                 if (!validarFormulario(this)) e.preventDefault();
             });
 
-            empresaForm.addEventListener('submit', function(e) {
+            empresaForm.addEventListener('submit', function (e) {
                 if (!validarFormulario(this)) e.preventDefault();
             });
         });

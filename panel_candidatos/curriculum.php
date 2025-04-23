@@ -1115,7 +1115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                               <li><a href="candidatos_index.html">Inicio para Candidatos</a></li>
                               <li><a href="#">Buscar Empleos</a></li>
                               <li><a href="empresas_index.html">Inicio para Empresas</a></li>
-                              <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                              <li><a href="sobre-nosotros.php">Sobre Nosotros</a></li>
                          </ul>
                     </div>
 

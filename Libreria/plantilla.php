@@ -14,6 +14,10 @@ class Plantilla
 
     public function __construct()
     {
+        // Iniciar sesión si no se ha hecho aún
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 ?>
 
         <!DOCTYPE html>
@@ -22,7 +26,7 @@ class Plantilla
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>EduTrack</title>
+            <title>JobConnect RD</title>
             <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
             <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -1012,6 +1016,132 @@ class Plantilla
                     display: flex;
                     gap: 10px;
                 }
+
+                /* Hero section */
+                .hero {
+                    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                    color: var(--white);
+                    text-align: center;
+                    padding: 4rem 1rem;
+                    border-radius: var(--radius);
+                    margin-bottom: 2rem;
+                }
+
+                .hero h2 {
+                    font-size: 2.5rem;
+                    margin-bottom: 1rem;
+                }
+
+                .hero p {
+                    font-size: 1.2rem;
+                    max-width: 700px;
+                    margin: 0 auto 2rem;
+                }
+
+                /* Cards */
+                .card {
+                    background-color: var(--white);
+                    border-radius: var(--radius);
+                    box-shadow: var(--shadow);
+                    padding: 1.5rem;
+                    margin-bottom: 1.5rem;
+                    transition: var(--transition);
+                    height: 100%;
+                }
+
+                .card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+                }
+
+                .card-title {
+                    font-size: 1.25rem;
+                    margin-bottom: 1rem;
+                    color: var(--primary);
+                }
+
+                .card-body {
+                    color: var(--dark);
+                }
+
+                .card-footer {
+                    margin-top: 1rem;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+
+                /* Grid System */
+                .row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin: 0 -1rem;
+                }
+
+                .col {
+                    flex: 1;
+                    padding: 0 1rem;
+                    min-width: 0;
+                }
+
+                .col-1 {
+                    flex: 0 0 8.333%;
+                    max-width: 8.333%;
+                }
+
+                .col-2 {
+                    flex: 0 0 16.666%;
+                    max-width: 16.666%;
+                }
+
+                .col-3 {
+                    flex: 0 0 25%;
+                    max-width: 25%;
+                }
+
+                .col-4 {
+                    flex: 0 0 33.333%;
+                    max-width: 33.333%;
+                }
+
+                .col-5 {
+                    flex: 0 0 41.666%;
+                    max-width: 41.666%;
+                }
+
+                .col-6 {
+                    flex: 0 0 50%;
+                    max-width: 50%;
+                }
+
+                .col-7 {
+                    flex: 0 0 58.333%;
+                    max-width: 58.333%;
+                }
+
+                .col-8 {
+                    flex: 0 0 66.666%;
+                    max-width: 66.666%;
+                }
+
+                .col-9 {
+                    flex: 0 0 75%;
+                    max-width: 75%;
+                }
+
+                .col-10 {
+                    flex: 0 0 83.333%;
+                    max-width: 83.333%;
+                }
+
+                .col-11 {
+                    flex: 0 0 91.666%;
+                    max-width: 91.666%;
+                }
+
+                .col-12 {
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                }
             </style>
 
         </head>
@@ -1024,10 +1154,7 @@ class Plantilla
 
         public static function navbar()
         {
-            // Iniciar sesión si no se ha hecho aún
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
+
 
             ?>
                 <header>
@@ -1044,9 +1171,9 @@ class Plantilla
                         <nav id="nav-menu" class="side-menu">
                             <ul>
                                 <li><a href="<?php echo BASE_URL; ?>general/index.php" class="nav_link active-link">Inicio</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_empresas.html" class="nav_link">Empresas</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>genera/index_candidatos.php" class="nav_link">Candidatos</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.html" class="nav_link">Sobre Nosotros</a></li>
+                                <li><a href="<?php echo BASE_URL; ?>general/index_empresas.php" class="nav_link">Empresas</a></li>
+                                <li><a href="<?php echo BASE_URL; ?>general/index_candidatos.php" class="nav_link">Candidatos</a></li>
+                                <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.php" class="nav_link">Sobre Nosotros</a></li>
 
                                 <?php if (isset($_SESSION['nombre'])): ?>
                                     <?php
@@ -1082,7 +1209,7 @@ class Plantilla
                                         </div>
                                     </li>
                                 <?php else: ?>
-                                    <li><a href="<?php echo BASE_URL; ?>general/Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
+                                    <li><a href="<?php echo BASE_URL; ?>general/Login_y_Registro/Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
                                 <?php endif; ?>
                             </ul>
                         </nav>
@@ -1138,10 +1265,10 @@ class Plantilla
                         <div class="footer-section">
                             <h3>Enlaces Rápidos</h3>
                             <ul>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_candidatos.html">Inicio para Candidatos</a></li>
+                                <li><a href="<?php echo BASE_URL; ?>general/index_candidatos.php">Inicio para Candidatos</a></li>
                                 <li><a href="<?php echo BASE_URL; ?>panel_candidatos/buscar_empleos.html">Buscar Empleos</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_empresas.html">Inicio para Empresas</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.html">Sobre Nosotros</a></li>
+                                <li><a href="<?php echo BASE_URL; ?>general/index_empresas.php">Inicio para Empresas</a></li>
+                                <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.php">Sobre Nosotros</a></li>
                             </ul>
                         </div>
 

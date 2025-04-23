@@ -1,34 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
+<?php
+$ocultar_footer = true; // o false si lo quieres mostrar
+require('../libreria/motor.php');
+require('../libreria/plantilla.php');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobConnect RD - Perfil de Empresa</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../Libreria/style_empresas.css">
-</head>
-
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <img src="../Libreria/logo.png" alt="JobConnect RD Logo">
-                <h1>Job<span>Connect RD</span></h1>
-            </div>
-            <div class="mobile-menu-toggle" id="mobile-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="user-menu">
-                <div class="user-avatar">TS</div>
-                <span class="user-name">Tech Solutions</span>
-                <div class="dropdown-toggle">
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-            </div>
-        </div>
-    </header>
+plantilla::aplicar();
+if (isset($ocultar_footer) && $ocultar_footer) {
+echo '<style>
+    footer {
+        display: none !important;
+    }
+</style>';
+}
+plantilla::navbar();
+?>
     <!-- Dashboard Container -->
     <div class="dashboard-container">
         <!-- Sidebar -->
@@ -48,10 +32,10 @@
                         <a href="candidatos.php"><i class="fas fa-users"></i> <span>Candidatos</span></a>
                     </li>
                     <li class="menu-item">
-                        <a href="perfil_empresa.html"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
+                        <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
                     </li>
                     <li class="menu-item" style="color: var(--danger);">
-                        <a href="../general/index_empresas.html" style="color: var(--danger);"><i
+                        <a href="../general/index_empresas.php" style="color: var(--danger);"><i
                                 class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
                                 Sesión</span></a>
                     </li>
@@ -59,8 +43,8 @@
             </div>
         </div>
 
-         <!-- Main Content -->
-         <div class="main-content">
+        <!-- Main Content -->
+        <div class="main-content">
             <div class="page-title">
                 <h1>Perfil de Empresa</h1>
             </div>
@@ -111,26 +95,3 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                </div>
-                <div class="footer-section">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul>
-                        <li><a href="empresa_panel.php">Inicio</a></li>
-                        <li><a href="ofertas/crear_oferta.php">Ofertas de Empleo</a></li>
-                        <li><a href="candidatos.php">Candidatos</a></li>
-                        <li><a href="perfil_empresa.html">Sobre Nosotros</a></li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-</body>
-</html>
