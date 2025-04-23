@@ -22,7 +22,7 @@ $id_empresa = $_SESSION['id_empresa'];
 $resultado = eliminarOferta($id_oferta, $id_empresa);
 
 if ($resultado) {
-     header("Location: ../empresa_panel.php?msg=Oferta eliminada");
+     header("Location: ../empresa_panel.php?msg=Oferta eliminada exitosamente");
 } else {
      header("Location: ../empresa_panel.php?error=No se pudo eliminar la oferta");
 }

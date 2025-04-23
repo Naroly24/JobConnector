@@ -104,24 +104,7 @@ $candidatos = conexion::consulta("
                         <p>Candidatos Totales</p>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: rgba(243, 156, 18, 0.1); color: var(--warning);">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>150</h3>
-                        <p>Vistas de Ofertas</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: rgba(231, 76, 60, 0.1); color: var(--danger);">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>3</h3>
-                        <p>Entrevistas Programadas</p>
-                    </div>
-                </div>
+                
             </div>
 
             <div class="content-section">
