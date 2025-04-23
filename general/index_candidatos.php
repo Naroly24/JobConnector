@@ -16,7 +16,7 @@ plantilla::navbar();
         <div class="hero">
             <h2>Encuentra tu próxima oportunidad profesional en República Dominicana</h2>
             <p>Conectamos talento dominicano con las mejores empresas del país. Crea tu perfil, sube tu CV y comienza a aplicar a ofertas de trabajo en Santo Domingo, Santiago y más.</p>
-            <a href="registro.html" class="btn btn-secondary btn-lg">Registrarse Ahora</a>
+            <a href="Login_y_Registro/registro.php" class="btn btn-secondary btn-lg">Registrarse Ahora</a>
         </div>
     </section>
 

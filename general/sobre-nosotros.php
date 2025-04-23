@@ -39,7 +39,7 @@ plantilla::navbar();
             <h2 style="text-align: center; margin-bottom: 2rem;">Misión y Visión</h2>
             <div class="row">
                 <!-- Mission -->
-                <div class="col-md-6 col-sm-12" style="margin-bottom: 1.5rem;">
+                <div class="col-md-6-col-sm-12">
                     <div class="card">
                         <h3 class="card-title">Misión</h3>
                         <div class="card-body">
@@ -48,7 +48,7 @@ plantilla::navbar();
                     </div>
                 </div>
                 <!-- Vision -->
-                <div class="col-md-6 col-sm-12" style="margin-bottom: 1.5rem;">
+                <div class="col-md-6-col-sm-12">
                     <div class="card">
                         <h3 class="card-title">Visión</h3>
                         <div class="card-body">
@@ -64,8 +64,8 @@ plantilla::navbar();
             <h2 style="text-align: center; margin-bottom: 2rem;">Nuestro Equipo</h2>
             <div class="row">
                 <!-- Team Member 1 -->
-                <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
-                    <div class="card" style="text-align: center;">
+                <div class="col-md-6-col-lg-4-col-sm-12">
+                    <div class="card">
                         <h3 class="card-title">Ana Martínez</h3>
                         <div class="card-body">
                             <p><strong>Fundadora y CEO</strong></p>
@@ -74,8 +74,8 @@ plantilla::navbar();
                     </div>
                 </div>
                 <!-- Team Member 2 -->
-                <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
-                    <div class="card" style="text-align: center;">
+                <div class="col-md-6-col-lg-4-col-sm-12">
+                    <div class="card">
                         <h3 class="card-title">Carlos Díaz</h3>
                         <div class="card-body">
                             <p><strong>Director de Tecnología</strong></p>
@@ -84,8 +84,8 @@ plantilla::navbar();
                     </div>
                 </div>
                 <!-- Team Member 3 -->
-                <div class="col-md-6 col-lg-4 col-sm-12" style="margin-bottom: 1.5rem;">
-                    <div class="card" style="text-align: center;">
+                <div class="col-md-6-col-lg-4-col-sm-12">
+                    <div class="card">
                         <h3 class="card-title">Sofía López</h3>
                         <div class="card-body">
                             <p><strong>Gerente de Operaciones</strong></p>

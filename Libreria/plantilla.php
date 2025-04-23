@@ -18,7 +18,7 @@ class Plantilla
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-?>
+        ?>
         <!DOCTYPE html>
         <html lang="es">
 
@@ -87,7 +87,7 @@ class Plantilla
                     align-items: center;
                     height: 100%;
                     padding: 0 1rem;
-                    max-width: var(--max-width);
+                    /* max-width: var(--max-width); */
                     margin: 0 auto;
                 }
 
@@ -777,8 +777,8 @@ class Plantilla
                     width: var(--sidebar-width);
                     background-color: var(--white);
                     box-shadow: var(--shadow);
-                    height: calc(100vh - var(--header-height));
-                    position: fixed;
+                    height: calc(100vh - var(--header-height) + 210px);
+
                     overflow-y: auto;
                     transition: var(--transition);
                 }
@@ -1046,6 +1046,7 @@ class Plantilla
                     margin-bottom: 1.5rem;
                     transition: var(--transition);
                     height: 100%;
+                    text-align: center;
                 }
 
                 .card:hover {
@@ -1073,11 +1074,25 @@ class Plantilla
                 .row {
                     display: flex;
                     flex-wrap: wrap;
+                    justify-content: center;
                     margin: 0 -1rem;
                 }
 
+                .col-md-6-col-sm-12 {
+                    flex: 0 0 50%;
+                    max-width: 50%;
+                    padding: 10px;
+                }
+
+                .col-md-6-col-lg-4-col-sm-12 {
+                    flex: 0 0 33.3333%;
+                    max-width: 33.3333%;
+                    padding: 25px;
+                }
+
+
                 .col {
-                    flex: 1;
+                    flex: 2;
                     padding: 0 1rem;
                     min-width: 0;
                 }
@@ -1148,19 +1163,19 @@ class Plantilla
         <body>
             <div class="container">
 
-            <?php
-        }
+                <?php
+    }
 
-        public static function navbar()
-        {
+    public static function navbar()
+    {
+        $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
 
-
-            ?>
+        ?>
                 <header>
                     <div class="container header-container">
                         <div class="logo">
-                            <a href="<?php echo BASE_URL; ?>general/index.php" class="logo-link">
-                                <img src="<?php echo BASE_URL; ?>Libreria/logo.png" alt="JobConnect RD Logo">
+                            <a href="/general/index.php" class="logo-link">
+                                <img src="/Libreria/logo.png" alt="JobConnect RD Logo">
                                 <h1>Job<span>Connect RD</span></h1>
                             </a>
                         </div>
@@ -1169,10 +1184,17 @@ class Plantilla
                         </div>
                         <nav id="nav-menu" class="side-menu">
                             <ul>
-                                <li><a href="<?php echo BASE_URL; ?>general/index.php" class="nav_link active-link">Inicio</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_empresas.php" class="nav_link">Empresas</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_candidatos.php" class="nav_link">Candidatos</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.php" class="nav_link">Sobre Nosotros</a></li>
+                                <li><a href="/general/index.php" class="nav_link active-link">Inicio</a></li>
+                                <li><a href="/general/sobre-nosotros.php" class="nav_link">Sobre Nosotros</a></li>
+
+                                <?php if ($tipoUsuario === 'empresa'): ?>
+                                    <li><a href="/panel_empresas/empresa_panel.php" class="nav_link">Panel</a></li>
+                                    </li>
+                                    
+                                <?php elseif ($tipoUsuario === 'candidato'): ?>
+                                    <li><a href="/panel_candidatos/buscar_empleos.php" class="nav_link">Buscar Empleos</a></li>
+                                    <li><a href="/panel_candidatos/mis_aplicaciones.php" class="nav_link">Mis Aplicaciones</a></li>
+                                <?php endif; ?>
 
                                 <?php if (isset($_SESSION['id_usuario'])): ?>
                                     <?php
@@ -1184,7 +1206,7 @@ class Plantilla
                                     $correo = $_SESSION['correo'] ?? 'Usuario';
                                     $iniciales = strtoupper(substr($correo, 0, 2)); // Primeras dos letras del correo
                                     $nombreCompleto = $correo; // Mostrar correo como nombre por defecto
-
+                        
                                     $sql = "SELECT nombre, apellido FROM Usuarios WHERE id_usuario = ?";
                                     $parametros = [$_SESSION['id_usuario']];
                                     $resultado = Conexion::select($sql, $parametros);
@@ -1206,13 +1228,14 @@ class Plantilla
                                             <span class="user-name"><?= htmlspecialchars($nombreCompleto) ?></span>
                                             <div class="dropdown-toggle"><i class="fas fa-chevron-down"></i></div>
                                             <div class="dropdown-menu">
-                                                <a href="<?php echo BASE_URL; ?>general/Login_y_registro/perfil.php">Mi Perfil</a>
-                                                <a href="<?php echo BASE_URL; ?>general/Login_y_registro/logout.php">Cerrar Sesión</a>
+                                                <a href="/general/Login_y_registro/perfil.php">Mi Perfil</a>
+                                                <a href="/general/Login_y_registro/logout.php">Cerrar Sesión</a>
                                             </div>
                                         </div>
                                     </li>
                                 <?php else: ?>
-                                    <li><a href="<?php echo BASE_URL; ?>general/Login_y_Registro/Login.php" class="nav_link login-link">Iniciar Sesión</a></li>
+                                    <li><a href="/general/Login_y_Registro/Login.php" class="nav_link login-link">Iniciar Sesión</a>
+                                    </li>
                                 <?php endif; ?>
                             </ul>
                         </nav>
@@ -1221,12 +1244,12 @@ class Plantilla
 
 
                 <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+                    document.addEventListener('DOMContentLoaded', function () {
                         const mobileToggle = document.getElementById('mobile-toggle');
                         const navMenu = document.getElementById('nav-menu');
 
                         if (mobileToggle) {
-                            mobileToggle.addEventListener('click', function() {
+                            mobileToggle.addEventListener('click', function () {
                                 navMenu.classList.toggle('active');
                             });
 
@@ -1237,21 +1260,21 @@ class Plantilla
                             });
                         }
 
-                        document.addEventListener('click', function(event) {
+                        document.addEventListener('click', function (event) {
                             if (!navMenu.contains(event.target) && !mobileToggle.contains(event.target)) {
                                 navMenu.classList.remove('active');
                             }
                         });
                     });
                 </script>
-            <?php
-        }
+                <?php
+    }
 
 
 
-        public function __destruct()
-        {
-            ?>
+    public function __destruct()
+    {
+        ?>
             </div>
 
             <footer>
@@ -1268,10 +1291,10 @@ class Plantilla
                         <div class="footer-section">
                             <h3>Enlaces Rápidos</h3>
                             <ul>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_candidatos.php">Inicio para Candidatos</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>panel_candidatos/buscar_empleos.html">Buscar Empleos</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/index_empresas.php">Inicio para Empresas</a></li>
-                                <li><a href="<?php echo BASE_URL; ?>general/sobre-nosotros.php">Sobre Nosotros</a></li>
+                                <li><a href="/general/index_candidatos.php">Inicio para Candidatos</a></li>
+                                <li><a href="/panel_candidatos/buscar_empleos.html">Buscar Empleos</a></li>
+                                <li><a href="/general/index_empresas.php">Inicio para Empresas</a></li>
+                                <li><a href="/general/sobre-nosotros.php">Sobre Nosotros</a></li>
                             </ul>
                         </div>
 
@@ -1312,7 +1335,7 @@ class Plantilla
         </body>
 
         </html>
-<?php
-        }
+        <?php
     }
+}
 ?>

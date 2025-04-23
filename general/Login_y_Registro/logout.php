@@ -17,5 +17,5 @@ if (ini_get("session.use_cookies")) {
      );
 }
 
-header("Location: index.php"); // Redirige a la página principal o donde prefieras
+header("Location: /general/index.php"); // Redirige a la página principal o donde prefieras
 exit;
