@@ -424,15 +424,16 @@ $ofertas = conexion::consulta("SELECT id_oferta, titulo FROM Ofertas");
                 <ul>
                     <li class="menu-item"><a href="candidato_panel.php"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
-                    <li class="menu-item active"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar Empleos</a>
+                    <li class="menu-item active"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar
+                            Empleos</a>
                     </li>
                     <li class="menu-item"><a href="mis_aplicaciones.php"><i class="fas fa-file-alt"></i> Mis
                             Aplicaciones</a></li>
                     <li class="menu-item"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                     <li class="menu-item" style="color: var(--danger);">
-                        <a href="../general/index_candidatos.php" style="color: var(--danger);">
-                            <i class="fas fa-sign-out-alt" style="color: var(--danger);"></i> Cerrar Sesión
-                        </a>
+                        <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i
+                                class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
+                                Sesión</span></a>
                     </li>
                 </ul>
             </div>

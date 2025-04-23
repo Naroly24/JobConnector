@@ -33,7 +33,7 @@ try {
             $resultado_candidato = Conexion::select($sql_candidato, $parametros_candidato);
             if ($resultado_candidato) {
                 $_SESSION['id_candidato'] = $resultado_candidato['id_candidato'];
-                header("Location: ../../panel_candidatos/candidato_panel.html");
+                header("Location: ../../panel_candidatos/candidato_panel.php");
                 exit;
             }
         }

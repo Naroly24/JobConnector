@@ -50,8 +50,8 @@ $candidatos = conexion::consulta("
                     <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
                 </li>
                 <li class="menu-item" style="color: var(--danger);">
-                    <a href="../general/index_empresas.php" style="color: var(--danger);"><i
-                            class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar
+                    <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt"
+                            style="color: var(--danger);"></i> <span>Cerrar
                             Sesión</span></a>
                 </li>
             </ul>

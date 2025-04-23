@@ -71,7 +71,7 @@ if ($usuario) {
                     <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Perfil de la Empresa</span></a>
                 </li>
                 <li class="menu-item" style="color: var(--danger);">
-                    <a href="../general/index_empresas.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt"
+                    <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i class="fas fa-sign-out-alt"
                             style="color: var(--danger);"></i> <span>Cerrar
                             Sesión</span></a>
                 </li>
@@ -106,31 +106,45 @@ if ($usuario) {
                             value="<?= htmlspecialchars($correo) ?>" required>
                     </div>
 
-                    <!-- Contraseña actual -->
+                    <!-- Botón para mostrar los campos de contraseña -->
                     <div class="form-group">
-                        <label class="form-label" for="password_actual">Contraseña Actual</label>
-                        <input type="password" id="password_actual" name="password_actual" class="form-control"
-                            placeholder="Solo si deseas cambiarla">
+                        <button type="button" class="btn btn-outline btn-sm" onclick="togglePasswordFields()">Cambiar
+                            Contraseña</button>
                     </div>
 
-                    <!-- Nueva contraseña -->
-                    <div class="form-group">
-                        <label class="form-label" for="nueva_password">Nueva Contraseña</label>
-                        <input type="password" id="nueva_password" name="nueva_password" class="form-control"
-                            placeholder="Solo si deseas cambiarla">
+                    <!-- Sección de contraseñas (oculta por defecto) -->
+                    <div id="password-section" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-label" for="password_actual">Contraseña Actual</label>
+                            <input type="password" id="password_actual" name="password_actual" class="form-control"
+                                placeholder="Solo si deseas cambiarla">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="nueva_password">Nueva Contraseña</label>
+                            <input type="password" id="nueva_password" name="nueva_password" class="form-control"
+                                placeholder="Solo si deseas cambiarla">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="confirmar_password">Confirmar Nueva Contraseña</label>
+                            <input type="password" id="confirmar_password" name="confirmar_password"
+                                class="form-control">
+                        </div>
                     </div>
 
-                    <!-- Confirmar nueva contraseña -->
-                    <div class="form-group">
-                        <label class="form-label" for="confirmar_password">Confirmar Nueva Contraseña</label>
-                        <input type="password" id="confirmar_password" name="confirmar_password" class="form-control">
-                    </div>
 
                     <!-- Descripción -->
                     <div class="form-group">
                         <label class="form-label" for="descripcion">Descripción</label>
                         <textarea id="descripcion" name="descripcion" class="form-control"
                             placeholder="Somos una empresa líder en tecnología..."><?= htmlspecialchars($descripcion) ?></textarea>
+                    </div>
+
+                    <!-- RNC -->
+                    <div class="form-group">
+                        <label class="form-label" for="rnc">RNC</label>
+                        <input type="text" id="rnc" name="rnc" class="form-control"
+                            value="<?= htmlspecialchars($resultado['rnc'] ?? '') ?>" placeholder="Ej: 131234567"
+                            required>
                     </div>
 
                     <!-- Industria -->
