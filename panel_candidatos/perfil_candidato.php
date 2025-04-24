@@ -53,7 +53,7 @@ $cv = $candidato['cv_pdf'] ?? '';
                 <li class="menu-item">
                     <a href="curriculum.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
                 </li>
-                <li class="menu-item active" ><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
+                <li class="menu-item active"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                 <li class="menu-item" style="color: var(--danger);">
                     <a href="../general/Login_y_Registro/Logout.php" style="color: var(--danger);"><i
                             class="fas fa-sign-out-alt" style="color: var(--danger);"></i> <span>Cerrar

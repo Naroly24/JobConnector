@@ -83,4 +83,3 @@ conexion::ejecutar($sqlEmpresa, $paramsEmpresa);
 // Redirigir o mostrar mensaje
 echo "<script>alert('✅ Perfil actualizado correctamente.'); window.location.href='perfil_empresa.php';</script>";
 exit;
-?>

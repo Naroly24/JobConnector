@@ -27,7 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Verificar si ya aplicó
     $verificacion = conexion::select("SELECT * FROM Aplicaciones WHERE id_candidato = ? AND id_oferta = ?", [
-        $id_candidato, $id_oferta
+        $id_candidato,
+        $id_oferta
     ]);
 
     if ($verificacion) {
@@ -46,4 +47,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 // Obtener ofertas
 $ofertas = conexion::consulta("SELECT id_oferta, titulo FROM Ofertas");
-?>
