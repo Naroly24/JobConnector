@@ -10,7 +10,7 @@ try {
     // Buscar en la tabla "Usuarios" por correo
     $sql = "SELECT id_usuario, contrasena, tipo_usuario FROM Usuarios WHERE correo = ?";
     $parametros = [$usuario];
-    $resultado = Conexion::select($sql, $parametros);
+    $resultado = conexion::select($sql, $parametros);
 
     if ($resultado && password_verify($contrasena, $resultado['contrasena'])) {
         // Iniciar sesión
@@ -21,7 +21,7 @@ try {
         if ($resultado['tipo_usuario'] == 'empresa') {
             $sql_empresa = "SELECT id_empresa FROM Empresas WHERE id_usuario = ?";
             $parametros_empresa = [$resultado['id_usuario']];
-            $resultado_empresa = Conexion::select($sql_empresa, $parametros_empresa);
+            $resultado_empresa = conexion::select($sql_empresa, $parametros_empresa);
             if ($resultado_empresa) {
                 $_SESSION['id_empresa'] = $resultado_empresa['id_empresa'];
                 header("Location: ../../panel_empresas/empresa_panel.php");
@@ -30,7 +30,7 @@ try {
         } else if ($resultado['tipo_usuario'] == 'candidato') {
             $sql_candidato = "SELECT id_candidato FROM Candidatos WHERE id_usuario = ?";
             $parametros_candidato = [$resultado['id_usuario']];
-            $resultado_candidato = Conexion::select($sql_candidato, $parametros_candidato);
+            $resultado_candidato = conexion::select($sql_candidato, $parametros_candidato);
             if ($resultado_candidato) {
                 $_SESSION['id_candidato'] = $resultado_candidato['id_candidato'];
                 header("Location: ../../panel_candidatos/candidato_panel.php");

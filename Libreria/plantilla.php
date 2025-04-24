@@ -1208,7 +1208,7 @@ class Plantilla
 
                                     $sql = "SELECT nombre, apellido FROM Usuarios WHERE id_usuario = ?";
                                     $parametros = [$_SESSION['id_usuario']];
-                                    $resultado = Conexion::select($sql, $parametros);
+                                    $resultado = conexion::select($sql, $parametros);
                                     if ($resultado) {
                                         $iniciales = strtoupper(substr($resultado['nombre'], 0, 1));
                                         $nombreCompleto = $resultado['nombre'];

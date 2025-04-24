@@ -36,7 +36,7 @@ if (!empty($password_actual) && !empty($nueva_password) && !empty($confirmar_pas
 
     // Obtener contraseña actual de la base
     $sql = "SELECT contraseña FROM Usuarios WHERE id_usuario = ?";
-    $result = Conexion::select($sql, [$idUsuario]);
+    $result = conexion::select($sql, [$idUsuario]);
 
     if (!$result || !password_verify($password_actual, $result['contraseña'])) {
         die("❌ La contraseña actual es incorrecta.");
@@ -54,7 +54,7 @@ if ($cambiar_contrasena) {
 }
 $paramsUsuario[] = $idUsuario;
 
-Conexion::ejecutar($sqlUsuario, $paramsUsuario);
+conexion::ejecutar($sqlUsuario, $paramsUsuario);
 
 // --- ACTUALIZAR EMPRESA ---
 $sqlEmpresa = "UPDATE Empresas SET 
@@ -78,7 +78,7 @@ $paramsEmpresa = [
     $idUsuario
 ];
 
-Conexion::ejecutar($sqlEmpresa, $paramsEmpresa);
+conexion::ejecutar($sqlEmpresa, $paramsEmpresa);
 
 // Redirigir o mostrar mensaje
 echo "<script>alert('✅ Perfil actualizado correctamente.'); window.location.href='perfil_empresa.php';</script>";

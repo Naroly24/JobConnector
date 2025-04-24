@@ -17,7 +17,7 @@ if (!$idUsuario) {
 
 // Datos de Usuarios
 $sqlUsuario = "SELECT nombre, apellido, correo FROM Usuarios WHERE id_usuario = ?";
-$usuario = Conexion::select($sqlUsuario, [$idUsuario]);
+$usuario = conexion::select($sqlUsuario, [$idUsuario]);
 
 $nombre = $usuario['nombre'] ?? '';
 $apellido = $usuario['apellido'] ?? '';
@@ -25,7 +25,7 @@ $correo = $usuario['correo'] ?? '';
 
 // Datos de Candidatos
 $sqlCandidato = "SELECT telefono, direccion, ciudad, profesion, resumen_profesional, disponibilidad, redes_profesionales, cv_pdf FROM Candidatos WHERE id_usuario = ?";
-$candidato = Conexion::select($sqlCandidato, [$idUsuario]);
+$candidato = conexion::select($sqlCandidato, [$idUsuario]);
 
 $telefono = $candidato['telefono'] ?? '';
 $direccion = $candidato['direccion'] ?? '';

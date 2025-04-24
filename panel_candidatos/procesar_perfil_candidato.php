@@ -29,7 +29,7 @@ if (!empty($password_actual) && !empty($nueva_password) && !empty($confirmar_pas
     }
 
     $sql = "SELECT contraseña FROM Usuarios WHERE id_usuario = ?";
-    $result = Conexion::select($sql, [$idUsuario]);
+    $result = conexion::select($sql, [$idUsuario]);
 
     if (!$result || !password_verify($password_actual, $result['contraseña'])) {
         die("❌ La contraseña actual es incorrecta.");
@@ -50,11 +50,11 @@ if ($cambiar_contrasena) {
 
 $sqlUsuario .= " WHERE id_usuario = ?";
 $paramsUsuario[] = $idUsuario;
-Conexion::ejecutar($sqlUsuario, $paramsUsuario);
+conexion::ejecutar($sqlUsuario, $paramsUsuario);
 
 // Obtener ID del candidato asociado
 $sqlIdCandidato = "SELECT id_candidato FROM Candidatos WHERE id_usuario = ?";
-$res = Conexion::select($sqlIdCandidato, [$idUsuario]);
+$res = conexion::select($sqlIdCandidato, [$idUsuario]);
 $idCandidato = $res['id_candidato'] ?? null;
 
 if ($idCandidato) {
@@ -73,7 +73,7 @@ if ($idCandidato) {
         $idCandidato
     ];
 
-    Conexion::ejecutar($sqlCandidato, $paramsCandidato);
+    conexion::ejecutar($sqlCandidato, $paramsCandidato);
 }
 
 // Redirigir

@@ -1,9 +1,7 @@
 <?php
+ob_start(); // Start output buffering
 require_once '../../libreria/motor.php';
 require_once '../../libreria/plantilla.php';
-
-plantilla::aplicar();
-plantilla::navbar();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tipo_usuario = $_POST['tipo_usuario'];
@@ -31,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $sql_usuario = "INSERT INTO Usuarios (nombre, apellido, correo, contrasena, fecha, tipo_usuario) VALUES (?, ?, ?, ?, ?, ?)";
             $parametros_usuario = [$nombre, $apellido, $correo, $contrasena_hash, $fecha, $tipo_usuario];
-            $id_usuario = Conexion::insert($sql_usuario, $parametros_usuario);
+            $id_usuario = conexion::insert($sql_usuario, $parametros_usuario);
 
             if ($tipo_usuario === 'candidato') {
                 $telefono = $_POST['telefono'];
@@ -41,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql_candidato = "INSERT INTO Candidatos (id_usuario, telefono, ciudad, profesion, resumen_profesional, disponibilidad, redes_profesionales, cv_pdf, foto, direccion)
                                   VALUES (?, ?, ?, ?, NULL, NULL, NULL, NULL, NULL, NULL)";
                 $params_candidato = [$id_usuario, $telefono, $ciudad, $profesion];
-                Conexion::insert($sql_candidato, $params_candidato);
+                conexion::insert($sql_candidato, $params_candidato);
             } elseif ($tipo_usuario === 'empresa') {
                 $rnc = $_POST['rnc'];
                 $sector = $_POST['sector'];
@@ -55,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql_empresa = "INSERT INTO Empresas (id_usuario, rnc, sector, direccion, ciudad, telefono, correo_corporativo, sitio_web, descripcion)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $params_empresa = [$id_usuario, $rnc, $sector, $direccion, $ciudad_empresa, $telefono_empresa, $correo_corporativo, $sitio_web, $descripcion];
-                Conexion::insert($sql_empresa, $params_empresa);
+                conexion::insert($sql_empresa, $params_empresa);
             }
 
             ob_end_clean();
@@ -66,6 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+plantilla::aplicar();
+plantilla::navbar();
 ?>
 
 <!DOCTYPE html>

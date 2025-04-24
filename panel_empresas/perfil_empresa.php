@@ -18,7 +18,7 @@ $idUsuario = $_SESSION['id_usuario'];
 // Consulta para traer los datos de la empresa
 $sql = "SELECT rnc, sector, direccion AS ubicacion, ciudad, telefono, sitio_web, correo_corporativo AS correo, descripcion 
         FROM Empresas WHERE id_usuario = ?";
-$resultado = Conexion::select($sql, [$idUsuario]);
+$resultado = conexion::select($sql, [$idUsuario]);
 
 // Variables por defecto
 $nombreEmpresa = $_SESSION['nombre'] ?? ''; // viene desde la sesión también
@@ -39,7 +39,7 @@ if ($resultado) {
 
 // Traer datos adicionales desde la tabla Usuarios
 $sqlUsuario = "SELECT nombre, apellido, correo FROM Usuarios WHERE id_usuario = ?";
-$usuario = Conexion::select($sqlUsuario, [$idUsuario]);
+$usuario = conexion::select($sqlUsuario, [$idUsuario]);
 
 $nombre = $apellido = $correo = '';
 if ($usuario) {
