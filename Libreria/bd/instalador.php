@@ -43,12 +43,16 @@ CREATE TABLE IF NOT EXISTS Usuarios (
 -- Tabla Candidatos
 CREATE TABLE IF NOT EXISTS Candidatos (
     id_candidato INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
+    id_usuario INT NOT NULL,
     telefono VARCHAR(20),
+    direccion VARCHAR(255),
     ciudad VARCHAR(100),
+    resumen_profesional TEXT,
     profesion VARCHAR(100),
     disponibilidad VARCHAR(50),
-    foto VARCHAR(255),
+    redes_profesionales VARCHAR(255),
+    foto LONGBLOB,
+    cv_pdf LONGBLOB,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
@@ -67,81 +71,81 @@ CREATE TABLE IF NOT EXISTS Empresas (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
--- Tabla Formaciones Academicas
+-- Tabla Formaciones_Academicas
 CREATE TABLE IF NOT EXISTS Formaciones_Academicas (
     id_formacion INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
+    id_candidato INT NOT NULL,
     institucion VARCHAR(255),
     titulo VARCHAR(255),
     fecha_inicio DATE,
     fecha_fin DATE,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
 );
 
--- Tabla Experiencias Laborales
+-- Tabla Experiencias_Laborales
 CREATE TABLE IF NOT EXISTS Experiencias_Laborales (
     id_experiencia INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
+    id_candidato INT NOT NULL,
     empresa VARCHAR(255),
     puesto VARCHAR(255),
     fecha_inicio DATE,
     fecha_fin DATE,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
 );
 
 -- Tabla Habilidades
 CREATE TABLE IF NOT EXISTS Habilidades (
     id_habilidad INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
+    id_candidato INT NOT NULL,
     habilidad VARCHAR(100),
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
 );
 
 -- Tabla Idiomas
 CREATE TABLE IF NOT EXISTS Idiomas (
     id_idioma INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
+    id_candidato INT NOT NULL,
     idioma VARCHAR(100),
     nivel VARCHAR(100),
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
 );
 
--- Tabla Logros o Proyectos
+-- Tabla Logros_Proyectos
 CREATE TABLE IF NOT EXISTS Logros_Proyectos (
     id_logro INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
+    id_candidato INT NOT NULL,
     descripcion TEXT,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
 );
 
 -- Tabla Referencias
 CREATE TABLE IF NOT EXISTS Referencias (
     id_referencia INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
+    id_candidato INT NOT NULL,
     nombre_contacto VARCHAR(255),
     descripcion_contacto TEXT,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
 );
 
 -- Tabla Ofertas
 CREATE TABLE IF NOT EXISTS Ofertas (
     id_oferta INT AUTO_INCREMENT PRIMARY KEY,
-    id_empresa INT,
+    id_empresa INT NOT NULL,
     titulo VARCHAR(255),
     descripcion TEXT,
     requisitos TEXT,
     fecha_publicacion DATE,
-    FOREIGN KEY (id_empresa) REFERENCES Empresas(id_empresa)
+    FOREIGN KEY (id_empresa) REFERENCES Empresas(id_empresa) ON DELETE CASCADE
 );
 
 -- Tabla Aplicaciones
 CREATE TABLE IF NOT EXISTS Aplicaciones (
     id_aplicacion INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    id_oferta INT,
+    id_candidato INT NOT NULL,
+    id_oferta INT NOT NULL,
     fecha_aplicacion DATE,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato),
-    FOREIGN KEY (id_oferta) REFERENCES Ofertas(id_oferta)
+    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE,
+    FOREIGN KEY (id_oferta) REFERENCES Ofertas(id_oferta) ON DELETE CASCADE
 );
 SQL;
 
