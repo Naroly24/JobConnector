@@ -1,218 +1,165 @@
 <?php
-$configFile = 'db_config.php';
+// Default database configuration
+$default_host = 'localhost';
+$default_user = 'root';
+$default_pass = '';
+$default_db = 'PlataformaEmpleos';
 
-// // If db_config.php exists, redirect to the main app
-// if (file_exists($configFile)) {
-//     header("Location: ../../general/Login_y_Registro/registro.php");
-//     exit;
-// }
-
-// Default credentials for local MySQL (e.g., XAMPP)
-$defaultCredentials = [
-    'db_host' => 'localhost',
-    'db_user' => 'root',
-    'db_pass' => '',
-    'db_name' => 'PlataformaEmpleos'
-];
-
-// Attempt automatic installation with defaults
-$autoInstallSuccess = false;
-$error = null;
-
+// Check if database already exists to avoid redundant installation
 try {
-    // Connect to MySQL server
-    $pdo = new PDO(
-        "mysql:host={$defaultCredentials['db_host']}",
-        $defaultCredentials['db_user'],
-        $defaultCredentials['db_pass'],
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-
-    // Create database
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$defaultCredentials['db_name']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-    $pdo->exec("USE `{$defaultCredentials['db_name']}`");
-
-    // Create tables
-    $sql = <<<SQL
--- Tabla Usuarios
-CREATE TABLE IF NOT EXISTS Usuarios (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) NOT NULL UNIQUE,
-    contrasena VARCHAR(255) NOT NULL,
-    fecha DATE NOT NULL,
-    tipo_usuario ENUM('candidato', 'empresa') NOT NULL
-);
-
--- Tabla Candidatos
-CREATE TABLE IF NOT EXISTS Candidatos (
-    id_candidato INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
-    telefono VARCHAR(20),
-    direccion VARCHAR(255),
-    ciudad VARCHAR(100)
-    resumen_profesional TEXT,,
-    profesion VARCHAR(100),
-    disponibilidad VARCHAR(50),
-    redes_profesionales VARCHAR(255),
-    foto VARCHAR(255),
-    cv_pdf VARCHAR(255),
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
-);
-
--- Tabla Empresas
-CREATE TABLE IF NOT EXISTS Empresas (
-    id_empresa INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    rnc VARCHAR(20),
-    sector VARCHAR(100),
-    direccion VARCHAR(255),
-    ciudad VARCHAR(100),
-    telefono VARCHAR(20),
-    correo_corporativo VARCHAR(100),
-    sitio_web VARCHAR(100),
-    descripcion TEXT,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
-);
-
--- Tabla Formaciones Academicas
-CREATE TABLE IF NOT EXISTS Formaciones_Academicas (
-    id_formacion INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    institucion VARCHAR(255),
-    titulo VARCHAR(255),
-    fecha_inicio DATE,
-    fecha_fin DATE,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
-);
-
--- Tabla Experiencias Laborales
-CREATE TABLE IF NOT EXISTS Experiencias_Laborales (
-    id_experiencia INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    empresa VARCHAR(255),
-    puesto VARCHAR(255),
-    fecha_inicio DATE,
-    fecha_fin DATE,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
-);
-
--- Tabla Habilidades
-CREATE TABLE IF NOT EXISTS Habilidades (
-    id_habilidad INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    habilidad VARCHAR(100),
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
-);
-
--- Tabla Idiomas
-CREATE TABLE IF NOT EXISTS Idiomas (
-    id_idioma INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    idioma VARCHAR(100),
-    nivel VARCHAR(100),
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
-);
-
--- Tabla Logros o Proyectos
-CREATE TABLE IF NOT EXISTS Logros_Proyectos (
-    id_logro INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    descripcion TEXT,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
-);
-
--- Tabla Referencias
-CREATE TABLE IF NOT EXISTS Referencias (
-    id_referencia INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    nombre_contacto VARCHAR(255),
-    descripcion_contacto TEXT,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato)
-);
-
--- Tabla Ofertas
-CREATE TABLE IF NOT EXISTS Ofertas (
-    id_oferta INT AUTO_INCREMENT PRIMARY KEY,
-    id_empresa INT,
-    titulo VARCHAR(255),
-    descripcion TEXT,
-    requisitos TEXT,
-    fecha_publicacion DATE,
-    FOREIGN KEY (id_empresa) REFERENCES Empresas(id_empresa)
-);
-
--- Tabla Aplicaciones
-CREATE TABLE IF NOT EXISTS Aplicaciones (
-    id_aplicacion INT AUTO_INCREMENT PRIMARY KEY,
-    id_candidato INT,
-    id_oferta INT,
-    fecha_aplicacion DATE,
-    FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato),
-    FOREIGN KEY (id_oferta) REFERENCES Ofertas(id_oferta)
-);
-SQL;
-
-    $pdo->exec($sql);
-
-    // Save configuration
-    $configContent = "<?php
-define('DB_HOST', '{$defaultCredentials['db_host']}');
-define('DB_USER', '{$defaultCredentials['db_user']}');
-define('DB_PASS', '{$defaultCredentials['db_pass']}');
-define('DB_NAME', '{$defaultCredentials['db_name']}');
-?>";
-    file_put_contents($configFile, $configContent);
-
-    $autoInstallSuccess = true;
-} catch (PDOException $e) {
-    $error = "No se pudo conectar con las credenciales predeterminadas. Por favor, ingrese los detalles de la base de datos.";
-}
-
-// If auto-install succeeded, redirect to registro.php
-if ($autoInstallSuccess) {
-    header("Location: ../general/Login_y_Registro/registro.php");
+    $pdo = new PDO("mysql:host=$default_host;dbname=$default_db", $default_user, $default_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Database exists, redirect to index.php
+    header("Location: ../../general/index.php");
     exit;
+} catch (PDOException $e) {
+    // Database doesn't exist, proceed to installation
 }
 
-// Handle manual form submission if auto-install failed
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $dbHost = trim($_POST['db_host'] ?? '');
-    $dbUser = trim($_POST['db_user'] ?? '');
-    $dbPass = $_POST['db_pass'] ?? '';
-    $dbName = trim($_POST['db_name'] ?? '');
+        // Handle installation form submission
+        // Handle installation form submission
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['install'])) {
+            $error_log = [];
+            try {
+                // Connect to MySQL server
+                $pdo = new PDO("mysql:host=$default_host", $default_user, $default_pass);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if (empty($dbHost) || empty($dbUser) || empty($dbName)) {
-        $error = "Por favor, complete todos los campos requeridos.";
-    } else {
-        try {
-            // Connect to MySQL server
-            $pdo = new PDO("mysql:host=$dbHost", $dbUser, $dbPass, [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            ]);
+                // Create database
+                $pdo->exec("CREATE DATABASE IF NOT EXISTS PlataformaEmpleos");
+                $pdo->exec("USE PlataformaEmpleos");
 
-            // Create database
-            $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-            $pdo->exec("USE `$dbName`");
+                // Array of SQL statements for table creation
+                $sql_statements = [
+                    "CREATE TABLE IF NOT EXISTS Usuarios (
+                id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(100) NOT NULL,
+                apellido VARCHAR(100) NOT NULL,
+                correo VARCHAR(100) NOT NULL UNIQUE,
+                contrasena VARCHAR(255) NOT NULL,
+                fecha DATE NOT NULL,
+                tipo_usuario ENUM('candidato', 'empresa') NOT NULL
+            )",
+                    "CREATE TABLE IF NOT EXISTS Candidatos (
+                id_candidato INT AUTO_INCREMENT PRIMARY KEY,
+                id_usuario INT NOT NULL,
+                telefono VARCHAR(20),
+                direccion VARCHAR(255),
+                ciudad VARCHAR(100),
+                resumen_profesional TEXT,
+                profesion VARCHAR(100),
+                disponibilidad VARCHAR(50),
+                redes_profesionales VARCHAR(255),
+                foto LONGBLOB,
+                cv_pdf LONGBLOB,
+                UNIQUE KEY uk_id_usuario (id_usuario),
+                FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Empresas (
+                id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+                id_usuario INT NOT NULL,
+                rnc VARCHAR(20),
+                sector VARCHAR(100),
+                direccion VARCHAR(255),
+                ciudad VARCHAR(100),
+                telefono VARCHAR(20),
+                correo_corporativo VARCHAR(100),
+                sitio_web VARCHAR(100),
+                descripcion TEXT,
+                FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Formaciones_Academicas (
+                id_formacion INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                institucion VARCHAR(255),
+                titulo VARCHAR(255),
+                fecha_inicio DATE,
+                fecha_fin DATE,
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Experiencias_Laborales (
+                id_experiencia INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                empresa VARCHAR(255),
+                puesto VARCHAR(255),
+                fecha_inicio DATE,
+                fecha_fin DATE,
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Habilidades (
+                id_habilidad INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                habilidad VARCHAR(100),
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Idiomas (
+                id_idioma INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                idioma VARCHAR(100),
+                nivel VARCHAR(100),
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Logros_Proyectos (
+                id_logro INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                descripcion TEXT,
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Referencias (
+                id_referencia INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                nombre_contacto VARCHAR(255),
+                descripcion_contacto TEXT,
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Ofertas (
+                id_oferta INT AUTO_INCREMENT PRIMARY KEY,
+                id_empresa INT NOT NULL,
+                titulo VARCHAR(255),
+                descripcion TEXT,
+                requisitos TEXT,
+                fecha_publicacion DATE,
+                FOREIGN KEY (id_empresa) REFERENCES Empresas(id_empresa) ON DELETE CASCADE
+            )",
+                    "CREATE TABLE IF NOT EXISTS Aplicaciones (
+                id_aplicacion INT AUTO_INCREMENT PRIMARY KEY,
+                id_candidato INT NOT NULL,
+                id_oferta INT NOT NULL,
+                fecha_aplicacion DATE,
+                FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato) ON DELETE CASCADE,
+                FOREIGN KEY (id_oferta) REFERENCES Ofertas(id_oferta) ON DELETE CASCADE
+            )"
+                ];
 
-            // Create tables (same SQL as above)
-            $pdo->exec($sql);
+                // Execute each SQL statement
+                foreach ($sql_statements as $index => $sql) {
+                    try {
+                        $pdo->exec($sql);
+                    } catch (PDOException $e) {
+                        $error_log[] = "Error en la consulta #$index: " . $e->getMessage() . " SQL: " . $sql;
+                    }
+                }
 
-            // Save configuration
-            $configContent = "<?php
-define('DB_HOST', '$dbHost');
-define('DB_USER', '$dbUser');
-define('DB_PASS', '$dbPass');
-define('DB_NAME', '$dbName');
+                if (!empty($error_log)) {
+                    throw new Exception("Errores al crear tablas:\n" . implode("\n", $error_log));
+                }
+
+                // Create db_config.php
+                $config_content = "<?php
+define('DB_HOST', '$default_host');
+define('DB_USER', '$default_user');
+define('DB_PASS', '$default_pass');
+define('DB_NAME', '$default_db');
 ?>";
-            file_put_contents($configFile, $configContent);
-
-            header("Location: ../general/Login_y_Registro/registro.php");
-            exit;
-        } catch (PDOException $e) {
-            $error = "❌ Error en la instalación: " . $e->getMessage();
+        if (!file_put_contents('db_config.php', $config_content)) {
+            throw new Exception("No se pudo crear db_config.php. Verifique los permisos de escritura en el directorio bd/.");
         }
+
+        // Redirect to index.php
+        header("Location: ../../general/index.php");
+        exit;
+    } catch (PDOException $e) {
+        $error_message = "Error al crear la base de datos: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
@@ -222,67 +169,108 @@ define('DB_NAME', '$dbName');
 
 <head>
     <meta charset="UTF-8">
-    <title>Instalador PlataformaEmpleos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalación de JobConnect RD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* CSS from curriculum.php/index.php for consistency */
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2ecc71;
+            --secondary-dark: #27ae60;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --info: #1abc9c;
+            --gray: #95a5a6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 0.5rem;
+            --transition: all 0.3s ease;
+            --max-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
+            color: var(--dark);
+            line-height: 1.6;
             background-color: #f8f9fa;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
         }
 
-        .installer-container {
-            max-width: 500px;
-            background: white;
+        .container {
+            width: 100%;
+            max-width: 600px;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
-        .installer-container h2 {
-            text-align: center;
+        h1 {
+            font-size: 2rem;
             margin-bottom: 1.5rem;
+            color: var(--primary);
         }
 
-        .error {
-            color: #dc3545;
+        p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
             text-align: center;
-            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background-color: var(--primary);
+            color: var(--white);
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid;
+        }
+
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left-color: var(--danger);
         }
     </style>
 </head>
 
 <body>
-    <div class="installer-container">
-        <h2>🔧 Instalador PlataformaEmpleos</h2>
-        <p class="text-center">Configure la base de datos para iniciar la aplicación.</p>
+    <div class="container">
+        <h1>Instalación de JobConnect RD</h1>
+        <p>La base de datos no está configurada. Haga clic en el botón a continuación para instalar la base de datos necesaria para la aplicación.</p>
 
-        <?php if (isset($error)): ?>
-            <p class="error"><?= htmlspecialchars($error) ?></p>
+        <?php if (isset($error_message)): ?>
+            <div class="alert alert-danger"><?php echo $error_message; ?></div>
         <?php endif; ?>
 
         <form method="post">
-            <div class="mb-3">
-                <label for="db_host" class="form-label">Servidor de Base de Datos</label>
-                <input type="text" class="form-control" id="db_host" name="db_host" value="localhost" required>
-            </div>
-            <div class="mb-3">
-                <label for="db_user" class="form-label">Usuario de Base de Datos</label>
-                <input type="text" class="form-control" id="db_user" name="db_user" value="root" required>
-            </div>
-            <div class="mb-3">
-                <label for="db_pass" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="db_pass" name="db_pass" placeholder="Dejar en blanco si no hay contraseña">
-            </div>
-            <div class="mb-3">
-                <label for="db_name" class="form-label">Nombre de la Base de Datos</label>
-                <input type="text" class="form-control" id="db_name" name="db_name" value="PlataformaEmpleos" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">📥 Instalar</button>
+            <button type="submit" name="install" class="btn">Instalar Base de Datos</button>
         </form>
     </div>
 </body>

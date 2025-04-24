@@ -1,4 +1,33 @@
 <?php
+// Default database configuration
+$default_host = 'localhost';
+$default_user = 'root';
+$default_pass = '';
+$default_db = 'PlataformaEmpleos';
+
+// Check for db_config.php and database existence
+if (!file_exists('../Libreria/bd/db_config.php')) {
+    if (!headers_sent()) {
+        header("Location: ../Libreria/bd/instalador.php");
+        exit;
+    }
+    echo "<script>window.location.href='../Libreria/bd/instalador.php';</script>";
+    exit;
+}
+
+// Try to connect to the database
+try {
+    $pdo = new PDO("mysql:host=$default_host;dbname=$default_db", $default_user, $default_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    if (!headers_sent()) {
+        header("Location: ../Libreria/bd/instalador.php");
+        exit;
+    }
+    echo "<script>window.location.href='../Libreria/bd/instalador.php';</script>";
+    exit;
+}
+
 $ocultar_footer = false;
 require('../libreria/motor.php');
 require_once('../libreria/plantilla.php');
@@ -31,7 +60,7 @@ plantilla::navbar();
         <div class="row">
 
             <!-- Oferta 1 -->
-            <div class="col-md-6-col-lg-4-col-sm-12">
+            <div class="col-md-6 col-lg-4 col-sm-12">
                 <div class="card h-100">
                     <div style="font-size: 2rem; color: var(--primary); margin-top: 1rem; text-align: center;">
                         <i class="fas fa-quote-left"></i>
