@@ -151,7 +151,7 @@ $referencias = Conexion::select($sqlReferencias, [$idUsuario]) ?: [];
                             value="<?= htmlspecialchars($redes) ?>">
                     </div>
 
-                    <h3>Formación Académica</h3>
+                    <!-- <h3>Formación Académica</h3>
                     <div class="form-group">
                         <label>Institución</label>
                         <input type="text" name="institucion" class="form-control">
@@ -231,7 +231,7 @@ $referencias = Conexion::select($sqlReferencias, [$idUsuario]) ?: [];
                         <label for="foto">Foto</label>
                         <input type="file" id="foto" name="foto" class="form-control" accept="image/*">
                     </div>
-                    <p><?= $foto_display ?></p>
+                    <p><?= $foto_display ?></p> -->
 
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>

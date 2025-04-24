@@ -1,5 +1,6 @@
 <?php
 $ocultar_footer = false;
+
 require('../libreria/motor.php');
 require_once('../libreria/plantilla.php');
 
@@ -280,7 +281,7 @@ plantilla::navbar();
             <p style="margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">Únete a JobConnect
                 RD hoy mismo y conecta con las mejores oportunidades profesionales. Registro gratuito y fácil.</p>
             <div>
-                <a href="registro.html" class="btn btn-secondary btn-lg" style="margin-right: 1rem;">Crear Cuenta
+                <a href="Login_y_Registro/registro.php" class="btn btn-secondary btn-lg" style="margin-right: 1rem;">Crear Cuenta
                     Candidato o Registrar empresa</a>
             </div>
         </div>

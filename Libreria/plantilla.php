@@ -1169,6 +1169,7 @@ class Plantilla
 
         public static function navbar()
         {
+
             $tipoUsuario = $_SESSION['tipo_usuario'] ?? '';
 
             ?>

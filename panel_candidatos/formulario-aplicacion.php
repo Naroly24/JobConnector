@@ -37,9 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $exito = conexion::ejecutar($sql, [$id_candidato, $id_oferta, $fecha_aplicacion]);
 
         if ($exito) {
-            echo "<p style='color: green;'>✅ Aplicación enviada con éxito.</p>";
+            header("Location: candidato_panel.php?mensaje=aplicacion_exitosa");
+            exit;
         } else {
-            echo "<p style='color: red;'>❌ Ocurrió un error al aplicar.</p>";
+            header("Location: candidato_panel.php?mensaje=error");
+            exit;
         }
     }
 }
