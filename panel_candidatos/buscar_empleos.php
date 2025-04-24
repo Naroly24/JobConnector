@@ -118,7 +118,7 @@ $ofertas = conexion::consulta("SELECT id_oferta, titulo FROM Ofertas");
                             </div>
                         </div>
                         <div class="application-status">
-                            <button class="btn btn-primary btn-sm">Aplicar</button>
+                            <a href="curriculum.php" class="btn btn-primary btn-sm">Aplicar</a>
                             <button class="btn btn-outline btn-sm">Guardar</button>
                         </div>
                     </div>
