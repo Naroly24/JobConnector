@@ -38,7 +38,7 @@ $ofertas = conexion::consulta("SELECT id_oferta, titulo FROM Ofertas");
                     <li class="menu-item"><a href="postulaciones.php"><i class="fas fa-file-alt"></i> Mis
                             Aplicaciones</a></li>
                     <li class="menu-item">
-                        <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
+                        <a href="curriculum.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
                     </li>
                     <li class="menu-item"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                     <li class="menu-item" style="color: var(--danger);">

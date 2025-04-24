@@ -1,9 +1,11 @@
 <?php
-// Iniciar sesión para obtener id_usuario del usuario autenticado
 session_start();
+$ocultar_footer = true; // o false si lo quieres mostrar
 
-// Incluir archivo de conexión a la base de datos
 require('../libreria/motor.php');
+require('../libreria/plantilla.php');
+plantilla::aplicar();
+plantilla::navbar();
 
 // Variables para almacenar los datos prellenados
 $nombre = '';
@@ -16,8 +18,8 @@ $user_exists = false;
 $candidato_exists = false;
 
 // Verificar si el usuario está logueado
-if (isset($_SESSION['user_id'])) {
-    $id_usuario = $_SESSION['user_id'];
+if (isset($_SESSION['id_usuario'])) {
+    $id_usuario = $_SESSION['id_usuario'];
 
     // Consultar datos del usuario en la tabla Usuarios
     $query_usuario = "SELECT nombre, apellido, correo FROM usuarios WHERE id_usuario = :id_usuario";
@@ -328,230 +330,7 @@ if (isset($id_usuario)) {
     <title>Currículum Digital - JobConnect RD</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Variables globales */
-        :root {
-            --primary: #3498db;
-            --primary-dark: #2980b9;
-            --secondary: #2ecc71;
-            --secondary-dark: #27ae60;
-            --dark: #34495e;
-            --light: #ecf0f1;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-            --info: #1abc9c;
-            --gray: #95a5a6;
-            --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --radius: 0.5rem;
-            --transition: all 0.3s ease;
-            --max-width: 1200px;
-            --header-height: 70px;
-            --footer-height: 60px;
-            --sidebar-width: 250px;
-        }
 
-        /* Reset y estilos base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            color: var(--dark);
-            line-height: 1.6;
-            background-color: #f8f9fa;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        a:hover {
-            color: var(--primary-dark);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Contenedor principal */
-        .container {
-            width: 100%;
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        /* Header */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            height: var(--header-height);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 0.5rem;
-        }
-
-        .logo h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .logo span {
-            color: var(--secondary);
-        }
-
-        /* Navegación */
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-
-        nav ul li a {
-            color: var(--dark);
-            font-weight: 500;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        nav ul li a.active {
-            color: var(--primary);
-        }
-
-        nav ul li a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary);
-            border-radius: 3px;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Main content */
-        main {
-            margin-top: calc(var(--header-height) + 40px);
-            flex: 1;
-            padding: 2rem 0;
-        }
-
-        /* Botones */
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-weight: 500;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            color: var(--white);
-        }
-
-        /* Formularios */
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 86, 112, 0.2);
-        }
-
-        select.form-control {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%2334495e" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 0.75rem center/12px 12px;
-        }
-
-        input[type="date"].form-control {
-            line-height: 1.5;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 1rem;
-            border-radius: var(--radius);
-            margin-bottom: 1.5rem;
-            border-left: 5px solid;
-        }
-
-        .alert-success {
-            background-color: rgba(0, 160, 165, 0.1);
-            border-left-color: var(--secondary);
-        }
-
-        .alert-danger {
-            background-color: rgba(231, 76, 60, 0.1);
-            border-left-color: var(--danger);
-        }
 
         /* Grid System */
         .row {
@@ -566,126 +345,10 @@ if (isset($id_usuario)) {
             padding: 0 0.5rem;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 2rem 0;
-            margin-top: auto;
-        }
-
-        .footer-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .footer-section {
-            flex: 1;
-            min-width: 200px;
-            margin-bottom: 1.5rem;
-            padding-right: 1rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            color: var(--light);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section ul li a {
-            color: var(--light);
-            opacity: 0.8;
-        }
-
-        .footer-section ul li a:hover {
-            opacity: 1;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            nav {
-                position: fixed;
-                top: var(--header-height);
-                left: -100%;
-                width: 70%;
-                height: calc(100vh - var(--header-height));
-                background-color: var(--white);
-                box-shadow: var(--shadow);
-                transition: var(--transition);
-                z-index: 999;
-            }
-
-            nav.active {
-                left: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                padding: 1rem;
-            }
-
-            nav ul li {
-                margin-left: 0;
-                margin-bottom: 1rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .col-6 {
-                flex: 0 0 100%;
-                max-width: 100%;
-                padding: 0 1rem;
-            }
-
-            .form-group {
-                margin-bottom: 1.5rem;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+        </style>
 </head>
 <body>
-    <header>
-        <div class="header-container container">
-            <div class="logo">
-                <h1>JobConnect <span>RD</span></h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Inicio</a></li>
-                    <li><a href="#">Ofertas</a></li>
-                    <li><a href="#">Perfil</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </header>
-
+    
     <main class="main-content container">
         <h1>Formulario de Currículum Digital</h1>
         <form action="curriculum.php" method="post" enctype="multipart/form-data">
@@ -861,54 +524,3 @@ if (isset($id_usuario)) {
         <?php endif; ?>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <!-- About Section -->
-                <div class="footer-section">
-                    <h3>Sobre JobConnect RD</h3>
-                    <p style="opacity: 0.8; margin-bottom: 1rem;">Plataforma líder en conectar talento dominicano con oportunidades profesionales en el país.</p>
-                </div>
-
-                <!-- Links Section -->
-                <div class="footer-section">
-                    <h3>Enlaces Rápidos</h3>
-                    <ul>
-                        <li><a href="candidatos_index.html">Inicio para Candidatos</a></li>
-                        <li><a href="#">Buscar Empleos</a></li>
-                        <li><a href="empresas_index.html">Inicio para Empresas</a></li>
-                        <li><a href="sobre-nosotros.php">Sobre Nosotros</a></li>
-                    </ul>
-                </div>
-
-                <!-- Contact Section -->
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i> info@jobconnectrd.com</li>
-                        <li><i class="fas fa-phone" style="margin-right: 0.5rem;"></i> +1 809-555-1234</li>
-                        <li><i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i> Av. Winston Churchill, Santo Domingo</li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter Section -->
-                <div class="footer-section">
-                    <h3>Newsletter</h3>
-                    <p style="opacity: 0.8; margin-bottom: 1rem;">Recibe las últimas ofertas de empleo en República Dominicana.</p>
-                    <form>
-                        <div style="display: flex;">
-                            <input type="email" class="form-control" placeholder="Tu email" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                            <button type="submit" class="btn btn-primary" style="border-top-left-radius: 0; border-bottom-left-radius: 0; white-space: nowrap;">Suscribir</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2025 JobConnect RD. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>

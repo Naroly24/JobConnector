@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS Candidatos (
     redes_profesionales VARCHAR(255),
     foto LONGBLOB,
     cv_pdf LONGBLOB,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
 );
 
 -- Tabla Empresas
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS Empresas (
     correo_corporativo VARCHAR(100),
     sitio_web VARCHAR(100),
     descripcion TEXT,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario) ON DELETE CASCADE
 );
 
 -- Tabla Formaciones_Academicas
