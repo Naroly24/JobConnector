@@ -23,6 +23,7 @@ $id_candidato = $_SESSION['id_candidato'];
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -502,7 +503,7 @@ $id_candidato = $_SESSION['id_candidato'];
                 <h3>Panel de Usuario</h3>
             </div>
             <div class="sidebar-menu">
-            <ul>
+                <ul>
                     <li class="menu-item "><a href="candidato_panel.php"><i class="fas fa-home"></i> Dashboard</a>
                     </li>
                     <li class="menu-item"><a href="buscar_empleos.php"><i class="fas fa-search"></i> Buscar
@@ -510,7 +511,7 @@ $id_candidato = $_SESSION['id_candidato'];
                     <li class="menu-item active"><a href="postulaciones.php"><i class="fas fa-file-alt"></i> Mis
                             Aplicaciones</a></li>
                     <li class="menu-item">
-                        <a href="perfil_empresa.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
+                        <a href="curriculum.php"><i class="fas fa-building"></i> <span>Curriculum Digital</span></a>
                     </li>
                     <li class="menu-item"><a href="perfil_candidato.php"><i class="fas fa-user"></i> Mi Perfil</a></li>
                     <li class="menu-item" style="color: var(--danger);">
@@ -633,4 +634,5 @@ $id_candidato = $_SESSION['id_candidato'];
 
     <script src="script.js"></script>
 </body>
+
 </html>
