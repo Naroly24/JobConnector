@@ -1,14 +1,6 @@
 <?php
-
-if (!file_exists('../../libreria/bd/db_config.php')) {
-    header("Location: ../../libreria/bd/instalador.php");
-    exit;
-}
-
-ob_start();
-
-require('../../libreria/bd/conexion.php');
-require('../../libreria/plantilla.php');
+require_once '../../libreria/motor.php';
+require_once '../../libreria/plantilla.php';
 
 plantilla::aplicar();
 plantilla::navbar();
@@ -372,11 +364,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             aplicarValidacionContraseñas(candidatoForm);
             aplicarValidacionContraseñas(empresaForm);
 
-            candidatoForm.addEventListener('submit', function (e) {
+            candidatoForm.addEventListener('submit', function(e) {
                 if (!validarFormulario(this)) e.preventDefault();
             });
 
-            empresaForm.addEventListener('submit', function (e) {
+            empresaForm.addEventListener('submit', function(e) {
                 if (!validarFormulario(this)) e.preventDefault();
             });
         });

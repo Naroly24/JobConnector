@@ -1,34 +1,39 @@
 <?php
 $configFile = 'db_config.php';
 
-// Si ya existe db_config.php, redirigir a la aplicación
-if (file_exists($configFile)) {
-    header("Location: instalador.php");
-    exit;
-}
+// // If db_config.php exists, redirect to the main app
+// if (file_exists($configFile)) {
+//     header("Location: ../../general/Login_y_Registro/registro.php");
+//     exit;
+// }
 
-// Si se envía el formulario, procesar los datos
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $dbHost = $_POST['db_host'];
-    $dbUser = $_POST['db_user'];
-    $dbPass = $_POST['db_pass'];
-    $dbName = $_POST['db_name'];
+// Default credentials for local MySQL (e.g., XAMPP)
+$defaultCredentials = [
+    'db_host' => 'localhost',
+    'db_user' => 'root',
+    'db_pass' => '',
+    'db_name' => 'PlataformaEmpleos'
+];
 
-    try {
-        // Conectar al servidor
-        $pdo = new PDO("mysql:host=$dbHost", $dbUser, $dbPass, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]);
+// Attempt automatic installation with defaults
+$autoInstallSuccess = false;
+$error = null;
 
-        // Crear la base de datos
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+try {
+    // Connect to MySQL server
+    $pdo = new PDO(
+        "mysql:host={$defaultCredentials['db_host']}",
+        $defaultCredentials['db_user'],
+        $defaultCredentials['db_pass'],
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
 
-        // Conectar a la base de datos
-        $pdo->exec("USE `$dbName`");
+    // Create database
+    $pdo->exec("CREATE DATABASE IF NOT EXISTS `{$defaultCredentials['db_name']}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+    $pdo->exec("USE `{$defaultCredentials['db_name']}`");
 
-        // Crear las tablas
-        $sql = <<<SQL
-
+    // Create tables
+    $sql = <<<SQL
 -- Tabla Usuarios
 CREATE TABLE IF NOT EXISTS Usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,10 +50,14 @@ CREATE TABLE IF NOT EXISTS Candidatos (
     id_candidato INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT,
     telefono VARCHAR(20),
-    ciudad VARCHAR(100),
+    direccion VARCHAR(255),
+    ciudad VARCHAR(100)
+    resumen_profesional TEXT,,
     profesion VARCHAR(100),
     disponibilidad VARCHAR(50),
+    redes_profesionales VARCHAR(255),
     foto VARCHAR(255),
+    cv_pdf VARCHAR(255),
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario)
 );
 
@@ -145,22 +154,65 @@ CREATE TABLE IF NOT EXISTS Aplicaciones (
 );
 SQL;
 
-        $pdo->exec($sql);
+    $pdo->exec($sql);
 
-        // Guardar configuración
-        $configContent = "<?php
+    // Save configuration
+    $configContent = "<?php
+define('DB_HOST', '{$defaultCredentials['db_host']}');
+define('DB_USER', '{$defaultCredentials['db_user']}');
+define('DB_PASS', '{$defaultCredentials['db_pass']}');
+define('DB_NAME', '{$defaultCredentials['db_name']}');
+?>";
+    file_put_contents($configFile, $configContent);
+
+    $autoInstallSuccess = true;
+} catch (PDOException $e) {
+    $error = "No se pudo conectar con las credenciales predeterminadas. Por favor, ingrese los detalles de la base de datos.";
+}
+
+// If auto-install succeeded, redirect to registro.php
+if ($autoInstallSuccess) {
+    header("Location: ../general/Login_y_Registro/registro.php");
+    exit;
+}
+
+// Handle manual form submission if auto-install failed
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $dbHost = trim($_POST['db_host'] ?? '');
+    $dbUser = trim($_POST['db_user'] ?? '');
+    $dbPass = $_POST['db_pass'] ?? '';
+    $dbName = trim($_POST['db_name'] ?? '');
+
+    if (empty($dbHost) || empty($dbUser) || empty($dbName)) {
+        $error = "Por favor, complete todos los campos requeridos.";
+    } else {
+        try {
+            // Connect to MySQL server
+            $pdo = new PDO("mysql:host=$dbHost", $dbUser, $dbPass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]);
+
+            // Create database
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            $pdo->exec("USE `$dbName`");
+
+            // Create tables (same SQL as above)
+            $pdo->exec($sql);
+
+            // Save configuration
+            $configContent = "<?php
 define('DB_HOST', '$dbHost');
 define('DB_USER', '$dbUser');
 define('DB_PASS', '$dbPass');
 define('DB_NAME', '$dbName');
 ?>";
+            file_put_contents($configFile, $configContent);
 
-        file_put_contents($configFile, $configContent);
-
-        header("Location: registro.php");
-        exit;
-    } catch (PDOException $e) {
-        $error = "❌ Error en la instalación: " . $e->getMessage();
+            header("Location: ../general/Login_y_Registro/registro.php");
+            exit;
+        } catch (PDOException $e) {
+            $error = "❌ Error en la instalación: " . $e->getMessage();
+        }
     }
 }
 ?>
@@ -171,69 +223,68 @@ define('DB_NAME', '$dbName');
 <head>
     <meta charset="UTF-8">
     <title>Instalador PlataformaEmpleos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .installer-container {
+            max-width: 500px;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .installer-container h2 {
             text-align: center;
-            margin: 50px;
-        }
-
-        form {
-            display: inline-block;
-            text-align: left;
-            background: #f4f4f4;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-
-        button {
-            padding: 10px 15px;
-            background: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #218838;
+            margin-bottom: 1.5rem;
         }
 
         .error {
-            color: red;
-            margin-bottom: 10px;
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 
 <body>
-    <h2>🔧 Instalador PlataformaEmpleos</h2>
-    <p>Complete los datos para crear la base de datos e iniciar la aplicación.</p>
+    <div class="installer-container">
+        <h2>🔧 Instalador PlataformaEmpleos</h2>
+        <p class="text-center">Configure la base de datos para iniciar la aplicación.</p>
 
-    <?php if (isset($error)): ?>
-        <p class="error"><?= $error ?></p>
-    <?php endif; ?>
+        <?php if (isset($error)): ?>
+            <p class="error"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
 
-    <form method="post">
-        <label>Servidor de Base de Datos:</label>
-        <input type="text" name="db_host" value="localhost" required>
-
-        <label>Usuario de Base de Datos:</label>
-        <input type="text" name="db_user" value="root" required>
-
-        <label>Contraseña:</label>
-        <input type="password" name="db_pass">
-
-        <label>Nombre de la Base de Datos:</label>
-        <input type="text" name="db_name" value="PlataformaEmpleos" required>
-
-        <button type="submit">📥 Instalar</button>
-    </form>
+        <form method="post">
+            <div class="mb-3">
+                <label for="db_host" class="form-label">Servidor de Base de Datos</label>
+                <input type="text" class="form-control" id="db_host" name="db_host" value="localhost" required>
+            </div>
+            <div class="mb-3">
+                <label for="db_user" class="form-label">Usuario de Base de Datos</label>
+                <input type="text" class="form-control" id="db_user" name="db_user" value="root" required>
+            </div>
+            <div class="mb-3">
+                <label for="db_pass" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="db_pass" name="db_pass" placeholder="Dejar en blanco si no hay contraseña">
+            </div>
+            <div class="mb-3">
+                <label for="db_name" class="form-label">Nombre de la Base de Datos</label>
+                <input type="text" class="form-control" id="db_name" name="db_name" value="PlataformaEmpleos" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">📥 Instalar</button>
+        </form>
+    </div>
 </body>
 
 </html>

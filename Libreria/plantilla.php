@@ -1,6 +1,4 @@
 <?php
-define('BASE_URL', '/JobConnector/');
-
 class Plantilla
 {
     static $instance = null;
